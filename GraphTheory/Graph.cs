@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Arithmetics;
+using Arithmetics.Matrix;
 
 namespace GraphTheory
 {
