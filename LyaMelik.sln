@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTheory", "GraphTheory\GraphTheory.csproj", "{CC5B09AF-47DB-4D96-BB15-6282F6425042}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{306DECF8-8F0C-43D1-B342-3F4F97D50E15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arithmetics", "Arithmetics\Arithmetics.csproj", "{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC5B09AF-47DB-4D96-BB15-6282F6425042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5B09AF-47DB-4D96-BB15-6282F6425042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5B09AF-47DB-4D96-BB15-6282F6425042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5B09AF-47DB-4D96-BB15-6282F6425042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{306DECF8-8F0C-43D1-B342-3F4F97D50E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{306DECF8-8F0C-43D1-B342-3F4F97D50E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{306DECF8-8F0C-43D1-B342-3F4F97D50E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{306DECF8-8F0C-43D1-B342-3F4F97D50E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C4260CF-B891-497E-916E-3784B29589FD}
+	EndGlobalSection
+EndGlobal
