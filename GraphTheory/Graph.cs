@@ -145,11 +145,7 @@ namespace GraphTheory
                     }
                 }
             }
-            /*int[] Numbers = new int[TopSortedList.Length];
-            for (i = 0; i < TopSortedList.Length; i++)
-            {
-                Numbers[i] = TopSortedList[i].CloseTime;
-            }*/
+            
             return new Graph(TopSortedList);
         }
 
