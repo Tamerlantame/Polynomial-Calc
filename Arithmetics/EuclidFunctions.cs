@@ -6,57 +6,67 @@ using System.Threading.Tasks;
 
 namespace Arithmetics
 {
-    class EuclidFunctions
+    /// <summary>
+    /// Static methods for Euclid's algorithm and its generalizations
+    /// </summary>
+    static class EuclidFunctions
     {
-        public static int Euclid(int a, int b)
+        /// <summary>
+        /// Classic Euclid's algorithm for greatest common divisor
+        /// </summary>
+        /// <param name="x">first number</param>
+        /// <param name="y">second number</param>
+        /// <returns>Returns the greatest common divisor of the two integers</returns>
+        public static int Euclid(int x, int y)
         {
-            a = Math.Abs(a);
-            b = Math.Abs(b);
-            while (a != 0 && b != 0)
+            x = Math.Abs(x);
+            y = Math.Abs(y);
+            while (x != 0 && y != 0)
             {
-                if (a != 0 && b != 0)
+                if (x != 0 && y != 0)
                 {
-                    if (a > b)
-                        a %= b;
+                    if (x > y)
+                        x %= y;
                     else
-                        b %= a;
+                        y %= x;
                 }
             }
-            return a + b;
+            return x + y;
         }
 
-        public static int arr_euclid(int[] a)
+        public static int Euclid(int[] a)
         {
-            int nod = Euclid(a[1], a[0]);
+            int gcd = Euclid(a[1], a[0]);
             for (int i = 2; i < a.Length; i++)
             {
-                nod = Euclid(nod, a[i]);
+                gcd = Euclid(gcd, a[i]);
+                gcd = Euclid(gcd, a[i]);
             }
-            return nod;
+            return gcd;
         }
 
-        public static int ExtendedEuclid(int a, int b, out int last_coeff_a, out int last_coeff_b)
+        public static int ExtendedEuclid(int x, int y, out int a, out int b)
         {
             int q, r;
-            last_coeff_a = 1;
+            a = 1;
             int coeff_a = 0;
-            last_coeff_b = 0;
+            b = 0;
             int coeff_b = 1;
-            while (b != 0)
+            while (y != 0)
             {
-                q = a / b;
-                r = a % b;
-                a = b;
-                b = r;
+                q = x / y;
+                r = x % y;
+                x = y;
+                y = r;
                 r = coeff_a;
 
-                coeff_a = last_coeff_a - q * coeff_a;
-                last_coeff_a = r;
+                coeff_a = a - q * coeff_a;
+                a = r;
                 r = coeff_b;
-                coeff_b = last_coeff_b - q * coeff_b;
-                last_coeff_b = r;
+                coeff_b = b - q * coeff_b;
+                b = r;
             }
-            return b;
+            return y;
         }
 
 
