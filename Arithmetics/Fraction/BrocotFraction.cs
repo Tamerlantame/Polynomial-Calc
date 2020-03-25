@@ -8,16 +8,15 @@ namespace Arithmetics
 {
     struct BrocotFraction
     {
-        public FakeFraction current;
-        public FakeFraction left;
-        public FakeFraction right;
+        public Fraction current;
+        public Fraction left;
+        public Fraction right;
 
-        public BrocotFraction(FakeFraction Current, FakeFraction Left, FakeFraction Right)
+        public BrocotFraction(Fraction Current, Fraction Left, Fraction Right)
         {
             current = Current;
             left = Left;
             right = Right;
-
         }
         public override string ToString()
         {

@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace Arithmetics
 {
-    struct RealFraction
+    struct Fraction
     {
-        
-        public int p, q;
-        public RealFraction(int p, int q)
+        /// <summary>
+        /// numerator
+        /// </summary>
+        public readonly int p;
+        /// <summary>
+        /// denominator
+        /// </summary>
+        public readonly int q;    
+
+        public Fraction(int p, int q)
         {
             this.p = p;
             this.q = q;
@@ -20,38 +27,44 @@ namespace Arithmetics
                 this.p = -p;
                 this.q = -q;
             }
-            
             else if (p==0) { }
             int nod = EuclidFunctions.Euclid(p, q);
             p =p/ nod;
             q =q/ nod;
         }
-        public static RealFraction operator +(RealFraction f1, RealFraction f2)
+        public static Fraction operator +(Fraction f1, Fraction f2)
         {
             int p = f1.p*f2.q + f2.p*f1.q;
             int q = f1.q * f2.q;
             int nod = EuclidFunctions.Euclid(p, q);
             p /= nod;
             q /= nod;
-            return new RealFraction(p, q);
+            return new Fraction(p, q);
         }
-        public static RealFraction operator -(RealFraction f1, RealFraction f2)
+        public static Fraction operator -(Fraction f1, Fraction f2)
         {
             int p = f1.p * f2.q - f2.p * f1.q;
             int q = f1.q * f2.q;
             int nod = EuclidFunctions.Euclid(p, q);
             p /= nod;
             q /= nod;
-            return new RealFraction(p, q);
+            return new Fraction(p, q);
         }
-        public static RealFraction operator *(RealFraction f1, RealFraction f2)
+        public static Fraction operator *(Fraction f1, Fraction f2)
         {
             int p = f1.p * f2.q - f2.p * f1.q;
             int q = f1.q * f2.q;
             int nod = EuclidFunctions.Euclid(p, q);
             p /= nod;
             q /= nod;
-            return new RealFraction(p, q);
+            return new Fraction(p, q);
+        }
+
+        public static Fraction Mediant(Fraction f1, Fraction f2)
+        {
+            int p = f1.p + f2.p;
+            int q = f1.q + f2.q;
+            return new Fraction(p, q);
         }
 
         public override string ToString()

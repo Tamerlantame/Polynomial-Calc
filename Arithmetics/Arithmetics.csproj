@@ -51,10 +51,9 @@
     <Compile Include="Fraction\BrocotFraction.cs" />
     <Compile Include="ISequence.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
-    <Compile Include="SternBrocotFractions.cs" />
-    <Compile Include="Fraction\RealFraction.cs" />
+    <Compile Include="SternBrocotFunctions.cs" />
+    <Compile Include="Fraction\Fraction.cs" />
     <Compile Include="Matrix\IntMatrix.cs" />
-    <Compile Include="Fraction\FakeFraction.cs" />
     <Compile Include="Polynomial\Polinomial.cs" />
     <Compile Include="Matrix\IntSquareMatrix.cs" />
     <Compile Include="Matrix\Matrix.cs" />
