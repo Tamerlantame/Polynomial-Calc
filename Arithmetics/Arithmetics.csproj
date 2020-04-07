@@ -49,14 +49,12 @@
   <ItemGroup>
     <Compile Include="BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
-    <Compile Include="ISequence.cs" />
+    <Compile Include="ISequerence.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
     <Compile Include="SternBrocotFunctions.cs" />
     <Compile Include="Fraction\Fraction.cs" />
     <Compile Include="Matrix\IntMatrix.cs" />
     <Compile Include="Polynomial\Polinomial.cs" />
-    <Compile Include="Matrix\IntSquareMatrix.cs" />
-    <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="NumberFunctions.cs" />
     <Compile Include="EuclidFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
