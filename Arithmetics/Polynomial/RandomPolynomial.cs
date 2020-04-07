@@ -6,50 +6,59 @@ using System.Threading.Tasks;
 
 namespace Arithmetics.Polynomial
 {
-    class RandomPolinomial : ISequence<Polinomial>
+    class RandomPolynomial : ISequerence<Polynomial>
     {
-        private int maxDeg;
-        private int minDeg;
-        private int maxCoeff;
-        private int minCoeff;
-
-        public RandomPolinomial()
+        public int deg;
+        protected int minimumdeg = 0, maximumdeg, minimumcoeff = 0, maximumcoeff;
+        public SortedList<int, double> coeff = new SortedList<int, double>();
+        public RandomPolynomial()
         {
-            maxDeg = 10;
-            minDeg = 0;
-            minCoeff = 0;
-            maxCoeff = 100;
-        }
-
-        public RandomPolinomial(int minDeg, int maxDeg)
-            : this()
-        {
-            this.minDeg = minDeg;
-            this.maxDeg = maxDeg;
-        }
-
-        public RandomPolinomial(int minDeg, int maxDeg, int minCoeff, int maxCoeff)
-            : this(minDeg, maxDeg)
-        {
-            this.minCoeff = minCoeff;
-            this.maxCoeff = maxCoeff;
-        }
-
-        public Polinomial Next()
-        {
+            maximumdeg = 10;
+            maximumcoeff = 10;
             Random rnd = new Random();
-            int SIZE = rnd.Next(minDeg, maxDeg) + 1;
-            double[] q = new double[SIZE];
-            for (int i = 0; i < q.Length; i++)
+            deg = rnd.Next(maximumdeg);
+            Random rndcoeff = new Random();
+            for (int i = 0; i < deg; i++)
             {
-                q[i] = rnd.Next(minCoeff, maxCoeff);
+                coeff.Add(i, rndcoeff.Next(maximumcoeff));
             }
-            SortedList<int, double> arr = new SortedList<int, double>();
-            for (int i = 0; i < SIZE; i++)
+        }
+        public RandomPolynomial(int maxdeg, int maxcoeff)
+        {
+            maximumdeg = maxdeg;
+            maximumcoeff = maxcoeff;
+            Random rnd = new Random();
+            deg = rnd.Next(maximumdeg);
+            Random rndcoeff = new Random();
+            for (int i = 0; i < deg; i++)
             {
-                arr.Add(i, q[i]);
+                coeff.Add(i, rndcoeff.Next(maxcoeff));
             }
-            return new Polinomial(arr);
+
+        }
+        public RandomPolynomial(int mindeg, int maxdeg, int mincoeff, int maxcoeff)
+        {
+            maximumdeg = maxdeg;
+            maximumcoeff = maxcoeff;
+            minimumdeg = mindeg;
+            minimumcoeff = mincoeff;
+            Random rnd = new Random();
+            deg = rnd.Next(minimumdeg, maximumdeg);
+            Random rndcoeff = new Random();
+            for (int i = minimumdeg; i < maximumdeg; i++)
+            {
+                if (!coeff.ContainsKey(i))
+                    coeff.Add(i, rndcoeff.Next(minimumcoeff, maximumcoeff));
+                else
+                    coeff[i] = rndcoeff.Next(minimumcoeff, maximumcoeff);
+            }
+        }
+        public Polynomial Next()
+        {
+            RandomPolynomial randomPolynomial = new RandomPolynomial(minimumdeg, maximumdeg, minimumcoeff, maximumcoeff);
+            Polynomial polynomial = new Polynomial(randomPolynomial.coeff);
+
+            return polynomial;
         }
     }
 }
