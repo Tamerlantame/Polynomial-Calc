@@ -21,30 +21,7 @@ namespace Arithmetics
 
             return randomArray;
         }
-        public static int Euclid(int m, int n)
-        {
-            while (m != n)
-            {
-                if (m == 0 || n == 0)
-                    break;
-                if (m > n)
-                    m %= n;
-                else
-                    n %= m;
-            }
-            return m + n;
-        }
-
-        public static int Euclid(int[] Arr)
-        {
-            int a = Arr[0];
-            for (int i = 1; i < Arr.Length; i++)
-            {
-                a = NumberFunctions.Euclid(a, Arr[i]);
-            }
-            return a;
-
-        }
+      
         public static int FastPowMod(int number, int deg, int mod)
         {
             int result = 1;
@@ -106,39 +83,7 @@ namespace Arithmetics
 
             }
         }
-        public static int ExtendedEuclid(int number_a, int number_b, out int last_coeff_around_a, out int last_coeff_around_b)
-        {
-            int q, temp;
-            last_coeff_around_a = 1;
-            int coeff_around_a = 0;
-            last_coeff_around_b = 0;
-            int coeff_around_b = 1;
-
-
-            while (number_b != 0)
-            {
-                q = number_a / number_b;// Алгоритм Евклида
-                temp = number_a % number_b;
-                number_a = number_b;
-                number_b = temp;// тут он кончается
-
-
-
-                temp = coeff_around_a;// восстанавливая коэффициенты при a
-                coeff_around_a = last_coeff_around_a - q * coeff_around_a;
-                last_coeff_around_a = temp;
-
-
-
-                temp = coeff_around_b;// восстанавливаю коэффициенты при b
-                coeff_around_b = last_coeff_around_b - q * coeff_around_b;
-                last_coeff_around_b = temp;
-
-
-
-            }
-            return number_a;
-        }
+       
         public static int Chinese_remainder_theorem(int[] remainde_array, int[] modul_array)
         {
 
@@ -152,7 +97,7 @@ namespace Arithmetics
             int temp;
             for (int i = 1; i < modul_array.Length; i++)
             {
-                if (Euclid(composition_of_moduls, modul_array[i]) != 1)//если числа не взаимно простые, решений может не быть.
+                if (EuclidFunctions.Euclid(composition_of_moduls, modul_array[i]) != 1)//если числа не взаимно простые, решений может не быть.
                 {
                     Console.WriteLine("may have no answer");
                     return 0;
@@ -162,7 +107,7 @@ namespace Arithmetics
             int result = 0;
             for (int i = 0; i < modul_array.Length; i++)
             {
-                ExtendedEuclid(composition_of_moduls / modul_array[i], modul_array[i], out inverse_element, out temp);
+                EuclidFunctions.ExtendedEuclid(composition_of_moduls / modul_array[i], modul_array[i], out inverse_element, out temp);
                 result += remainde_array[i] * (composition_of_moduls / modul_array[i]) * inverse_element;
             }
             if (result < 0)
@@ -189,45 +134,6 @@ namespace Arithmetics
                 results[i] = mass[i];
             }
             return results;
-        }
-        public static int[] DiaphantineEquation(int[] coeffs, int value)
-        {
-
-            int[] results = new int[coeffs.Length];
-            int gcd = Euclid(coeffs);
-            if (value % gcd == 0)
-            {
-                if (coeffs.Length == 2)
-                {
-                    coeffs[0] /= gcd;
-                    coeffs[1] /= gcd;
-                    value /= gcd;
-                    ExtendedEuclid(coeffs[0], coeffs[1], out results[0], out results[1]);
-                    results[0] = results[0] * value;
-                    results[1] = results[1] * value;
-                }
-                else
-                {
-                    gcd = coeffs[0];
-                    for (int i = 1; i < coeffs.Length - 1; i++)
-                        gcd = Euclid(gcd, coeffs[i]);
-                    int gcdGlobal = Euclid(gcd, coeffs[coeffs.Length - 1]);
-                    int imaginaryValue = value;
-                    gcd /= gcdGlobal;
-                    value /= gcdGlobal;
-                    coeffs[coeffs.Length - 1] /= gcdGlobal;
-                    ExtendedEuclid(gcd, coeffs[coeffs.Length - 1], out int temp, out results[coeffs.Length - 1]);
-                    results[coeffs.Length - 1] *= value;
-                    temp *= imaginaryValue;
-                    coeffs = DelElement(coeffs, coeffs.Length - 1);
-                    int[] temp1 = DiaphantineEquation(coeffs, temp);
-                    for (int i = 0; i < results.Length - 1; i++)
-                        results[i] = temp1[i];
-                }
-                return results;
-            }
-            else
-                return null;
         }
     }
 
