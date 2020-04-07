@@ -5,8 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Arithmetics.Polynomial
+
 {
-    class ImposiblePolynomialFormException
+    class ImposiblePolynomialFormException : Exception
     {
+        public ImposiblePolynomialFormException(string massage) : base(massage)
+        {
+
+        }
+        public ImposiblePolynomialFormException() : base()
+        {
+
+
+        }
     }
 }
