@@ -50,6 +50,7 @@
     <Compile Include="BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
     <Compile Include="ISequerence.cs" />
+    <Compile Include="Polynomial\ImposiblePolynomialFormException.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
     <Compile Include="SternBrocotFunctions.cs" />
     <Compile Include="Fraction\Fraction.cs" />
