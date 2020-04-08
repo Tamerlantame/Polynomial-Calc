@@ -69,7 +69,7 @@ namespace Arithmetics
             return y;
         }
 
-
+        // TODO Яссин, смотрите! Это нужно сделать аккуратнее.
         public static int[] LinearDiophantine(int res, int[] coeffs, int length)
         {
 

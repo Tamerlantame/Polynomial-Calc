@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Arithmetics
 {
-    public interface ISequerence<T>
+    public interface ISequence<T>
     {
         T Next();
     }
-    public interface ISeries<T> : ISequerence<T>
+    public interface ISeries<T> : ISequence<T>
     {
         void Reset();
         T Prev();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Arithmetics.Polynomial
 {
-    class RandomPolynomial : ISequerence<Polynomial>
+    class RandomPolynomial : ISequence<Polynomial>
     {
         public int deg;
         protected int minimumdeg = 0, maximumdeg, minimumcoeff = 0, maximumcoeff;

@@ -66,6 +66,7 @@ namespace Arithmetics
             return fractions;
         }
 
+        //TODO что-то странное. 
         public static Fraction GetFarrey(int n, int m)
         {
             Fraction right = new Fraction(1, 1);
