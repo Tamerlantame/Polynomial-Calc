@@ -8,19 +8,19 @@ namespace GraphTheory
     class Graph
     {
         public List<GraphNode> AdjNodesList;
-        public Graph(IntSquareMatrix matrix)
+        public Graph(IntegerSquareMatrix matrix)
         {
-            AdjNodesList = new List<GraphNode>(matrix.n);
-            for (int i = 0; i < matrix.n; i++)
+            AdjNodesList = new List<GraphNode>(matrix.columns);
+            for (int i = 0; i < matrix.columns; i++)
             {
                 ///create List of empty Nodes
                 GraphNode a = new GraphNode();
                 AdjNodesList.Add(a);
                 a.Number = i;
             }
-            for (int i = 0; i < matrix.n; i++)
+            for (int i = 0; i < matrix.columns; i++)
             {
-                for (int j = 0; j < matrix.n; j++)
+                for (int j = 0; j < matrix.columns; j++)
                 {
                     if (matrix.elements[i, j] != 0)
                     {
