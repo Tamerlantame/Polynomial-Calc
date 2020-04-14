@@ -20,9 +20,27 @@ namespace Arithmetics
 
             return randomArray;
         }
-
-        public static int ModPow(int number, int deg, int mod)
+        public static int FastPow(int number, int deg)
         {
+            int result = 1;
+            List<int> binaryNotation = new List<int>();
+            while (deg > 0)
+            {
+                binaryNotation.Add(deg % 2);
+                deg /= 2;
+            }
+            for (int i = 0; i < binaryNotation.Count; i++)
+            {
+                if (binaryNotation[i] == 1)
+                    result = (result * number);
+                number = (number * number);
+
+            }
+            return result;
+        }
+
+            public static int ModPow(int number, int deg, int mod)
+            {
             int result = 1;
             List<int> binaryNotation = new List<int>();
             while (deg > 0)
@@ -38,28 +56,32 @@ namespace Arithmetics
 
             }
             return result;
-        }
+            }
 
         // TODO избавиться от WriteLine и выбрасывать исключения, если вход неверный.
         public static int ChineseRemainderTheorem(int[] res, int[] mod)
         {
-            if (res.Length != mod.Length)
-            {
-                Console.WriteLine("wrong input");
-                return 0;
-            }
+            try
+            { 
             int composition_of_moduls = mod[0];
             int inverse_element;
             int temp;
             for (int i = 1; i < mod.Length; i++)
             {
-                if (EuclidFunctions.Euclid(composition_of_moduls, mod[i]) != 1)//если числа не взаимно простые, решений может не быть.
+                try
                 {
-                    Console.WriteLine("may have no answer");
-                    return 0;
+                        temp = 1 / (EuclidFunctions.Euclid(composition_of_moduls, mod[i]) - 1);
+                        throw new Exception("may have no answer");
                 }
-                composition_of_moduls *= mod[i];
-            }                                                          //реализация китайской теоремы об остатках
+                catch
+                {
+                     
+                        composition_of_moduls *= mod[i];
+                }
+        //если числа не взаимно простые, решений может не быть.
+               
+            }
+        //реализация китайской теоремы об остатках
             int result = 0;
             for (int i = 0; i < mod.Length; i++)
             {
@@ -72,6 +94,11 @@ namespace Arithmetics
                 result += composition_of_moduls;
             }
             return result;
+            }
+            catch
+            {
+                throw new Exception("error input");
+            }
         }
 
         public static int revers_element_mod_prime(int element, int prime_number)
@@ -81,18 +108,6 @@ namespace Arithmetics
             return reverselement;
         }
 
-        // TODO разобраться, зачем вообще нужен. Если не нужен, то удалить.
-        public static int[] DelElement(int[] mass, int number)
-        {
-            int[] results = new int[mass.Length - 1];
-            for (int i = 0; i < mass.Length - 1; i++)
-            {
-                if (i == number)
-                    i++;
-                results[i] = mass[i];
-            }
-            return results;
-        }
     }
 }
 
