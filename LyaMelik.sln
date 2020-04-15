@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTheory", "GraphTheory\GraphTheory.csproj", "{CC5B09AF-47DB-4D96-BB15-6282F6425042}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{306DECF8-8F0C-43D1-B342-3F4F97D50E15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arithmetics", "Arithmetics\Arithmetics.csproj", "{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logics", "Logics\Logics.csproj", "{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052} = {E9EDA9A1-7C35-4E0A-94E0-4117A8699052}
+		{CC5B09AF-47DB-4D96-BB15-6282F6425042} = {CC5B09AF-47DB-4D96-BB15-6282F6425042}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,10 @@ Global
 		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

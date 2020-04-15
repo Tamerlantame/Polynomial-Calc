@@ -49,10 +49,6 @@ namespace GraphTheory
             a[3, 3] = 0;
 
 
-            IntSquareMatrix test = new IntSquareMatrix(4, a);
-                Console.WriteLine(test);
-
-            Graph testGraph = new Graph(test);
        //     Console.WriteLine(testGraph.IsTwoParted());
          //   Console.WriteLine(testGraph.GraphDiametr(testGraph));
             Console.ReadKey();
