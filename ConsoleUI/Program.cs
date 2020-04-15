@@ -50,7 +50,7 @@ namespace GraphTheory
             a[3, 3] = 0;
 
 
-            IntegerSquareMatrix test = new IntegerSquareMatrix(4, a);
+            IntSquareMatrix test = new IntSquareMatrix(4, a);
                 Console.WriteLine(test);
 
             Graph testGraph = new Graph(test);
