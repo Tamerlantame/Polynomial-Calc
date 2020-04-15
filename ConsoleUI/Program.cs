@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.IO;
-using Arithmetics;
+using Arithmetics.Matrix;
+using GraphTheory;
 
 namespace GraphTheory
 {
@@ -49,7 +50,7 @@ namespace GraphTheory
             a[3, 3] = 0;
 
 
-            IntSquareMatrix test = new IntSquareMatrix(4, a);
+            IntegerSquareMatrix test = new IntegerSquareMatrix(4, a);
                 Console.WriteLine(test);
 
             Graph testGraph = new Graph(test);

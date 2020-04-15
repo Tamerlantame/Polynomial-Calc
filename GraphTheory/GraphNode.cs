@@ -7,7 +7,7 @@ using Arithmetics;
 
 namespace GraphTheory
 {
-    class GraphNode
+    public class GraphNode
     {
         public List<GraphNode> adjList;
         public enum Colors 

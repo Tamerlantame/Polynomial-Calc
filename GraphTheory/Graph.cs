@@ -5,7 +5,7 @@ using Arithmetics.Matrix;
 
 namespace GraphTheory
 {
-    class Graph
+    public class Graph
     {
         public List<GraphNode> AdjNodesList;
         public Graph(IntegerSquareMatrix matrix)
@@ -127,7 +127,7 @@ namespace GraphTheory
             Nod.NodeColor = GraphNode.Colors.Grey;
         }
 
-        public Graph TopologicalSort()
+        /*public Graph TopologicalSort()
         {
             GraphNode[] TopSortedList = new GraphNode[AdjNodesList.Count];
             AdjNodesList.CopyTo(TopSortedList);
@@ -147,7 +147,7 @@ namespace GraphTheory
             }
             
             return new Graph(TopSortedList);
-        }
+        }*/
 
     }
 
