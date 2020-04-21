@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.IO;
-using Arithmetics.Matrix;
-using GraphTheory;
 
 namespace GraphTheory
 {
@@ -11,10 +6,10 @@ namespace GraphTheory
     {
         static void Main(string[] args)
         {
-            
-        
-             
-             int[,] a = new int[4, 4];
+
+
+
+            int[,] a = new int[4, 4];
             /*        a[0, 0] = 0;
                     a[0, 1] = 0;
                   a[0, 2] = 1;
@@ -32,7 +27,7 @@ namespace GraphTheory
                   a[3, 2] = 0;
                   a[3, 3] = 0;*/
 
-            a[0, 0] =0;
+            a[0, 0] = 0;
             a[0, 1] = 1;
             a[0, 2] = 1;
             a[0, 3] = 0;
@@ -50,13 +45,16 @@ namespace GraphTheory
             a[3, 3] = 0;
 
 
-            IntSquareMatrix test = new IntSquareMatrix(4, a);
-                Console.WriteLine(test);
+            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(4, a);
 
-            Graph testGraph = new Graph(test);
-       //     Console.WriteLine(testGraph.IsTwoParted());
-         //   Console.WriteLine(testGraph.GraphDiametr(testGraph));
+            GraphTheory.Graph testGraph = new GraphTheory.Graph(test);
+            //  Console.WriteLine(testGraph.IsBipartite());
+            // Console.WriteLine(testGraph.GraphDiam(testGraph));
+            testGraph.TopolSort(testGraph);
+
+            //foreach (GraphNode item in testGraph.AdjNodesList)
+            // { Console.WriteLine("Num " + item.Number + " OT " + item.OpenTime + " CT " + item.CloseTime); }
             Console.ReadKey();
-          }
         }
     }
+}

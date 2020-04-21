@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Arithmetics;
 using Arithmetics.Matrix;
 
 namespace GraphTheory
@@ -105,29 +104,100 @@ namespace GraphTheory
             }
             return Diam;
         }
-
-        private void TopolSortTimes(GraphNode Nod, int time)
+        public bool IsEmpty(GraphNode Node)/// вспомогательный mетод для TopolDFS, проверяет веришину на наличие у нее не посещенных соседей
         {
-            Nod.OpenTime = time++;
-            Nod.NodeColor = GraphNode.Colors.Black;
-            foreach (GraphNode NodItem in Nod.adjList)
+            foreach (GraphNode item in Node.adjList)
             {
-                if (NodItem.OpenTime < 0)
+                if (item.NodeColor != GraphNode.Colors.Black)
                 {
-                    Console.WriteLine(NodItem.Number + " " + time);
-                    TopolSortTimes(NodItem, time);
-                }
-                if (NodItem.NodeColor == GraphNode.Colors.Black)
-                {
-                    Console.WriteLine("Contuor detected");
-                    return;
+                    return false;
                 }
             }
-            Nod.CloseTime = time++;
-            Nod.NodeColor = GraphNode.Colors.Grey;
+            if (Node.adjList.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return true;
+            }
         }
+        public GraphNode TopolDFS(GraphNode node, ref Stack<GraphNode> sorted, Stack<GraphNode> visited)
+        {
+            {
+                if (IsEmpty(node) == true)
+                {
+                    sorted.Push(node);
+                    node.NodeColor = GraphNode.Colors.Black;
+                    visited.Pop();
+                    if (visited.Count != 0)
+                    {
+                        return TopolDFS(visited.Peek(), ref sorted, visited);
+                    }
+                    else
+                    {
+                        return node;
+                    }
+                }
+                else
+                {
 
-        /*public Graph TopologicalSort()
+                    foreach (GraphNode item in node.adjList)
+                    {
+                        if (visited.Contains(item))
+                        {
+                            Console.WriteLine("Contur detected");
+                            GraphNode a = new GraphNode();
+                            a.Number = -1;
+                            return a;
+                        }
+                        if (item.NodeColor == GraphNode.Colors.Black) continue;
+                        visited.Push(item);
+                    }
+                    return TopolDFS(visited.Peek(), ref sorted, visited);
+                }
+            }
+        }
+        public List<GraphNode> TopolSort(Graph graph)
+        {
+            Stack<GraphNode> sorted = new Stack<GraphNode>();
+
+            Stack<GraphNode> visited = new Stack<GraphNode>();
+            visited.Push(AdjNodesList[0]);
+            TopolDFS(graph.AdjNodesList[0], ref sorted, visited);
+
+            foreach (GraphNode item in sorted)
+            {
+                Console.WriteLine(item.Number);
+            }
+
+            return new List<GraphNode>();
+        }
+        /*  public void TopolSortTimes(GraphNode Nod, int time)
+          {
+              Stack<GraphNode> sorted = new Stack<GraphNode>();
+              Stack<GraphNode> visited = new Stack<GraphNode>();
+
+              Nod.OpenTime = time;
+              foreach (GraphNode NodItem in Nod.adjList)
+              {
+                  if (NodItem.OpenTime == -1)
+                  {
+                      time++;
+                      TopolSortTimes(NodItem, time);
+                  }
+                  if ()
+                  {
+                      if (NodItem.OpenTime > 0 && NodItem.CloseTime == -1)
+                      {
+                          Console.WriteLine("Contuor detected");
+                          return;
+                      }
+                  }
+              }
+          }
+          
+        public Graph TopologicalSort()
         {
             GraphNode[] TopSortedList = new GraphNode[AdjNodesList.Count];
             AdjNodesList.CopyTo(TopSortedList);
@@ -145,12 +215,10 @@ namespace GraphTheory
                     }
                 }
             }
-            
-            return new Graph(TopSortedList);
+
+            return null;
         }*/
 
     }
 
 }
-
-

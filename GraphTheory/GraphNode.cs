@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arithmetics;
+﻿using System.Collections.Generic;
 
 namespace GraphTheory
 {
     public class GraphNode
     {
         public List<GraphNode> adjList;
-        public enum Colors 
+        public enum Colors
         {
-            Grey , Black, White
+            Grey, Black, White
         }
         public Colors NodeColor;
         public int Number;
@@ -22,7 +17,21 @@ namespace GraphTheory
         {
             adjList = new List<GraphNode>();
             NodeColor = Colors.Grey;
+            OpenTime = -1;
+            CloseTime = -1;
+        }
+        public GraphNode CreateNode(int num, List<GraphNode> list)
+        {
+            GraphNode a = new GraphNode();
+            a.Number = num;
+            adjList = list;
+            return a;
+
         }
     }
-   
+
 }
+
+
+
+
