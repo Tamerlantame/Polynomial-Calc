@@ -47,5 +47,15 @@
     <Compile Include="SAT\Variable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Arithmetics\Arithmetics.csproj">
+      <Project>{e9eda9a1-7c35-4e0a-94e0-4117a8699052}</Project>
+      <Name>Arithmetics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphTheory\GraphTheory.csproj">
+      <Project>{cc5b09af-47db-4d96-bb15-6282f6425042}</Project>
+      <Name>GraphTheory</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
