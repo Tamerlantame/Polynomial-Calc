@@ -34,13 +34,6 @@ namespace GraphTheory
             AdjNodesList = new List<GraphNode>(adjList.Count);
             adjList.CopyTo(AdjNodesList.ToArray());
         }
-
-        public void CopyTo(Graph g)
-        {
-            g = new Graph(AdjNodesList);
-        }
-
-
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
@@ -173,52 +166,6 @@ namespace GraphTheory
 
             return new List<GraphNode>();
         }
-        /*  public void TopolSortTimes(GraphNode Nod, int time)
-          {
-              Stack<GraphNode> sorted = new Stack<GraphNode>();
-              Stack<GraphNode> visited = new Stack<GraphNode>();
-
-              Nod.OpenTime = time;
-              foreach (GraphNode NodItem in Nod.adjList)
-              {
-                  if (NodItem.OpenTime == -1)
-                  {
-                      time++;
-                      TopolSortTimes(NodItem, time);
-                  }
-                  if ()
-                  {
-                      if (NodItem.OpenTime > 0 && NodItem.CloseTime == -1)
-                      {
-                          Console.WriteLine("Contuor detected");
-                          return;
-                      }
-                  }
-              }
-          }
-          
-        public Graph TopologicalSort()
-        {
-            GraphNode[] TopSortedList = new GraphNode[AdjNodesList.Count];
-            AdjNodesList.CopyTo(TopSortedList);
-            //bubble sort
-            GraphNode temp;
-            for (int i = 0; i < TopSortedList.Length; i++)
-            {
-                for (int j = i + 1; j < TopSortedList.Length; j++)
-                {
-                    if (TopSortedList[i].CloseTime < TopSortedList[j].CloseTime)
-                    {
-                        temp = TopSortedList[i];
-                        TopSortedList[i] = TopSortedList[j];
-                        TopSortedList[j] = temp;
-                    }
-                }
-            }
-
-            return null;
-        }*/
-
     }
 
 }
