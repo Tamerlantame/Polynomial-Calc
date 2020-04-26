@@ -15,3 +15,14 @@ C:\Users\Admin\Documents\Visual Studio 2013\Projects\GraphTheoryFromLyalin\Graph
 C:\Users\User\Documents\lyamelik\GraphTheory\obj\Debug\GraphTheory.csprojAssemblyReference.cache
 C:\Users\User\Documents\lyamelik\GraphTheory\obj\Debug\GraphTheory.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\lyamelik\GraphTheory\obj\Debug\GraphTheory.pdb
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\bin\Debug\GraphTheory.dll.config
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\bin\Debug\GraphTheory.dll
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\bin\Debug\GraphTheory.pdb
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\bin\Debug\Arithmetics.dll
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\bin\Debug\Arithmetics.pdb
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\bin\Debug\Arithmetics.dll.config
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\obj\Debug\GraphTheory.csprojAssemblyReference.cache
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\obj\Debug\GraphTheory.csproj.CoreCompileInputs.cache
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\obj\Debug\GraphTheory.csproj.CopyComplete
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\obj\Debug\GraphTheory.dll
+C:\Users\Backa\source\repos\Homework\lyamelik\GraphTheory\obj\Debug\GraphTheory.pdb

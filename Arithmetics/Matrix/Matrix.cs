@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Arithmetics.Matrix
 {
@@ -51,6 +47,7 @@ namespace Arithmetics.Matrix
                 }
             }
         }
+       
         public Matrix(int n, int m, T[,] coeff)
         {
             rows = n;

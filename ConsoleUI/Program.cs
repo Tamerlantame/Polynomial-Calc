@@ -45,15 +45,19 @@ namespace GraphTheory
             a[3, 3] = 0;
 
 
-            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(4, a);
+            //  Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(4, a);
 
-            GraphTheory.Graph testGraph = new GraphTheory.Graph(test);
+            /// GraphTheory.Graph testGraph = new GraphTheory.Graph(test);
             //  Console.WriteLine(testGraph.IsBipartite());
             // Console.WriteLine(testGraph.GraphDiam(testGraph));
-            testGraph.TopolSort(testGraph);
+            ///  testGraph.TopolSort(testGraph);
 
             //foreach (GraphNode item in testGraph.AdjNodesList)
-            // { Console.WriteLine("Num " + item.Number + " OT " + item.OpenTime + " CT " + item.CloseTime); }
+
+            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(@"C:\test.txt");
+            Console.WriteLine(test);
+   
+                
             Console.ReadKey();
         }
     }

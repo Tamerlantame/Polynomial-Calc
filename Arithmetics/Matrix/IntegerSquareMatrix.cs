@@ -23,6 +23,9 @@ namespace Arithmetics.Matrix
         {
 
         }
+        public IntegerSquareMatrix(string path) : base(path)
+        {
+        }
         public override bool IsSymmetric()
         {
             return base.IsSymmetric();
