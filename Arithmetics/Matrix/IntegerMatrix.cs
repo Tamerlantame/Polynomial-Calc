@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 
@@ -31,28 +28,48 @@ namespace Arithmetics.Matrix
         ///<summary>  Создание матрицы по ссылке на текстовый файл с матрицей; полагается, что матрица написана правильно
         public IntegerMatrix(string path)
         {
-
-            string[] text = File.ReadAllLines(path);
-            string[] RowElemnts = text[0].Split(' ');
-            elements = new int[text.Length, RowElemnts.Length];
-
-            for (int i = 0; i < text.Length; i++)
+            try
             {
-                RowElemnts= text[i].Split(' ');
-                for (int j=0; j < RowElemnts.Length;j++)
-            {
-                    elements[i, j] = Convert.ToInt32(RowElemnts[j]);               
-            }
+                string[] text = File.ReadAllLines(path);
+                string[] RowElemnts;
+                List<string[]> AllElements = new List<string[]>();
+                RowElemnts = text[0].Split(' ');
+                AllElements.Add(RowElemnts);
+                int RowLength = RowElemnts.Length;
+                for (int i = 1; i < text.Length; i++)
+                {
+                    RowElemnts = text[i].Split(' ');
+                    if (RowElemnts.Length != RowLength)
+                    {
+                        throw new Exception();
+                    }
+                    AllElements.Add(RowElemnts);
+                }
+                //проверяем, чтобы все строки содержали одинаковое количество элементов, создаем список массивов строк, каждая строка в массиве-элемент матрицы
+                elements = new int[text.Length, RowLength];
+                foreach (string[] item in AllElements)
+                {
+
+                    for (int j = 0; j < RowElemnts.Length; j++)
+                    {
+                        elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
+                    }
+                }
                 rows = text.Length;
-                columns = RowElemnts.Length;
+                columns = RowLength;
             }
-
+            catch
+            {
+                Console.WriteLine("Неверный формат");
+            }
         }
 
         public virtual bool IsSymmetric()
         {
             if (rows != columns)
+            {
                 return false;
+            }
             else
             {
                 for (int i = 0; i < rows; i++)
@@ -60,7 +77,9 @@ namespace Arithmetics.Matrix
                     for (int j = 0; j < columns; j++)
                     {
                         if (elements[i, j] != elements[j, i])
+                        {
                             return false;
+                        }
                     }
 
 
@@ -74,7 +93,9 @@ namespace Arithmetics.Matrix
         {
 
             if (factor1.rows != factor2.columns)//factor1.GetLength(1) число столбцов в 1 матрице 
+            {
                 return null;                                 //factor2.GetLength(0) число строк в 2 матрице
+            }
 
             IntegerMatrix composition = new IntegerMatrix(factor1.rows, factor2.columns);
 
@@ -83,8 +104,9 @@ namespace Arithmetics.Matrix
                 for (int j = 0; j < factor2.columns; j++)
                 {
                     for (int k = 0; k < factor2.rows; k++)
+                    {
                         composition.elements[i, j] += factor1.elements[i, k] * factor2.elements[k, j];
-
+                    }
                 }
             }
             return composition;
@@ -96,7 +118,9 @@ namespace Arithmetics.Matrix
             for (int i = 0; i < divinded.rows; i++)
             {
                 for (int j = 0; j < divinded.columns; j++)
+                {
                     result.elements[i, j] = divinded.elements[i, j] % mod;
+                }
             }
 
             return result;
@@ -112,7 +136,9 @@ namespace Arithmetics.Matrix
                 {
                     CompositionOfMatrixs.elements[i, j] = matrix.elements[i, j];
                     if (i == j)
+                    {
                         Neutral.elements[i, j] = 1;
+                    }
                 }
             }
             List<int> binaryNotation = new List<int>();
@@ -125,7 +151,10 @@ namespace Arithmetics.Matrix
             for (int i = 0; i < binaryNotation.Count; i++)
             {
                 if (binaryNotation[i] == 1)
+                {
                     CompositionOfMatrixs *= matrix;
+                }
+
                 matrix *= matrix;
 
             }
@@ -142,7 +171,9 @@ namespace Arithmetics.Matrix
                 {
                     CompositionOfMatrixs.elements[i, j] = matrix.elements[i, j];
                     if (i == j)
+                    {
                         Neutral.elements[i, j] = 1;
+                    }
                 }
             }
             List<long> binaryNotation = new List<long>();
