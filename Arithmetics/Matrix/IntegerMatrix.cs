@@ -26,6 +26,27 @@ namespace Arithmetics.Matrix
         public IntegerMatrix(int n, int m, int[,] coeff) : base(n, m, coeff)
         {
         }
+        ///<summary>  Создание матрицы по ссылке на текстовый файл с матрицей; полагается, что матрица написана правильно
+        public IntegerMatrix(string path)
+        {
+
+            string[] text = File.ReadAllLines(path);
+            string[] RowElemnts = text[0].Split(' ');
+            elements = new int[text.Length, RowElemnts.Length];
+
+            for (int i = 0; i < text.Length; i++)
+            {
+               
+                RowElemnts= text[i].Split(' ');
+                for (int j=0; j < RowElemnts.Length;j++)
+            {
+                    elements[i, j] = Convert.ToInt32(RowElemnts[j]);               
+            }
+                rows = text.Length;
+                columns = RowElemnts.Length;
+            }
+
+        }
 
         //TODO Если неправильный вид матрицы, то Exception нужен.
         ///<summary>  Создание матрицы по ссылке на текстовый файл с матрицей; полагается, что матрица написана правильно
