@@ -52,7 +52,7 @@
     <Compile Include="ISequence.cs" />
     <Compile Include="Matrix\IntegerMatrix.cs" />
     <Compile Include="Matrix\Matrix.cs" />
-    <Compile Include="Polynomial\ImposiblePolynomialFormException.cs" />
+    <Compile Include="Exception\Polynomial\ImposiblePolynomialFormException.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
     <Compile Include="SternBrocotFunctions.cs" />
     <Compile Include="Fraction\Fraction.cs" />
@@ -64,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exception\Matrix\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

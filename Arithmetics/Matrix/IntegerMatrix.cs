@@ -26,6 +26,8 @@ namespace Arithmetics.Matrix
         public IntegerMatrix(int n, int m, int[,] coeff) : base(n, m, coeff)
         {
         }
+
+        //TODO Если неправильный вид матрицы, то Exception нужен.
         ///<summary>  Создание матрицы по ссылке на текстовый файл с матрицей; полагается, что матрица написана правильно
         public IntegerMatrix(string path)
         {
@@ -36,7 +38,6 @@ namespace Arithmetics.Matrix
 
             for (int i = 0; i < text.Length; i++)
             {
-               
                 RowElemnts= text[i].Split(' ');
                 for (int j=0; j < RowElemnts.Length;j++)
             {
