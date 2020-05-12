@@ -24,7 +24,6 @@ namespace Arithmetics.Matrix
         {
         }
 
-        //TODO Если неправильный вид матрицы, то Exception нужен.
         ///<summary>  Создание матрицы по ссылке на текстовый файл с матрицей; полагается, что матрица написана правильно
         public IntegerMatrix(string path)
         {
@@ -35,7 +34,7 @@ namespace Arithmetics.Matrix
                 List<string[]> AllElements = new List<string[]>();
                 RowElemnts = text[0].Split(' ');
                 AllElements.Add(RowElemnts);
-                int RowLength = RowElemnts.Length;
+              int RowLength = RowElemnts.Length;
                 for (int i = 1; i < text.Length; i++)
                 {
                     RowElemnts = text[i].Split(' ');
