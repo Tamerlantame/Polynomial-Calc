@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GraphTheory
 {
@@ -6,23 +7,22 @@ namespace GraphTheory
     {
         static void Main(string[] args)
         {
-            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(@"C:\test.txt");
+            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(@"C:\Users\Backa\source\repos\Homework\lyamelik\Arithmetics\Matrix\Tests\TopologicalSort.txt");
             Console.WriteLine(test);
             GraphTheory.Graph testGraph = new GraphTheory.Graph(test);
-            /*        testGraph.DFS(testGraph);
-                        foreach (GraphNode node in testGraph.AdjNodesList)
-                        {
-                            Console.WriteLine(node.Number + "  " + node.OpenTime + "  " + node.CloseTime);
-                        }
-            */
-           
-            Console.WriteLine(testGraph.Cycle);
-            GraphTheory.GraphNode[] topsorted = testGraph.TopolSort(testGraph);
-            
-           foreach (GraphNode item  in topsorted)
+            Console.WriteLine(testGraph);
+
+            GraphTheory.GraphNode[] x= testGraph.TopolSort(testGraph);
+            foreach (GraphNode item in x) Console.WriteLine(item.Number);
+            List<List<GraphNode>> a = testGraph.StrongConectedComponents(testGraph);
+            foreach (List<GraphTheory.GraphNode> item in a)
             {
-                Console.WriteLine(item.Number + " " + item.CloseTime);
-            }           
+                foreach (GraphNode item1 in item)
+                {
+                    Console.WriteLine(item1.Number);
+                }
+                Console.WriteLine("next");
+            }
             Console.ReadKey();
         }
     }

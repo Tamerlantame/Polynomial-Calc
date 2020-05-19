@@ -35,9 +35,56 @@ namespace GraphTheory
             AdjNodesList = new List<GraphNode>(adjList.Count);
             adjList.CopyTo(AdjNodesList.ToArray());
         }
+        /// <summary> метод получает матрицу смежности из графа
+        public IntegerSquareMatrix ToMatrix(Graph gr)
+        {
+            int[,] adjArray = new int[gr.AdjNodesList.Count, gr.AdjNodesList.Count];
+            for (int i = 0; i < gr.AdjNodesList.Count; i++)
+            {
+                foreach (GraphNode item in gr.AdjNodesList[i].adjList)
+                {
+                    adjArray[i, item.Number] = 1;
+                }
+            }
+
+            IntegerSquareMatrix adjMatrix = new IntegerSquareMatrix(gr.AdjNodesList.Count, adjArray);
+            return adjMatrix;
+
+        }
+        /// <summary>
+        /// транспонирует данный граф
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <returns></returns>
+        public Graph Transponse(Graph gr)
+        {
+            IntegerSquareMatrix a = ToMatrix(gr);
+            a = a.TransposeMatrix();
+            Graph Transponeded = new Graph(a);
+            return Transponeded;
+        }
         public void CopyTo(Graph g)
         {
             g = new Graph(AdjNodesList);
+        }
+        /// <summary>
+        /// поиск вершины в графе по ее номеру
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public GraphNode FindNode(Graph gr, int number)
+        {
+
+            foreach (GraphNode item in gr.AdjNodesList)
+            {
+                if (item.Number == number)
+                {
+                    return item;
+                }
+            }
+            return null;
+
         }
         public bool IsBipartite()
         {
@@ -68,6 +115,21 @@ namespace GraphTheory
                 q.Dequeue();
             }
             return true;
+        }
+        public override string ToString()
+        {
+            string s = "";
+            foreach (GraphNode item in AdjNodesList)
+            {
+                s += Convert.ToString(item.Number) + "-->{ ";
+                foreach (GraphNode grItem in item.adjList)
+                {
+                    s += Convert.ToString(grItem.Number) + " ";
+                }
+
+                s += "}\n";
+            }
+            return s;
         }
         public int GraphDiam(Graph Graph)
         {
@@ -122,7 +184,7 @@ namespace GraphTheory
         {
             gr.time++;
             node.Color = GraphNode.Colors.Grey;
-            node.OpenTime = time;
+            node.OpenTime = gr.time;
             foreach (GraphNode adjNode in node.adjList)
             {
                 if (adjNode.Color == GraphNode.Colors.Grey)
@@ -137,8 +199,8 @@ namespace GraphTheory
             }
 
             node.Color = GraphNode.Colors.Black;
-            time++;
-            node.CloseTime = time;
+            gr.time++;
+            node.CloseTime = gr.time;
         }
         public GraphNode[] TopolSort(Graph graph)
         {
@@ -168,6 +230,48 @@ namespace GraphTheory
                 }
             }
             return sorted;
+        }
+        public List<List<GraphNode>> StrongConectedComponents(Graph graph)
+        {
+            List<List<GraphNode>> SCC = new List<List<GraphNode>>();
+            DFS(graph);//проставили время закрытия/открытия
+            Graph transponded = Transponse(graph);
+            foreach (GraphNode node in transponded.AdjNodesList)
+            {
+                node.Color = GraphNode.Colors.White;
+            }
+            List<int> used = new List<int>();
+            int maxTimeNumber;//сюда будем помещать номер вершины-корня очередного обхода в глубину
+            while (used.Count != graph.AdjNodesList.Count)//запустим дфс для каждой css
+            {
+                maxTimeNumber = 0;
+                while (used.Contains(maxTimeNumber) == true) maxTimeNumber++;
+                foreach (GraphNode item in graph.AdjNodesList)
+                {
+                    if (used.Contains(item.Number) != true&& graph.AdjNodesList[item.Number].CloseTime > graph.AdjNodesList[maxTimeNumber].CloseTime)
+                    {
+                            maxTimeNumber = item.Number;//ищем вeршину с максимальным closeTime в graph и берем за корень вершину с тем же номером в transponded
+                    }
+                }
+                foreach (GraphNode node in transponded.AdjNodesList)
+                {
+                    node.CloseTime = 0;
+                    node.OpenTime = 0;
+                }
+                transponded.time = 0;
+                dfsVisit(transponded, transponded.AdjNodesList[maxTimeNumber]);
+                List<GraphNode> StrongComponent = new List<GraphNode>();
+                foreach (GraphNode item in transponded.AdjNodesList)
+                {
+                    if (item.CloseTime > 0)
+                    {
+                        used.Add(item.Number);
+                        StrongComponent.Add(item);
+                    }
+                }
+                SCC.Add(StrongComponent);
+            }
+            return SCC;
         }
     }
 }

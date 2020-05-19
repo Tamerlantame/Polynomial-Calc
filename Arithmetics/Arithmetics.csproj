@@ -65,8 +65,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Exception\Matrix\" />
+    <Content Include="Matrix\Tests\SCCtest.txt" />
+    <Content Include="Matrix\Tests\TopologicalSort.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
