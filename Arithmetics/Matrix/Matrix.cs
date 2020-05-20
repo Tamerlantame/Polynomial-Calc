@@ -2,7 +2,7 @@
 
 namespace Arithmetics.Matrix
 {
-    public abstract class Matrix<T>
+    public class Matrix<T>
     {
         public T[,] elements;
         public int rows;
@@ -61,6 +61,28 @@ namespace Arithmetics.Matrix
                 }
             }
         }
+
+        protected void Transpose(Matrix<T> matrix)
+        {
+            T temp;
+            for (int i = 0; i < matrix.rows; i++)
+            {
+                for (int j = i; j < matrix.columns; j++)
+                {
+                    temp = matrix.elements[i, j];
+                    matrix.elements[i, j] = matrix.elements[j, i];
+                    matrix.elements[j, i] = temp;
+                }
+            }
+        }
+
+        public Matrix<T> GetTransposed()
+        {
+            Matrix<T> matrix = new Matrix<T>(rows, columns);
+            Transpose(matrix);
+            return matrix;
+        }
+
         public override string ToString()
         {
             string s = "";

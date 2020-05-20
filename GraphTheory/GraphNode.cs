@@ -29,7 +29,6 @@ namespace GraphTheory
             a.Number = num;
             adjList = list;
             return a;
-
         }
     }
 

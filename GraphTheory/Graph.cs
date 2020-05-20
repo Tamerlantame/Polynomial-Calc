@@ -7,8 +7,13 @@ namespace GraphTheory
     public class Graph
     {
         public List<GraphNode> AdjNodesList;
-        public int time;//переменная для обходов
-        public bool? Cycle;//наличие циклов в графе
+
+        private bool hasCycle;//наличие циклов в графе
+        
+        /// <summary>
+        /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
+        /// </summary>
+        /// <param name="matrix"></param>
         public Graph(IntegerSquareMatrix matrix)
         {
             AdjNodesList = new List<GraphNode>(matrix.columns);
@@ -29,44 +34,67 @@ namespace GraphTheory
                     }
                 }
             }
+            DFS();
         }
         public Graph(List<GraphNode> adjList)
         {
             AdjNodesList = new List<GraphNode>(adjList.Count);
             adjList.CopyTo(AdjNodesList.ToArray());
         }
-        /// <summary> метод получает матрицу смежности из графа
-        public IntegerSquareMatrix ToMatrix(Graph gr)
+
+        public override string ToString()
         {
-            int[,] adjArray = new int[gr.AdjNodesList.Count, gr.AdjNodesList.Count];
-            for (int i = 0; i < gr.AdjNodesList.Count; i++)
+            string s = "";
+            foreach (GraphNode item in AdjNodesList)
             {
-                foreach (GraphNode item in gr.AdjNodesList[i].adjList)
+                s += Convert.ToString(item.Number) + "-->{ ";
+                foreach (GraphNode grItem in item.adjList)
+                {
+                    s += Convert.ToString(grItem.Number) + " ";
+                }
+
+                s += "}\n";
+            }
+            return s;
+        }
+
+        /// <summary> 
+        ///     метод получает матрицу смежности из графа
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <returns></returns>
+        public IntegerSquareMatrix ToMatrix()
+        {
+            int[,] adjArray = new int[AdjNodesList.Count, AdjNodesList.Count];
+            for (int i = 0; i < AdjNodesList.Count; i++)
+            {
+                foreach (GraphNode item in AdjNodesList[i].adjList)
                 {
                     adjArray[i, item.Number] = 1;
                 }
             }
-
-            IntegerSquareMatrix adjMatrix = new IntegerSquareMatrix(gr.AdjNodesList.Count, adjArray);
-            return adjMatrix;
-
+            return new IntegerSquareMatrix(AdjNodesList.Count, adjArray);
         }
+
+        //TODO Откровенно говоря, огромное количество лишней работы. 
+        // Если граф, например, огромный цикл x1->x2->...->x10...0->x1
         /// <summary>
         /// транспонирует данный граф
         /// </summary>
         /// <param name="gr"></param>
         /// <returns></returns>
-        public Graph Transponse(Graph gr)
+        public Graph Transponse()
         {
-            IntegerSquareMatrix a = ToMatrix(gr);
-            a = a.TransposeMatrix();
-            Graph Transponeded = new Graph(a);
-            return Transponeded;
+            return new Graph(ToMatrix().GetTransposed());
         }
+
+        // Сомнительную роль сейчас играет этот метод. Нужно обосновать, когда есть конструктор Graph(List<GraphNode> adjList)
         public void CopyTo(Graph g)
         {
-            g = new Graph(AdjNodesList);
+            g.AdjNodesList = new List<GraphNode>();
+            AdjNodesList.CopyTo(g.AdjNodesList.ToArray());
         }
+
         /// <summary>
         /// поиск вершины в графе по ее номеру
         /// </summary>
@@ -84,13 +112,21 @@ namespace GraphTheory
                 }
             }
             return null;
-
         }
+
+        public bool HasCycles()
+        {
+            return hasCycle;
+        }
+
+        //TODO Этот метод создавался давно, и у меня есть опасения по поводу изменений цветов вершин.
+        // Я пока что сделал работу с копией.
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
-            q.Enqueue(AdjNodesList[0]);
-            AdjNodesList[0].Color = GraphNode.Colors.Black;
+            Graph graph = new Graph(AdjNodesList);
+            q.Enqueue(graph.AdjNodesList[0]);
+            graph.AdjNodesList[0].Color = GraphNode.Colors.Black;
             while (q.Count != 0)
             {
                 foreach (GraphNode item in q.Peek().adjList)
@@ -116,162 +152,45 @@ namespace GraphTheory
             }
             return true;
         }
-        public override string ToString()
-        {
-            string s = "";
-            foreach (GraphNode item in AdjNodesList)
-            {
-                s += Convert.ToString(item.Number) + "-->{ ";
-                foreach (GraphNode grItem in item.adjList)
-                {
-                    s += Convert.ToString(grItem.Number) + " ";
-                }
 
-                s += "}\n";
-            }
-            return s;
-        }
-        public int GraphDiam(Graph Graph)
-        {
-            int Diam = 0;
-            var q = new Queue<ValueTuple<int, GraphNode>>();
-            foreach (GraphNode item in Graph.AdjNodesList)
-            ///для каждой вершины bfs
-            {
-                int ItemDiam = 0;
-                foreach (GraphNode node in Graph.AdjNodesList)
-                {
-                    node.Color = GraphNode.Colors.Grey;
-                }
-                item.Color = GraphNode.Colors.Black;
-                q.Enqueue((0, item));
-                while (q.Count != 0)
-                {
-                    foreach (GraphNode Counter in q.Peek().Item2.adjList)
-                    {
-                        if (Counter.Color == GraphNode.Colors.Grey)
-                        {
-                            q.Enqueue((q.Peek().Item1 + 1, Counter));
-                            ItemDiam = q.Peek().Item1 + 1;
-                            Counter.Color = GraphNode.Colors.Black;
-                        }
-                    }
-                    q.Dequeue();
-                }
-                if (ItemDiam > Diam) { Diam = ItemDiam; }
-            }
-            return Diam;
-        }
         /// <summary> обычный dfs, проставляющий времена входа-выхода на вершинах
-        public void DFS(Graph gr)
+        public void DFS()
         {
-            foreach (GraphNode node in gr.AdjNodesList)
+            foreach (GraphNode node in AdjNodesList)
             {
                 node.Color = GraphNode.Colors.White;
                 node.Ancestor = null;
             }
-            gr.time = 0;
-            foreach (GraphNode node in gr.AdjNodesList)
+            int time = 0;
+            foreach (GraphNode node in AdjNodesList)
             {
                 if (node.Color == GraphNode.Colors.White)
                 {
-                    dfsVisit(gr, node);
+                    DfsVisit(node, ref time);
                 }
             }
         }
         /// <summary> метод является рекурсивной частью DFS. Его смысл сводится к проставлению времен вхождения и выхода в вершину 
-        public void dfsVisit(Graph gr, GraphNode node)
+        private void DfsVisit(GraphNode node, ref int time)
         {
-            gr.time++;
+            time++;
             node.Color = GraphNode.Colors.Grey;
-            node.OpenTime = gr.time;
+            node.OpenTime = time;
             foreach (GraphNode adjNode in node.adjList)
             {
                 if (adjNode.Color == GraphNode.Colors.Grey)
                 {
-                    gr.Cycle = true;
+                    hasCycle = true;
                 }
                 if (adjNode.Color == GraphNode.Colors.White)
                 {
                     adjNode.Ancestor = node;
-                    dfsVisit(gr, adjNode);
+                    DfsVisit(adjNode, ref time);
                 }
             }
-
             node.Color = GraphNode.Colors.Black;
-            gr.time++;
-            node.CloseTime = gr.time;
-        }
-        public GraphNode[] TopolSort(Graph graph)
-        {
-            GraphNode[] sorted = new GraphNode[graph.AdjNodesList.Count];
-
-            DFS(graph);
-
-            if (graph.Cycle == true)
-            {
-                Console.WriteLine("присутствуют циклы");
-                return null;
-            }
-            for (int i = 0; i < graph.AdjNodesList.Count; i++)
-            {
-                sorted[i] = graph.AdjNodesList[i];
-            }
-            for (int i = 0; i < sorted.Length; i++)
-            {
-                for (int j = i; j < sorted.Length; j++)
-                {
-                    if (sorted[i].CloseTime < sorted[j].CloseTime)
-                    {
-                        GraphNode a = sorted[i];
-                        sorted[i] = sorted[j];
-                        sorted[j] = a;
-                    }
-                }
-            }
-            return sorted;
-        }
-        public List<List<GraphNode>> StrongConectedComponents(Graph graph)
-        {
-            List<List<GraphNode>> SCC = new List<List<GraphNode>>();
-            DFS(graph);//проставили время закрытия/открытия
-            Graph transponded = Transponse(graph);
-            foreach (GraphNode node in transponded.AdjNodesList)
-            {
-                node.Color = GraphNode.Colors.White;
-            }
-            List<int> used = new List<int>();
-            int maxTimeNumber;//сюда будем помещать номер вершины-корня очередного обхода в глубину
-            while (used.Count != graph.AdjNodesList.Count)//запустим дфс для каждой css
-            {
-                maxTimeNumber = 0;
-                while (used.Contains(maxTimeNumber) == true) maxTimeNumber++;
-                foreach (GraphNode item in graph.AdjNodesList)
-                {
-                    if (used.Contains(item.Number) != true&& graph.AdjNodesList[item.Number].CloseTime > graph.AdjNodesList[maxTimeNumber].CloseTime)
-                    {
-                            maxTimeNumber = item.Number;//ищем вeршину с максимальным closeTime в graph и берем за корень вершину с тем же номером в transponded
-                    }
-                }
-                foreach (GraphNode node in transponded.AdjNodesList)
-                {
-                    node.CloseTime = 0;
-                    node.OpenTime = 0;
-                }
-                transponded.time = 0;
-                dfsVisit(transponded, transponded.AdjNodesList[maxTimeNumber]);
-                List<GraphNode> StrongComponent = new List<GraphNode>();
-                foreach (GraphNode item in transponded.AdjNodesList)
-                {
-                    if (item.CloseTime > 0)
-                    {
-                        used.Add(item.Number);
-                        StrongComponent.Add(item);
-                    }
-                }
-                SCC.Add(StrongComponent);
-            }
-            return SCC;
+            time++;
+            node.CloseTime = time;
         }
     }
 }

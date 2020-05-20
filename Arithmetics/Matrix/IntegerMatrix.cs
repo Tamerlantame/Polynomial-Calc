@@ -88,6 +88,13 @@ namespace Arithmetics.Matrix
 
         }
 
+        public new IntegerMatrix GetTransposed()
+        {
+            IntegerMatrix matrix = new IntegerMatrix(rows, columns);
+            Transpose(matrix);
+            return matrix;
+        }
+
         public static IntegerMatrix operator *(IntegerMatrix factor1, IntegerMatrix factor2)
         {
 

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using GraphTheory;
 
-namespace GraphTheory
+namespace ConsoleUI
 {
     class Program
     {
@@ -9,13 +10,13 @@ namespace GraphTheory
         {
             Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(@"C:\Users\Backa\source\repos\Homework\lyamelik\Arithmetics\Matrix\Tests\TopologicalSort.txt");
             Console.WriteLine(test);
-            GraphTheory.Graph testGraph = new GraphTheory.Graph(test);
+            Graph testGraph = new Graph(test);
             Console.WriteLine(testGraph);
 
-            GraphTheory.GraphNode[] x= testGraph.TopolSort(testGraph);
+            GraphNode[] x= GraphBasicFunctions.TopolSort(testGraph);
             foreach (GraphNode item in x) Console.WriteLine(item.Number);
-            List<List<GraphNode>> a = testGraph.StrongConectedComponents(testGraph);
-            foreach (List<GraphTheory.GraphNode> item in a)
+            List<List<GraphNode>> a = GraphBasicFunctions.StrongConectedComponents(testGraph);
+            foreach (List<GraphNode> item in a)
             {
                 foreach (GraphNode item1 in item)
                 {
