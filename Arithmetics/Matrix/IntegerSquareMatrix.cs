@@ -23,9 +23,19 @@ namespace Arithmetics.Matrix
         {
 
         }
+        public IntegerSquareMatrix(string path) : base(path)
+        {
+        }
         public override bool IsSymmetric()
         {
             return base.IsSymmetric();
+        }
+
+        public new IntegerSquareMatrix GetTransposed()
+        {
+            IntegerSquareMatrix matrix = new IntegerSquareMatrix(rows);
+            Transpose(matrix);
+            return matrix;
         }
         public static IntegerSquareMatrix operator *(IntegerSquareMatrix factor1, IntegerSquareMatrix factor2)
         {
@@ -200,23 +210,6 @@ namespace Arithmetics.Matrix
                 }
             }
             return triangleMatrix;
-        }
-
-        public IntegerSquareMatrix TransposeMatrix()
-        {
-            IntegerSquareMatrix squareMatrix = new IntegerSquareMatrix(rows, elements);
-            int temp;
-            for (int i = 0; i < squareMatrix.rows; i++)
-            {
-                for (int j = i; j < squareMatrix.columns; j++)
-                {
-                    temp = squareMatrix.elements[i, j];
-                    squareMatrix.elements[i, j] = squareMatrix.elements[j, i];
-                    squareMatrix.elements[j, i] = temp;
-                }
-            }
-
-            return squareMatrix;
         }
 
         public IntegerSquareMatrix AddColomnsAndRows(int[] new_colomns, int[] new_rows)

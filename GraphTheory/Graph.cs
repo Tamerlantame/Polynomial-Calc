@@ -7,6 +7,13 @@ namespace GraphTheory
     public class Graph
     {
         public List<GraphNode> AdjNodesList;
+
+        private bool hasCycle;//наличие циклов в графе
+        
+        /// <summary>
+        /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
+        /// </summary>
+        /// <param name="matrix"></param>
         public Graph(IntegerSquareMatrix matrix)
         {
             AdjNodesList = new List<GraphNode>(matrix.columns);
@@ -27,43 +34,117 @@ namespace GraphTheory
                     }
                 }
             }
+            DFS();
         }
-
         public Graph(List<GraphNode> adjList)
         {
             AdjNodesList = new List<GraphNode>(adjList.Count);
             adjList.CopyTo(AdjNodesList.ToArray());
         }
 
-        public void CopyTo(Graph g)
+        public override string ToString()
         {
-            g = new Graph(AdjNodesList);
+            string s = "";
+            foreach (GraphNode item in AdjNodesList)
+            {
+                s += Convert.ToString(item.Number) + "-->{ ";
+                foreach (GraphNode grItem in item.adjList)
+                {
+                    s += Convert.ToString(grItem.Number) + " ";
+                }
+
+                s += "}\n";
+            }
+            return s;
         }
 
+        /// <summary> 
+        ///     метод получает матрицу смежности из графа
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <returns></returns>
+        public IntegerSquareMatrix ToMatrix()
+        {
+            int[,] adjArray = new int[AdjNodesList.Count, AdjNodesList.Count];
+            for (int i = 0; i < AdjNodesList.Count; i++)
+            {
+                foreach (GraphNode item in AdjNodesList[i].adjList)
+                {
+                    adjArray[i, item.Number] = 1;
+                }
+            }
+            return new IntegerSquareMatrix(AdjNodesList.Count, adjArray);
+        }
 
+        //TODO Откровенно говоря, огромное количество лишней работы. 
+        // Если граф, например, огромный цикл x1->x2->...->x10...0->x1
+        /// <summary>
+        /// транспонирует данный граф
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <returns></returns>
+        public Graph Transponse()
+        {
+            return new Graph(ToMatrix().GetTransposed());
+        }
+
+        // Сомнительную роль сейчас играет этот метод. Нужно обосновать, когда есть конструктор Graph(List<GraphNode> adjList)
+        public void CopyTo(Graph g)
+        {
+            g.AdjNodesList = new List<GraphNode>();
+            AdjNodesList.CopyTo(g.AdjNodesList.ToArray());
+        }
+
+        /// <summary>
+        /// поиск вершины в графе по ее номеру
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public GraphNode FindNode(Graph gr, int number)
+        {
+
+            foreach (GraphNode item in gr.AdjNodesList)
+            {
+                if (item.Number == number)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public bool HasCycles()
+        {
+            return hasCycle;
+        }
+
+        //TODO Этот метод создавался давно, и у меня есть опасения по поводу изменений цветов вершин.
+        // Я пока что сделал работу с копией.
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
-            q.Enqueue(AdjNodesList[0]);
-            AdjNodesList[0].NodeColor = GraphNode.Colors.Black;
+            Graph graph = new Graph(AdjNodesList);
+            q.Enqueue(graph.AdjNodesList[0]);
+            graph.AdjNodesList[0].Color = GraphNode.Colors.Black;
             while (q.Count != 0)
             {
                 foreach (GraphNode item in q.Peek().adjList)
                 {
-                    if (item.NodeColor == q.Peek().NodeColor)
+                    if (item.Color == q.Peek().Color)
                     {
                         return false;
                     }
-                    else if (item.NodeColor == GraphNode.Colors.Grey)
+                    else if (item.Color == GraphNode.Colors.Grey)
                     {
                         q.Enqueue(item);
-                        if (q.Peek().NodeColor == GraphNode.Colors.Black)
+                        if (q.Peek().Color == GraphNode.Colors.Black)
                         {
-                            item.NodeColor = GraphNode.Colors.White;
+                            item.Color = GraphNode.Colors.White;
                         }
                         else
                         {
-                            item.NodeColor = GraphNode.Colors.Black;
+                            item.Color = GraphNode.Colors.Black;
                         }
                     }
                 }
@@ -72,153 +153,44 @@ namespace GraphTheory
             return true;
         }
 
-
-        public int GraphDiam(Graph Graph)
+        /// <summary> обычный dfs, проставляющий времена входа-выхода на вершинах
+        public void DFS()
         {
-            int Diam = 0;
-            var q = new Queue<ValueTuple<int, GraphNode>>();
-            foreach (GraphNode item in Graph.AdjNodesList)
-            ///для каждой вершины bfs
+            foreach (GraphNode node in AdjNodesList)
             {
-                int ItemDiam = 0;
-                foreach (GraphNode node in Graph.AdjNodesList)
-                {
-                    node.NodeColor = GraphNode.Colors.Grey;
-                }
-                item.NodeColor = GraphNode.Colors.Black;
-                q.Enqueue((0, item));
-                while (q.Count != 0)
-                {
-                    foreach (GraphNode Counter in q.Peek().Item2.adjList)
-                    {
-                        if (Counter.NodeColor == GraphNode.Colors.Grey)
-                        {
-                            q.Enqueue((q.Peek().Item1 + 1, Counter));
-                            ItemDiam = q.Peek().Item1 + 1;
-                            Counter.NodeColor = GraphNode.Colors.Black;
-                        }
-                    }
-                    q.Dequeue();
-                }
-                if (ItemDiam > Diam) { Diam = ItemDiam; }
+                node.Color = GraphNode.Colors.White;
+                node.Ancestor = null;
             }
-            return Diam;
-        }
-        public bool IsEmpty(GraphNode Node)/// вспомогательный mетод для TopolDFS, проверяет веришину на наличие у нее не посещенных соседей
-        {
-            foreach (GraphNode item in Node.adjList)
+            int time = 0;
+            foreach (GraphNode node in AdjNodesList)
             {
-                if (item.NodeColor != GraphNode.Colors.Black)
+                if (node.Color == GraphNode.Colors.White)
                 {
-                    return false;
-                }
-            }
-            if (Node.adjList.Count == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        public GraphNode TopolDFS(GraphNode node, ref Stack<GraphNode> sorted, Stack<GraphNode> visited)
-        {
-            {
-                if (IsEmpty(node) == true)
-                {
-                    sorted.Push(node);
-                    node.NodeColor = GraphNode.Colors.Black;
-                    visited.Pop();
-                    if (visited.Count != 0)
-                    {
-                        return TopolDFS(visited.Peek(), ref sorted, visited);
-                    }
-                    else
-                    {
-                        return node;
-                    }
-                }
-                else
-                {
-
-                    foreach (GraphNode item in node.adjList)
-                    {
-                        if (visited.Contains(item))
-                        {
-                            Console.WriteLine("Contur detected");
-                            GraphNode a = new GraphNode();
-                            a.Number = -1;
-                            return a;
-                        }
-                        if (item.NodeColor == GraphNode.Colors.Black) continue;
-                        visited.Push(item);
-                    }
-                    return TopolDFS(visited.Peek(), ref sorted, visited);
+                    DfsVisit(node, ref time);
                 }
             }
         }
-        public List<GraphNode> TopolSort(Graph graph)
+        /// <summary> метод является рекурсивной частью DFS. Его смысл сводится к проставлению времен вхождения и выхода в вершину 
+        private void DfsVisit(GraphNode node, ref int time)
         {
-            Stack<GraphNode> sorted = new Stack<GraphNode>();
-
-            Stack<GraphNode> visited = new Stack<GraphNode>();
-            visited.Push(AdjNodesList[0]);
-            TopolDFS(graph.AdjNodesList[0], ref sorted, visited);
-
-            foreach (GraphNode item in sorted)
+            time++;
+            node.Color = GraphNode.Colors.Grey;
+            node.OpenTime = time;
+            foreach (GraphNode adjNode in node.adjList)
             {
-                Console.WriteLine(item.Number);
-            }
-
-            return new List<GraphNode>();
-        }
-        /*  public void TopolSortTimes(GraphNode Nod, int time)
-          {
-              Stack<GraphNode> sorted = new Stack<GraphNode>();
-              Stack<GraphNode> visited = new Stack<GraphNode>();
-
-              Nod.OpenTime = time;
-              foreach (GraphNode NodItem in Nod.adjList)
-              {
-                  if (NodItem.OpenTime == -1)
-                  {
-                      time++;
-                      TopolSortTimes(NodItem, time);
-                  }
-                  if ()
-                  {
-                      if (NodItem.OpenTime > 0 && NodItem.CloseTime == -1)
-                      {
-                          Console.WriteLine("Contuor detected");
-                          return;
-                      }
-                  }
-              }
-          }
-          
-        public Graph TopologicalSort()
-        {
-            GraphNode[] TopSortedList = new GraphNode[AdjNodesList.Count];
-            AdjNodesList.CopyTo(TopSortedList);
-            //bubble sort
-            GraphNode temp;
-            for (int i = 0; i < TopSortedList.Length; i++)
-            {
-                for (int j = i + 1; j < TopSortedList.Length; j++)
+                if (adjNode.Color == GraphNode.Colors.Grey)
                 {
-                    if (TopSortedList[i].CloseTime < TopSortedList[j].CloseTime)
-                    {
-                        temp = TopSortedList[i];
-                        TopSortedList[i] = TopSortedList[j];
-                        TopSortedList[j] = temp;
-                    }
+                    hasCycle = true;
+                }
+                if (adjNode.Color == GraphNode.Colors.White)
+                {
+                    adjNode.Ancestor = node;
+                    DfsVisit(adjNode, ref time);
                 }
             }
-
-            return null;
-        }*/
-
+            node.Color = GraphNode.Colors.Black;
+            time++;
+            node.CloseTime = time;
+        }
     }
-
 }

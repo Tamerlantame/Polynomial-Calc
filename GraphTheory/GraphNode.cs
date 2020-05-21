@@ -9,14 +9,17 @@ namespace GraphTheory
         {
             Grey, Black, White
         }
-        public Colors NodeColor;
+        public Colors Color;
         public int Number;
         public int OpenTime;
         public int CloseTime;
+        public GraphNode Ancestor;//предшественник данной вершины; вспомогательное поле для некоторых методов
+       
+    
         public GraphNode()
         {
             adjList = new List<GraphNode>();
-            NodeColor = Colors.Grey;
+            Color = Colors.Grey;
             OpenTime = -1;
             CloseTime = -1;
         }
@@ -26,7 +29,6 @@ namespace GraphTheory
             a.Number = num;
             adjList = list;
             return a;
-
         }
     }
 

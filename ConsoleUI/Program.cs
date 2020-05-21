@@ -1,59 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
+using GraphTheory;
 
-namespace GraphTheory
+namespace ConsoleUI
 {
     class Program
     {
         static void Main(string[] args)
         {
+            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(@"C:\Users\Backa\source\repos\Homework\lyamelik\Arithmetics\Matrix\Tests\TopologicalSort.txt");
+            Console.WriteLine(test);
+            Graph testGraph = new Graph(test);
+            Console.WriteLine(testGraph);
 
-
-
-            int[,] a = new int[4, 4];
-            /*        a[0, 0] = 0;
-                    a[0, 1] = 0;
-                  a[0, 2] = 1;
-                  a[0, 3] = 1;
-                  a[1, 0] = 0;
-                  a[1, 1] = 0;
-                  a[1, 2] = 1;
-                  a[1, 3] = 1;
-                  a[2, 0] = 1;
-                  a[2, 1] = 1;
-                  a[2, 2] = 0;
-                  a[2, 3] = 0;
-                  a[3, 0] = 1;
-                  a[3,1] = 1;
-                  a[3, 2] = 0;
-                  a[3, 3] = 0;*/
-
-            a[0, 0] = 0;
-            a[0, 1] = 1;
-            a[0, 2] = 1;
-            a[0, 3] = 0;
-            a[1, 0] = 0;
-            a[1, 1] = 0;
-            a[1, 2] = 1;
-            a[1, 3] = 1;
-            a[2, 0] = 0;
-            a[2, 1] = 0;
-            a[2, 2] = 0;
-            a[2, 3] = 0;
-            a[3, 0] = 0;
-            a[3, 1] = 0;
-            a[3, 2] = 0;
-            a[3, 3] = 0;
-
-
-            Arithmetics.Matrix.IntegerSquareMatrix test = new Arithmetics.Matrix.IntegerSquareMatrix(4, a);
-
-            GraphTheory.Graph testGraph = new GraphTheory.Graph(test);
-            //  Console.WriteLine(testGraph.IsBipartite());
-            // Console.WriteLine(testGraph.GraphDiam(testGraph));
-            testGraph.TopolSort(testGraph);
-
-            //foreach (GraphNode item in testGraph.AdjNodesList)
-            // { Console.WriteLine("Num " + item.Number + " OT " + item.OpenTime + " CT " + item.CloseTime); }
+            GraphNode[] x= GraphBasicFunctions.TopolSort(testGraph);
+            foreach (GraphNode item in x) Console.WriteLine(item.Number);
+            List<List<GraphNode>> a = GraphBasicFunctions.StrongConectedComponents(testGraph);
+            foreach (List<GraphNode> item in a)
+            {
+                foreach (GraphNode item1 in item)
+                {
+                    Console.WriteLine(item1.Number);
+                }
+                Console.WriteLine("next");
+            }
             Console.ReadKey();
         }
     }
