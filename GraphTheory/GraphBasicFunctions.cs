@@ -18,19 +18,19 @@ namespace GraphTheory
                 int ItemDiam = 0;
                 foreach (GraphNode node in graph.AdjNodesList)
                 {
-                    node.Color = GraphNode.Colors.Grey;
+                    node.Color = Colors.Grey;
                 }
-                item.Color = GraphNode.Colors.Black;
+                item.Color = Colors.Black;
                 q.Enqueue((0, item));
                 while (q.Count != 0)
                 {
                     foreach (GraphNode Counter in q.Peek().Item2.adjList)
                     {
-                        if (Counter.Color == GraphNode.Colors.Grey)
+                        if (Counter.Color == Colors.Grey)
                         {
                             q.Enqueue((q.Peek().Item1 + 1, Counter));
                             ItemDiam = q.Peek().Item1 + 1;
-                            Counter.Color = GraphNode.Colors.Black;
+                            Counter.Color = Colors.Black;
                         }
                     }
                     q.Dequeue();
@@ -39,28 +39,32 @@ namespace GraphTheory
             }
             return Diam;
         }
+
+        /// <summary>
+        /// Топологическая сортировка вершин графа. Возвращает null, если в графе есть циклы.
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <returns>Отсортированный массив вершин, если в графе нет циклов, иначе возвращает null</returns>
         public static GraphNode[] TopolSort(Graph graph)
         {
-            GraphNode[] sorted = new GraphNode[graph.AdjNodesList.Count];
-
-            if (graph.HasCycles())
+            GraphNode[] sorted = null;
+            if (!graph.HasCycles())
             {
-                Console.WriteLine("присутствуют циклы");
-                return null;
-            }
-            for (int i = 0; i < graph.AdjNodesList.Count; i++)
-            {
-                sorted[i] = graph.AdjNodesList[i];
-            }
-            for (int i = 0; i < sorted.Length; i++)
-            {
-                for (int j = i; j < sorted.Length; j++)
+                sorted = new GraphNode[graph.AdjNodesList.Count];
+                for (int i = 0; i < graph.AdjNodesList.Count; i++)
                 {
-                    if (sorted[i].CloseTime < sorted[j].CloseTime)
+                    sorted[i] = graph.AdjNodesList[i];
+                }
+                for (int i = 0; i < sorted.Length; i++)
+                {
+                    for (int j = i; j < sorted.Length; j++)
                     {
-                        GraphNode a = sorted[i];
-                        sorted[i] = sorted[j];
-                        sorted[j] = a;
+                        if (sorted[i].CloseTime < sorted[j].CloseTime)
+                        {
+                            GraphNode a = sorted[i];
+                            sorted[i] = sorted[j];
+                            sorted[j] = a;
+                        }
                     }
                 }
             }
@@ -72,7 +76,7 @@ namespace GraphTheory
             Graph transponded = graph.Transponse();
             foreach (GraphNode node in transponded.AdjNodesList)
             {
-                node.Color = GraphNode.Colors.White;
+                node.Color = Colors.White;
             }
             List<int> used = new List<int>();
             int maxTimeNumber;//сюда будем помещать номер вершины-корня очередного обхода в глубину

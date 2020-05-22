@@ -120,13 +120,13 @@ namespace GraphTheory
         }
 
         //TODO Этот метод создавался давно, и у меня есть опасения по поводу изменений цветов вершин.
-        // Я пока что сделал работу с копией.
+        // Я пока что сделал работу с копией. Хорошо бы его перенести в GraphBasicFunctions, нечего ему здесь делать.
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
             Graph graph = new Graph(AdjNodesList);
             q.Enqueue(graph.AdjNodesList[0]);
-            graph.AdjNodesList[0].Color = GraphNode.Colors.Black;
+            graph.AdjNodesList[0].Color = Colors.Black;
             while (q.Count != 0)
             {
                 foreach (GraphNode item in q.Peek().adjList)
@@ -135,16 +135,16 @@ namespace GraphTheory
                     {
                         return false;
                     }
-                    else if (item.Color == GraphNode.Colors.Grey)
+                    else if (item.Color == Colors.Grey)
                     {
                         q.Enqueue(item);
-                        if (q.Peek().Color == GraphNode.Colors.Black)
+                        if (q.Peek().Color == Colors.Black)
                         {
-                            item.Color = GraphNode.Colors.White;
+                            item.Color = Colors.White;
                         }
                         else
                         {
-                            item.Color = GraphNode.Colors.Black;
+                            item.Color = Colors.Black;
                         }
                     }
                 }
@@ -158,13 +158,13 @@ namespace GraphTheory
         {
             foreach (GraphNode node in AdjNodesList)
             {
-                node.Color = GraphNode.Colors.White;
-                node.Ancestor = null;
+                node.Color = Colors.White;
+                //node.Ancestor = null;
             }
             int time = 0;
             foreach (GraphNode node in AdjNodesList)
             {
-                if (node.Color == GraphNode.Colors.White)
+                if (node.Color == Colors.White)
                 {
                     DfsVisit(node, ref time);
                 }
@@ -174,21 +174,21 @@ namespace GraphTheory
         private void DfsVisit(GraphNode node, ref int time)
         {
             time++;
-            node.Color = GraphNode.Colors.Grey;
+            node.Color = Colors.Grey;
             node.OpenTime = time;
             foreach (GraphNode adjNode in node.adjList)
             {
-                if (adjNode.Color == GraphNode.Colors.Grey)
+                if (adjNode.Color == Colors.Grey)
                 {
                     hasCycle = true;
                 }
-                if (adjNode.Color == GraphNode.Colors.White)
+                if (adjNode.Color == Colors.White)
                 {
-                    adjNode.Ancestor = node;
+                    //adjNode.Ancestor = node;
                     DfsVisit(adjNode, ref time);
                 }
             }
-            node.Color = GraphNode.Colors.Black;
+            node.Color = Colors.Black;
             time++;
             node.CloseTime = time;
         }
