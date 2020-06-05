@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UIMethods.cs" />
     <Compile Include="Program.cs">
       <SubType>
       </SubType>
@@ -60,6 +61,9 @@
       <Project>{cc5b09af-47db-4d96-bb15-6282f6425042}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

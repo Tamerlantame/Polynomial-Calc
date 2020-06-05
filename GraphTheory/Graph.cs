@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Arithmetics.Matrix;
 
 namespace GraphTheory
@@ -9,7 +10,7 @@ namespace GraphTheory
         public List<GraphNode> AdjNodesList;
 
         private bool hasCycle;//наличие циклов в графе
-        
+
         /// <summary>
         /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
         /// </summary>
@@ -88,13 +89,6 @@ namespace GraphTheory
             return new Graph(ToMatrix().GetTransposed());
         }
 
-        // Сомнительную роль сейчас играет этот метод. Нужно обосновать, когда есть конструктор Graph(List<GraphNode> adjList)
-        public void CopyTo(Graph g)
-        {
-            g.AdjNodesList = new List<GraphNode>();
-            AdjNodesList.CopyTo(g.AdjNodesList.ToArray());
-        }
-
         /// <summary>
         /// поиск вершины в графе по ее номеру
         /// </summary>
@@ -121,6 +115,60 @@ namespace GraphTheory
 
         //TODO Этот метод создавался давно, и у меня есть опасения по поводу изменений цветов вершин.
         // Я пока что сделал работу с копией. Хорошо бы его перенести в GraphBasicFunctions, нечего ему здесь делать.
+        /// <summary>
+        /// добавляет ребро, на вход получает граф, номер стартовой вершины и конченой
+        /// </summary>
+        /// <param name="gr"></param>
+        /// <param name="begin"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public Graph AddEdge(Graph gr, int begin, int end)
+        {
+            if (gr.AdjNodesList[begin].adjList.Contains(gr.AdjNodesList[end]) == false)
+            {
+                gr.AdjNodesList[begin].adjList.Add(gr.AdjNodesList[end]);
+            }
+            else
+            {
+                Console.WriteLine("такое ребро уже есть");
+            }
+
+            return gr;
+        }
+        public Graph AddNode(Graph gr, List<int> incoming, List<int> outgoing)
+        {
+            GraphNode NewNode = new GraphNode();
+            foreach (int item in outgoing)
+            {
+                NewNode.adjList.Add(gr.AdjNodesList[item]);
+            }
+            NewNode.Number = gr.AdjNodesList.Count;
+            gr.AdjNodesList.Add(NewNode);
+            foreach (int item in incoming)
+            {
+                gr.AdjNodesList[item].adjList.Add(gr.AdjNodesList[NewNode.Number]);
+            }
+            return gr;
+        }
+        public void SaveGraph(string path, Graph gr)
+        {
+            Directory.CreateDirectory(path);
+            IntegerSquareMatrix a = ToMatrix();
+            string line = "";
+            for (int i = 0; i < a.rows; i++)
+            {
+                line = "";
+                for (int j = 0; j < a.columns; j++)
+                {
+                    line += Convert.ToString(a.elements[i, j]);
+                    if (j != a.columns-1) line += " ";
+                }
+             
+                if (i!=a.rows-1) line += "\n";
+                System.IO.File.AppendAllText(path+"\\AdjMatrix", line);
+            }
+
+        }
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
@@ -152,7 +200,6 @@ namespace GraphTheory
             }
             return true;
         }
-
         /// <summary> обычный dfs, проставляющий времена входа-выхода на вершинах
         public void DFS()
         {
