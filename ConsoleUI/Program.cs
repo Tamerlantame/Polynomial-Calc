@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GraphTheory;
 using Arithmetics;
+using System.IO;
 
 namespace ConsoleUI
 {
@@ -9,9 +10,10 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            SortedList<string, Graph> Graphs = new SortedList<string, Graph>();
-            UIMethods.Input(Graphs);
-            Console.ReadKey();
+            //SortedList<string, Graph> Graphs = new SortedList<string, Graph>();
+            LyaMelikSession session = new LyaMelikSession();
+            session.Start();
+            //Console.ReadKey();
         }
     }
 }
