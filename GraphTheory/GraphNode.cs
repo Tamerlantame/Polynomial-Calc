@@ -13,8 +13,6 @@ namespace GraphTheory
         public int Number;
         public int OpenTime;
         public int CloseTime;
-        // Ancestor, если я не ошибаюсь, мы нигде не используем. Только что-то присваиваем. И вообще нехорошо. Если так, нужно то удалить.
-        //public GraphNode Ancestor;//предшественник данной вершины; вспомогательное поле для некоторых методов
         
         // TODO Здесь у меня вопрос. Не удобнее ли сделать White, 0, 0?
         public GraphNode()
