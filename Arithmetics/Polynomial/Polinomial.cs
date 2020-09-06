@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Arithmetics.Polynomial
 {
-    internal class Polynomial : IComparable
+    public class Polynomial : IComparable
     {
         public SortedList<int, double> coeff;
         public int deg;

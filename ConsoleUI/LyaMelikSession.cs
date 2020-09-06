@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using GraphTheory;
+using Arithmetics.Polynomial;
+
 
 namespace ConsoleUI
 {
@@ -113,6 +115,20 @@ namespace ConsoleUI
             {
                 Console.WriteLine(item);
             }
+        }
+        private void PolynomialCulc()
+        {
+            SortedList<string, Polynomial> polynomialList = new SortedList<string, Polynomial>();
+            ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
+            while(keyInfo.Key!=ConsoleKey.Enter)
+            {
+                Console.WriteLine("Введите имя полинома");
+                string name = Console.ReadLine();
+                Console.WriteLine("Введите Полином");
+                Polynomial polynomial = new Polynomial(Console.ReadLine());
+                polynomialList.Add(name, polynomial);
+            }
+
         }
         private void Create()
         {
