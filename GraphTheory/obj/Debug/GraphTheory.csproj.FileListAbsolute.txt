@@ -45,3 +45,13 @@ D:\Proj\LyaMelik\LyaMelik\GraphTheory\obj\Debug\GraphTheory.csproj.CoreCompileIn
 D:\Proj\LyaMelik\LyaMelik\GraphTheory\obj\Debug\GraphTheory.csproj.CopyComplete
 D:\Proj\LyaMelik\LyaMelik\GraphTheory\obj\Debug\GraphTheory.dll
 D:\Proj\LyaMelik\LyaMelik\GraphTheory\obj\Debug\GraphTheory.pdb
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\bin\Debug\GraphTheory.dll.config
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\bin\Debug\GraphTheory.dll
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\bin\Debug\GraphTheory.pdb
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\bin\Debug\Arithmetics.dll
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\bin\Debug\Arithmetics.pdb
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\bin\Debug\Arithmetics.dll.config
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\obj\Debug\GraphTheory.csprojAssemblyReference.cache
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\obj\Debug\GraphTheory.csproj.CopyComplete
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\obj\Debug\GraphTheory.dll
+C:\Users\hp\source\repos\LyaMelik\GraphTheory\obj\Debug\GraphTheory.pdb
