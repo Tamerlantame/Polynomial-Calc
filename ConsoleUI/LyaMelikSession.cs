@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using GraphTheory;
 using Arithmetics.Polynomial;
+using GraphTheory;
 
 
 namespace ConsoleUI
@@ -35,7 +35,7 @@ namespace ConsoleUI
         {
             bool exit = false;
             Help();
-            while(!exit)
+            while (!exit)
             {
                 Console.Write("\n>");
                 if (activeGraph != "")
@@ -102,6 +102,24 @@ namespace ConsoleUI
                     case "exit":
                         exit = true;
                         break;
+                    case "isbiparted":
+                        if (!graphs[activeGraph].IsBipartite())
+                        {
+                            Console.WriteLine("Граф" + activeGraph + "не двудолен");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Граф" + activeGraph + "двудолен");
+                        }
+
+                        break;
+                    case "show colors":
+                        foreach (GraphNode item in graphs[activeGraph].AdjNodesList)
+                        {
+                            Console.WriteLine("{ " + item.Number + " }   " + item.Color);
+                        }
+                        break;
                 }
             }
             return;
@@ -120,7 +138,7 @@ namespace ConsoleUI
         {
             SortedList<string, Polynomial> polynomialList = new SortedList<string, Polynomial>();
             ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
-            while(keyInfo.Key!=ConsoleKey.Enter)
+            while (keyInfo.Key != ConsoleKey.Enter)
             {
                 Console.WriteLine("Введите имя полинома");
                 string name = Console.ReadLine();
@@ -138,7 +156,10 @@ namespace ConsoleUI
             Arithmetics.Matrix.IntegerSquareMatrix a = new Arithmetics.Matrix.IntegerSquareMatrix(path);
             Console.WriteLine(a);
             if (a.columns == 0)
+            {
                 return;
+            }
+
             Console.WriteLine("Введите имя графа");
             Console.Write(">");
             string name = Console.ReadLine();
@@ -191,7 +212,7 @@ namespace ConsoleUI
             {
                 incoming.Add(Convert.ToInt32(item));
             }
-            graphs[activeGraph].AddNode(graphs[activeGraph], incoming, outgoing);
+            graphs[activeGraph].AddNode(incoming, outgoing);
             Console.WriteLine("вершина успешно добавлена");
         }
         private void AddEdge()
@@ -200,14 +221,14 @@ namespace ConsoleUI
             string st = Console.ReadLine();
             Console.WriteLine("введите номер конца ребра");
             string st1 = Console.ReadLine();
-            graphs[activeGraph].AddEdge(graphs[activeGraph], Convert.ToInt32(st), Convert.ToInt32(st1));
+            graphs[activeGraph].AddEdge(Convert.ToInt32(st), Convert.ToInt32(st1));
         }
         private void Save()
         {
             Console.WriteLine("Введите путь к папке, в которой будем сохранять");
             string p = Console.ReadLine();
             p = p + "\\" + activeGraph;
-            graphs[activeGraph].SaveGraph(p, graphs[activeGraph]);
+            graphs[activeGraph].SaveGraph(p);
         }
     }
 }

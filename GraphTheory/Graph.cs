@@ -9,8 +9,14 @@ namespace GraphTheory
     {
         public List<GraphNode> AdjNodesList;
 
-        private bool hasCycle;//наличие циклов в графе
-
+        /// <summary>
+        /// наличие циклов в графе
+        /// </summary>
+        public bool HasCycle
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
         /// </summary>
@@ -76,9 +82,6 @@ namespace GraphTheory
             }
             return new IntegerSquareMatrix(AdjNodesList.Count, adjArray);
         }
-
-        //TODO Откровенно говоря, огромное количество лишней работы. 
-        // Если граф, например, огромный цикл x1->x2->...->x10...0->x1
         /// <summary>
         /// транспонирует данный граф
         /// </summary>
@@ -86,6 +89,7 @@ namespace GraphTheory
         /// <returns></returns>
         public Graph Transponse()
         {
+            // много лишнего...
             return new Graph(ToMatrix().GetTransposed());
         }
 
@@ -95,10 +99,10 @@ namespace GraphTheory
         /// <param name="gr"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        public GraphNode FindNode(Graph gr, int number)
+        public GraphNode FindNode(int number)
         {
 
-            foreach (GraphNode item in gr.AdjNodesList)
+            foreach (GraphNode item in AdjNodesList)
             {
                 if (item.Number == number)
                 {
@@ -108,13 +112,6 @@ namespace GraphTheory
             return null;
         }
 
-        public bool HasCycles()
-        {
-            return hasCycle;
-        }
-
-        //TODO Этот метод создавался давно, и у меня есть опасения по поводу изменений цветов вершин.
-        // Я пока что сделал работу с копией. Хорошо бы его перенести в GraphBasicFunctions, нечего ему здесь делать.
         /// <summary>
         /// добавляет ребро, на вход получает граф, номер стартовой вершины и конченой
         /// </summary>
@@ -122,35 +119,35 @@ namespace GraphTheory
         /// <param name="begin"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public Graph AddEdge(Graph gr, int begin, int end)
+        public Graph AddEdge(int begin, int end)
         {
-            if (gr.AdjNodesList[begin].adjList.Contains(gr.AdjNodesList[end]) == false)
+            if (AdjNodesList[begin].adjList.Contains(AdjNodesList[end]) == false)
             {
-                gr.AdjNodesList[begin].adjList.Add(gr.AdjNodesList[end]);
+                AdjNodesList[begin].adjList.Add(AdjNodesList[end]);
             }
             else
             {
                 Console.WriteLine("такое ребро уже есть");
             }
 
-            return gr;
+            return this;
         }
-        public Graph AddNode(Graph gr, List<int> incoming, List<int> outgoing)
+        public Graph AddNode(List<int> incoming, List<int> outgoing)
         {
             GraphNode NewNode = new GraphNode();
             foreach (int item in outgoing)
             {
-                NewNode.adjList.Add(gr.AdjNodesList[item]);
+                NewNode.adjList.Add(AdjNodesList[item]);
             }
-            NewNode.Number = gr.AdjNodesList.Count;
-            gr.AdjNodesList.Add(NewNode);
+            NewNode.Number = AdjNodesList.Count;
+            AdjNodesList.Add(NewNode);
             foreach (int item in incoming)
             {
-                gr.AdjNodesList[item].adjList.Add(gr.AdjNodesList[NewNode.Number]);
+                AdjNodesList[item].adjList.Add(AdjNodesList[NewNode.Number]);
             }
-            return gr;
+            return this;
         }
-        public void SaveGraph(string path, Graph gr)
+        public void SaveGraph(string path)
         {
             Directory.CreateDirectory(path);
             IntegerSquareMatrix a = ToMatrix();
@@ -161,11 +158,11 @@ namespace GraphTheory
                 for (int j = 0; j < a.columns; j++)
                 {
                     line += Convert.ToString(a.elements[i, j]);
-                    if (j != a.columns-1) line += " ";
+                    if (j != a.columns - 1) line += " ";
                 }
-             
-                if (i!=a.rows-1) line += "\n";
-                System.IO.File.AppendAllText(path+"\\AdjMatrix", line);
+
+                if (i != a.rows - 1) line += "\n";
+                System.IO.File.AppendAllText(path + "\\AdjMatrix", line);
             }
 
         }
@@ -173,8 +170,8 @@ namespace GraphTheory
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
             Graph graph = new Graph(AdjNodesList);
-            q.Enqueue(graph.AdjNodesList[0]);
             graph.AdjNodesList[0].Color = Colors.Black;
+            q.Enqueue(graph.AdjNodesList[0]);
             while (q.Count != 0)
             {
                 foreach (GraphNode item in q.Peek().adjList)
@@ -183,17 +180,17 @@ namespace GraphTheory
                     {
                         return false;
                     }
-                    else if (item.Color == Colors.Grey)
+                    else if (item.Color == Colors.White)
                     {
-                        q.Enqueue(item);
                         if (q.Peek().Color == Colors.Black)
                         {
-                            item.Color = Colors.White;
+                            item.Color = Colors.Grey;
                         }
                         else
                         {
                             item.Color = Colors.Black;
                         }
+                        q.Enqueue(item);
                     }
                 }
                 q.Dequeue();
@@ -227,11 +224,11 @@ namespace GraphTheory
             {
                 if (adjNode.Color == Colors.Grey)
                 {
-                    hasCycle = true;
+                    HasCycle = true;
                 }
                 if (adjNode.Color == Colors.White)
                 {
-                    //adjNode.Ancestor = node;
+
                     DfsVisit(adjNode, ref time);
                 }
             }
@@ -241,3 +238,4 @@ namespace GraphTheory
         }
     }
 }
+

@@ -48,7 +48,7 @@ namespace GraphTheory
         public static GraphNode[] TopolSort(Graph graph)
         {
             GraphNode[] sorted = null;
-            if (!graph.HasCycles())
+            if (!graph.HasCycle)
             {
                 sorted = new GraphNode[graph.AdjNodesList.Count];
                 for (int i = 0; i < graph.AdjNodesList.Count; i++)

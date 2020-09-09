@@ -75,7 +75,6 @@ namespace Arithmetics.Matrix
                 }
             }
         }
-
         public Matrix<T> GetTransposed()
         {
             Matrix<T> matrix = new Matrix<T>(rows, columns);
