@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace Arithmetics.Polynomial
 
 {
-    class ImposiblePolynomialFormException : Exception
+    class InvalidPolynomialStringException : Exception
     {
-        public ImposiblePolynomialFormException(string massage) : base(massage)
+        public InvalidPolynomialStringException(string massage) : base(massage)
         {
 
         }
-        public ImposiblePolynomialFormException() : base()
+        public InvalidPolynomialStringException() : base()
         {
 
 
