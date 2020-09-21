@@ -12,11 +12,11 @@ namespace GraphTheory
         {
             int Diam = 0;
             var q = new Queue<ValueTuple<int, GraphNode>>();
-            foreach (GraphNode item in graph.AdjNodesList)
+            foreach (GraphNode item in graph)
             ///для каждой вершины bfs
             {
                 int ItemDiam = 0;
-                foreach (GraphNode node in graph.AdjNodesList)
+                foreach (GraphNode node in graph)
                 {
                     node.Color = Colors.Grey;
                 }
@@ -50,10 +50,10 @@ namespace GraphTheory
             GraphNode[] sorted = null;
             if (!graph.HasCycle)
             {
-                sorted = new GraphNode[graph.AdjNodesList.Count];
-                for (int i = 0; i < graph.AdjNodesList.Count; i++)
+                sorted = new GraphNode[graph.Count()];
+                for (int i = 0; i < graph.Count(); i++)
                 {
-                    sorted[i] = graph.AdjNodesList[i];
+                    sorted[i] = graph[i];
                 }
                 for (int i = 0; i < sorted.Length; i++)
                 {
@@ -70,38 +70,44 @@ namespace GraphTheory
             }
             return sorted;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <returns></returns>
         public static List<List<GraphNode>> StrongConectedComponents(Graph graph)
         {
             List<List<GraphNode>> SCC = new List<List<GraphNode>>();
             Graph transponded = graph.Transponse();
-            foreach (GraphNode node in transponded.AdjNodesList)
+            foreach (GraphNode node in transponded)
             {
-                node.Color = Colors.White;
+                node.Color = Colors.White;// ??????????
             }
-            List<int> used = new List<int>();
+            List<int> visited = new List<int>();
             int maxTimeNumber;//сюда будем помещать номер вершины-корня очередного обхода в глубину
-            while (used.Count != graph.AdjNodesList.Count)//запустим дфс для каждой css
+            while (visited.Count != graph.Count())//запустим дфс для каждой css
             {
                 maxTimeNumber = 0;
-                while (used.Contains(maxTimeNumber)) maxTimeNumber++;
-                foreach (GraphNode item in graph.AdjNodesList)
+                while (visited.Contains(maxTimeNumber)) maxTimeNumber++;
+                foreach (GraphNode item in graph)
                 {
-                    if (!used.Contains(item.Number) && graph.AdjNodesList[item.Number].CloseTime > graph.AdjNodesList[maxTimeNumber].CloseTime)
+                    if (!visited.Contains(item.Number) && graph[item.Number].CloseTime > graph[maxTimeNumber].CloseTime)
                     {
                         maxTimeNumber = item.Number;//ищем вeршину с максимальным closeTime в graph и берем за корень вершину с тем же номером в transponded
                     }
                 }
-                foreach (GraphNode node in transponded.AdjNodesList)
+                foreach (GraphNode node in transponded) // ???????????????????/
                 {
                     node.CloseTime = 0;
                     node.OpenTime = 0;
                 }
                 List<GraphNode> StrongComponent = new List<GraphNode>();
-                foreach (GraphNode item in transponded.AdjNodesList)
+                foreach (GraphNode item in transponded)
                 {
                     if (item.CloseTime > 0)
                     {
-                        used.Add(item.Number);
+                        visited.Add(item.Number);
                         StrongComponent.Add(item);
                     }
                 }

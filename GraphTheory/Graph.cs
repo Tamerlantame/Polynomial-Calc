@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.Remoting;
 using Arithmetics.Matrix;
 
 namespace GraphTheory
 {
-    public class Graph
+    public class Graph: IEnumerable<GraphNode>
     {
-        public List<GraphNode> AdjNodesList;
+        private List<GraphNode> adjNodesList;
 
         /// <summary>
         /// наличие циклов в графе
@@ -17,18 +20,28 @@ namespace GraphTheory
             get;
             private set;
         }
+        public int Count => adjNodesList.Count;
+
+
+        public GraphNode this[int index]
+        {
+            get
+            {
+                return this.adjNodesList[index];
+            }
+        }
         /// <summary>
         /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
         /// </summary>
         /// <param name="matrix"></param>
         public Graph(IntegerSquareMatrix matrix)
         {
-            AdjNodesList = new List<GraphNode>(matrix.columns);
+            adjNodesList = new List<GraphNode>(matrix.columns);
             for (int i = 0; i < matrix.columns; i++)
             {
                 ///create List of empty Nodes
                 GraphNode a = new GraphNode();
-                AdjNodesList.Add(a);
+                adjNodesList.Add(a);
                 a.Number = i;
             }
             for (int i = 0; i < matrix.columns; i++)
@@ -37,7 +50,7 @@ namespace GraphTheory
                 {
                     if (matrix.elements[i, j] != 0)
                     {
-                        AdjNodesList[i].adjList.Add(AdjNodesList[j]);
+                        this[i].adjList.Add(this[j]);
                     }
                 }
             }
@@ -45,14 +58,14 @@ namespace GraphTheory
         }
         public Graph(List<GraphNode> adjList)
         {
-            AdjNodesList = new List<GraphNode>(adjList.Count);
-            adjList.CopyTo(AdjNodesList.ToArray());
+            adjNodesList = adjList;
+            
         }
 
         public override string ToString()
         {
             string s = "";
-            foreach (GraphNode item in AdjNodesList)
+            foreach (GraphNode item in this)
             {
                 s += Convert.ToString(item.Number) + "-->{ ";
                 foreach (GraphNode grItem in item.adjList)
@@ -64,6 +77,7 @@ namespace GraphTheory
             }
             return s;
         }
+      
 
         /// <summary> 
         ///     метод получает матрицу смежности из графа
@@ -72,25 +86,43 @@ namespace GraphTheory
         /// <returns></returns>
         public IntegerSquareMatrix ToMatrix()
         {
-            int[,] adjArray = new int[AdjNodesList.Count, AdjNodesList.Count];
-            for (int i = 0; i < AdjNodesList.Count; i++)
+            int[,] adjArray = new int[adjNodesList.Count, adjNodesList.Count];
+            for (int i = 0; i < adjNodesList.Count; i++)
             {
-                foreach (GraphNode item in AdjNodesList[i].adjList)
+                foreach (GraphNode item in adjNodesList[i].adjList)
                 {
                     adjArray[i, item.Number] = 1;
                 }
             }
-            return new IntegerSquareMatrix(AdjNodesList.Count, adjArray);
+            return new IntegerSquareMatrix(adjNodesList.Count, adjArray);
         }
         /// <summary>
         /// транспонирует данный граф
         /// </summary>
         /// <param name="gr"></param>
         /// <returns></returns>
-        public Graph Transponse()
+       
+       public Graph Transponse()
         {
-            // много лишнего...
-            return new Graph(ToMatrix().GetTransposed());
+            List < GraphNode > tempList= new List<GraphNode>(this.Count);
+            for (int i=0; i<this.Count; i++)
+            {
+                GraphNode newNode = new GraphNode
+                {
+                    Number = i
+                };
+                tempList.Add(newNode);
+            }
+            foreach (GraphNode item in this)
+            {
+                foreach (GraphNode nodeitem in item.adjList)
+                {
+
+                    tempList[nodeitem.Number].adjList.Add(tempList[item.Number]);  
+                }
+            }
+
+            return new  Graph(tempList);
         }
 
         /// <summary>
@@ -102,7 +134,7 @@ namespace GraphTheory
         public GraphNode FindNode(int number)
         {
 
-            foreach (GraphNode item in AdjNodesList)
+            foreach (GraphNode item in adjNodesList)
             {
                 if (item.Number == number)
                 {
@@ -121,9 +153,9 @@ namespace GraphTheory
         /// <returns></returns>
         public Graph AddEdge(int begin, int end)
         {
-            if (AdjNodesList[begin].adjList.Contains(AdjNodesList[end]) == false)
+            if (adjNodesList[begin].adjList.Contains(adjNodesList[end]) == false)
             {
-                AdjNodesList[begin].adjList.Add(AdjNodesList[end]);
+                adjNodesList[begin].adjList.Add(adjNodesList[end]);
             }
             else
             {
@@ -137,16 +169,17 @@ namespace GraphTheory
             GraphNode NewNode = new GraphNode();
             foreach (int item in outgoing)
             {
-                NewNode.adjList.Add(AdjNodesList[item]);
+                NewNode.adjList.Add(adjNodesList[item]);
             }
-            NewNode.Number = AdjNodesList.Count;
-            AdjNodesList.Add(NewNode);
+            NewNode.Number = adjNodesList.Count;
+            adjNodesList.Add(NewNode);
             foreach (int item in incoming)
             {
-                AdjNodesList[item].adjList.Add(AdjNodesList[NewNode.Number]);
+                adjNodesList[item].adjList.Add(adjNodesList[NewNode.Number]);
             }
             return this;
         }
+       
         public void SaveGraph(string path)
         {
             Directory.CreateDirectory(path);
@@ -169,9 +202,9 @@ namespace GraphTheory
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
-            Graph graph = new Graph(AdjNodesList);
-            graph.AdjNodesList[0].Color = Colors.Black;
-            q.Enqueue(graph.AdjNodesList[0]);
+            Graph graph = new Graph(adjNodesList);
+            graph.adjNodesList[0].Color = Colors.Black;
+            q.Enqueue(graph.adjNodesList[0]);
             while (q.Count != 0)
             {
                 foreach (GraphNode item in q.Peek().adjList)
@@ -200,13 +233,13 @@ namespace GraphTheory
         /// <summary> обычный dfs, проставляющий времена входа-выхода на вершинах
         public void DFS()
         {
-            foreach (GraphNode node in AdjNodesList)
+            foreach (GraphNode node in adjNodesList)
             {
                 node.Color = Colors.White;
                 //node.Ancestor = null;
             }
             int time = 0;
-            foreach (GraphNode node in AdjNodesList)
+            foreach (GraphNode node in adjNodesList)
             {
                 if (node.Color == Colors.White)
                 {
@@ -235,6 +268,17 @@ namespace GraphTheory
             node.Color = Colors.Black;
             time++;
             node.CloseTime = time;
+        }
+
+
+        public IEnumerator<GraphNode> GetEnumerator()
+        {
+            return adjNodesList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return adjNodesList.GetEnumerator();
         }
     }
 }

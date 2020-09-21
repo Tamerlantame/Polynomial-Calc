@@ -91,11 +91,7 @@ namespace ConsoleUI
                             Console.WriteLine("Вы ввели что-то не то");
                             break;
                         }
-                    case "transpose":
-                        {
-                            graphs[activeGraph].Transponse();
-                            break;
-                        }
+                    
                     case "save":
                         Save();
                         break;
@@ -115,11 +111,16 @@ namespace ConsoleUI
 
                         break;
                     case "show colors":
-                        foreach (GraphNode item in graphs[activeGraph].AdjNodesList)
+                        foreach (GraphNode item in graphs[activeGraph])
                         {
                             Console.WriteLine("{ " + item.Number + " }   " + item.Color);
                         }
                         break;
+                    case "transpose":
+                        
+                            graphs[activeGraph] = graphs[activeGraph].Transponse();
+                            break;
+                        
                 }
             }
             return;
@@ -134,7 +135,7 @@ namespace ConsoleUI
                 Console.WriteLine(item);
             }
         }
-        private void PolynomialCulc()
+    /*    private void PolynomialCulc()
         {
             SortedList<string, Polynomial> polynomialList = new SortedList<string, Polynomial>();
             ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
@@ -142,12 +143,12 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Введите имя полинома");
                 string name = Console.ReadLine();
-                Console.WriteLine("Введите Полином");
+               Console.WriteLine("Введите Полином");
                 Polynomial polynomial = new Polynomial(Console.ReadLine());
                 polynomialList.Add(name, polynomial);
             }
 
-        }
+        }*/
         private void Create()
         {
             Console.WriteLine("Введите путь к текстовому файлу с матрицей смежности");
