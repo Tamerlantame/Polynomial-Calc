@@ -27,78 +27,26 @@ namespace Arithmetics.Polynomial
                 else return 0;
             }
         }
+
+        /// <summary>
+        /// If <paramref name="poly"/> is a correct representaion of a polynomial (i.e. a sum of monomials of the form either a, ax or ax^b for some integers a and b.), 
+        /// constructs the corresponding polynomial. Otherwise the polynomial is initialized as 0. 
+        /// </summary>
+        /// <param name="poly">string representation of a polynomial</param>
+        [Obsolete("Use Polynomial(SortedList<int, double> coeff) instead")]
         public Polynomial(string poly)
         {
-            try
+            try 
             {
-                poly = poly.Replace("-", "+-");
-                string[] s = poly.Split(new char[] { '+' });//разбиваю строку на массив подстрок по каждому из +(+ при этом удаляется)
-                int deg;
-                coeff = new SortedList<int, double>();
-                for (int i = 0; i < s.Length; i++)
-                {
-                    string m = s[i];
-                    if (m == "")
-                        continue;
-                    m = m.Replace("-x", "-1x");
-                    int indexOfDeg = m.IndexOf("^") + 1;
-                    int indexOfx = m.IndexOf("x");//определяю границы каждого монома
-                    if ((indexOfDeg > 0) && (indexOfx >= 0))
-                    {
-
-                        deg = Convert.ToInt32(m.Substring(indexOfDeg));
-                        if (indexOfx != 0)
-                        {
-                            if (!coeff.ContainsKey(deg))
-                                coeff.Add(deg, Convert.ToInt32(m.Substring(0, indexOfx)));
-                            else
-                                coeff[deg] += Convert.ToInt32(m.Substring(0, indexOfx));
-                        }
-                        else
-                        {
-                            if (!coeff.ContainsKey(deg))
-                                coeff.Add(deg, 1);
-                            else
-                                coeff[deg]++;
-                        }
-                    }
-                    if (m.Contains("x") && !m.Contains("^"))
-                    {
-                        if (indexOfx == 0)
-                        {
-                            if (!coeff.ContainsKey(1))
-                                coeff.Add(1, 1);
-                            else
-                                coeff[1]++;
-                        }
-                        else
-                        {
-                            if (!coeff.ContainsKey(1))
-                                coeff.Add(1, Convert.ToInt32(m.Substring(0, indexOfx)));
-
-                            else
-                                coeff[1] += Convert.ToInt32(m.Substring(0, indexOfx));
-                        }
-                    }
-                    if (!m.Contains("x") && !m.Contains("^"))
-                    {
-                        if (!coeff.ContainsKey(0))
-                            coeff.Add(0, Convert.ToInt32(m));
-                        else
-                            coeff[0] += Convert.ToInt32(m);
-                    }
-                }
-
+                coeff = PolynomialParser.Parse(poly);
             }
-
-            catch (Exception e)
+            catch(InvalidPolynomialStringException)
             {
-                //Console.WriteLine("Ошибка" + e);
-                //coeff.Add(0, 0);
-                throw new ImposiblePolynomialFormException(e.Message);
+                coeff.Add(0, 0);
             }
             deg = coeff.Keys[coeff.Keys.Count - 1];
         }
+
         public Polynomial()
         {
             deg = 0;
@@ -127,7 +75,7 @@ namespace Arithmetics.Polynomial
                         this.coeff.Add(i, coeff[i]);
                 }
             }
-            catch (Exception e)
+            catch (Exception e) // не вполне ясно, что означает это исключение.
             {
                 deg = 0;
                 this.coeff = null;
@@ -165,6 +113,10 @@ namespace Arithmetics.Polynomial
 
         }
 
+        /// <summary>
+        /// Пока что совсем не аккуратно.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string s = "";
@@ -298,7 +250,6 @@ namespace Arithmetics.Polynomial
                     }
                 }
             }
-
             return p3;
         }
 
@@ -315,13 +266,7 @@ namespace Arithmetics.Polynomial
 
         public static Polynomial operator *(int number, Polynomial p1)
         {
-            Polynomial p3 = new Polynomial(p1);
-            for (int i = p1.Deg + 1; i > -(1); i--)
-            {
-                if (p1.coeff.ContainsKey(i))
-                    p3.coeff[i] = p1.coeff[i] * number;
-            }
-            return p3;
+            return p1*number;
         }
         public static Polynomial operator /(Polynomial p1, int number)
         {
@@ -492,6 +437,11 @@ namespace Arithmetics.Polynomial
             return obj is Polynomial polynomial &&
                    EqualityComparer<SortedList<int, double>>.Default.Equals(coeff, polynomial.coeff) &&
                    Deg == polynomial.Deg;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
     }
