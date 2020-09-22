@@ -42,8 +42,8 @@ namespace Arithmetics
                 if (depth == 1)
                     return b;
                 b.value = FirstStage;
-                b.right = GetSbSubTree(new BrocotFraction(Fraction.Mediant(b.value.current, b.value.right), b.value.current, b.value.right), depth - 1);
-                b.left = GetSbSubTree(new BrocotFraction(Fraction.Mediant(b.value.current, b.value.left), b.value.left, b.value.current), depth - 1);
+                b.right = GetSubTree(new BrocotFraction(Fraction.Mediant(b.value.current, b.value.right), b.value.current, b.value.right), depth - 1);
+                b.left = GetSubTree(new BrocotFraction(Fraction.Mediant(b.value.current, b.value.left), b.value.left, b.value.current), depth - 1);
 
                 return b;
             }
@@ -78,7 +78,7 @@ namespace Arithmetics
         }
 
 
-        public static BinaryTree<BrocotFraction> GetSbSubTree(BrocotFraction f, int depth)
+        public static BinaryTree<BrocotFraction> GetSubTree(BrocotFraction f, int depth)
         {
             if (depth > 0)
             {
@@ -88,8 +88,8 @@ namespace Arithmetics
                 BrocotFraction leftSub = new BrocotFraction(x, f.left, f.current);
                 BrocotFraction rightSub = new BrocotFraction(y, f.current, f.right);
 
-                BinaryTree<BrocotFraction> leftSubTree = GetSbSubTree(leftSub, depth - 1);
-                BinaryTree<BrocotFraction> rightSubTree = GetSbSubTree(rightSub, depth - 1);
+                BinaryTree<BrocotFraction> leftSubTree = GetSubTree(leftSub, depth - 1);
+                BinaryTree<BrocotFraction> rightSubTree = GetSubTree(rightSub, depth - 1);
                 BinaryTree<BrocotFraction> tree = new BinaryTree<BrocotFraction>(f, leftSubTree, rightSubTree);
 
                 return tree;
