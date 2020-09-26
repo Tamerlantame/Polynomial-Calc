@@ -46,7 +46,7 @@ namespace Arithmetics.Matrix
                 for (int j = 0; j < factor2.columns; j++)
                 {
                     for (int k = 0; k < factor2.rows; k++)
-                        composition.elements[i, j] += factor1.elements[i, k] * factor2.elements[k, j];
+                        composition[i, j] += factor1[i, k] * factor2[k, j];
 
                 }
             }
@@ -57,7 +57,7 @@ namespace Arithmetics.Matrix
             IntegerSquareMatrix newMatrix = new IntegerSquareMatrix(rows, elements);
             for (int i = 0; i < rows; i++)
             {
-                newMatrix.elements[reducedLine, i] -= newMatrix.elements[deductibleline, i];
+                newMatrix[reducedLine, i] -= newMatrix[deductibleline, i];
             }
             return newMatrix;
         }
@@ -66,7 +66,7 @@ namespace Arithmetics.Matrix
             IntegerSquareMatrix newMatrix = new IntegerSquareMatrix(rows, elements);
             for (int i = 0; i < rows; i++)
             {
-                newMatrix.elements[summline, i] += newMatrix.elements[termline, i];
+                newMatrix[summline, i] += newMatrix[termline, i];
             }
             return newMatrix;
         }
@@ -76,9 +76,9 @@ namespace Arithmetics.Matrix
             int temp;
             for (int i = 0; i < rows; i++)
             {
-                temp = newMatrix.elements[line1, i];
-                newMatrix.elements[line1, i] = newMatrix.elements[line2, i];
-                newMatrix.elements[line2, i] = temp;
+                temp = newMatrix[line1, i];
+                newMatrix[line1, i] = newMatrix[line2, i];
+                newMatrix[line2, i] = temp;
             }
             return newMatrix;
 
@@ -91,13 +91,13 @@ namespace Arithmetics.Matrix
             {
                 for (int j = i; j < triangleMatrix.columns; j++)
                 {
-                    if (triangleMatrix.elements[j, i] != 0)
+                    if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix.elements[j, i], prime_number);
+                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix[j, i], prime_number);
                         for (int k = j; k < triangleMatrix.columns; k++)
                         {
-                            triangleMatrix.elements[j, k] *= reverselement;
-                            triangleMatrix.elements[j, k] %= prime_number;
+                            triangleMatrix[j, k] *= reverselement;
+                            triangleMatrix[j, k] %= prime_number;
                         }
                         if (i != j)
                         {
@@ -107,9 +107,9 @@ namespace Arithmetics.Matrix
                         }
                         for (int k = j + 1; k < triangleMatrix.columns; k++)
                         {
-                            while (triangleMatrix.elements[k, j] != 0)
+                            while (triangleMatrix[k, j] != 0)
                             {
-                                if (triangleMatrix.elements[k, j] > 0)
+                                if (triangleMatrix[k, j] > 0)
                                     triangleMatrix = triangleMatrix.SubtractionOfLines(k, j);
                                 else
                                     triangleMatrix = triangleMatrix.AdditionOfLines(k, j);
@@ -130,13 +130,13 @@ namespace Arithmetics.Matrix
             {
                 for (int j = i; j < triangleMatrix.columns; j++)
                 {
-                    if (triangleMatrix.elements[j, i] != 0)
+                    if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix.elements[j, i], prime_number);
+                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix[j, i], prime_number);
                         for (int k = j; k < triangleMatrix.columns; k++)
                         {
-                            triangleMatrix.elements[j, k] *= reverselement;
-                            triangleMatrix.elements[j, k] %= prime_number;
+                            triangleMatrix[j, k] *= reverselement;
+                            triangleMatrix[j, k] %= prime_number;
                         }
                         if (i != j)
                         {
@@ -146,9 +146,9 @@ namespace Arithmetics.Matrix
                         }
                         for (int k = j + 1; k < triangleMatrix.columns; k++)
                         {
-                            while (triangleMatrix.elements[k, j] != 0)
+                            while (triangleMatrix[k, j] != 0)
                             {
-                                if (triangleMatrix.elements[k, j] > 0)
+                                if (triangleMatrix[k, j] > 0)
                                     triangleMatrix = triangleMatrix.SubtractionOfLines(k, j);
                                 else
                                     triangleMatrix = triangleMatrix.AdditionOfLines(k, j);
@@ -162,7 +162,7 @@ namespace Arithmetics.Matrix
             int det = 1;
             for (int i = 0; i < triangleMatrix.columns; i++)
             {
-                det *= triangleMatrix.elements[i, i];
+                det *= triangleMatrix[i, i];
             }
             if (signOfDet == 0)
                 return det;
@@ -180,13 +180,13 @@ namespace Arithmetics.Matrix
             {
                 for (int j = i; j < triangleMatrix.columns; j++)
                 {
-                    if (triangleMatrix.elements[j, i] != 0)
+                    if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix.elements[j, i], prime_number);
+                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix[j, i], prime_number);
                         for (int k = j; k < triangleMatrix.columns; k++)
                         {
-                            triangleMatrix.elements[j, k] *= reverselement;
-                            triangleMatrix.elements[j, k] %= prime_number;
+                            triangleMatrix[j, k] *= reverselement;
+                            triangleMatrix[j, k] %= prime_number;
                         }
                         if (i != j)
                         {
@@ -196,9 +196,9 @@ namespace Arithmetics.Matrix
                         }
                         for (int k = j + 1; k < triangleMatrix.columns; k++)
                         {
-                            while (triangleMatrix.elements[k, j] != 0)
+                            while (triangleMatrix[k, j] != 0)
                             {
-                                if (triangleMatrix.elements[k, j] > 0)
+                                if (triangleMatrix[k, j] > 0)
                                     triangleMatrix = triangleMatrix.SubtractionOfLines(k, j);
                                 else
                                     triangleMatrix = triangleMatrix.AdditionOfLines(k, j);
@@ -214,29 +214,29 @@ namespace Arithmetics.Matrix
 
         public IntegerSquareMatrix AddColomnsAndRows(int[] new_colomns, int[] new_rows)
         {
-            int[,] new_elements = new int[rows + 1, columns + 1];
+            int[,] newElements = new int[rows + 1, columns + 1];
             for (int i = 0; i < rows + 1; i++)
             {
                 for (int j = 0; j < columns + 1; j++)
                 {
                     if ((j != rows) && (i != columns))
-                        new_elements[i, j] = elements[i, j];
+                        newElements[i, j] = elements[i, j];
                     else
                     {
                         if ((j == rows) && (i != columns))
-                            new_elements[i, j] = new_colomns[i];
+                            newElements[i, j] = new_colomns[i];
                         else
                         {
                             if ((j != rows) && (i == columns))
-                                new_elements[i, j] = new_rows[j];
+                                newElements[i, j] = new_rows[j];
                             else
-                                new_elements[i, j] = new_colomns[i] + new_rows[j];
+                                newElements[i, j] = new_colomns[i] + new_rows[j];
                         }
                     }
 
                 }
             }
-            IntegerSquareMatrix matrix = new IntegerSquareMatrix(rows + 1, new_elements);
+            IntegerSquareMatrix matrix = new IntegerSquareMatrix(rows + 1, newElements);
 
             return matrix;
         }

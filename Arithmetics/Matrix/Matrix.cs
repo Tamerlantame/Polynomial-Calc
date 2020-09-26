@@ -4,9 +4,24 @@ namespace Arithmetics.Matrix
 {
     public class Matrix<T>
     {
-        public T[,] elements;
-        public int rows;
-        public int columns;
+        protected T[,] elements;
+        protected int rows;
+        protected int columns;
+        public T this[int index0, int index1]
+        {
+            get
+            {
+                if ((elements.GetLength(0) < index0)&& (elements.GetLength(1) < index1))
+                {
+                    return elements[index0,index1];
+                }
+                else return default(T);
+            }
+            set
+            {
+                elements[index0, index1] = value;
+            }
+        }
         public Matrix(int n, int m)
         {
             elements = new T[n, m];
@@ -62,16 +77,16 @@ namespace Arithmetics.Matrix
             }
         }
 
-        protected void Transpose(Matrix<T> matrix)
+        public void Transpose(Matrix<T> matrix)
         {
             T temp;
             for (int i = 0; i < matrix.rows; i++)
             {
                 for (int j = i; j < matrix.columns; j++)
                 {
-                    temp = matrix.elements[i, j];
-                    matrix.elements[i, j] = matrix.elements[j, i];
-                    matrix.elements[j, i] = temp;
+                    temp = matrix[i, j];
+                    matrix[i, j] = matrix[j, i];
+                    matrix[j, i] = temp;
                 }
             }
         }

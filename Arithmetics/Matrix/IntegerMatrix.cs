@@ -100,7 +100,7 @@ namespace Arithmetics.Matrix
 
             if (factor1.rows != factor2.columns)//factor1.GetLength(1) число столбцов в 1 матрице 
             {
-                return null;                                 //factor2.GetLength(0) число строк в 2 матрице
+                return null;     //factor2.GetLength(0) число строк в 2 матрице
             }
 
             IntegerMatrix composition = new IntegerMatrix(factor1.rows, factor2.columns);
@@ -111,7 +111,7 @@ namespace Arithmetics.Matrix
                 {
                     for (int k = 0; k < factor2.rows; k++)
                     {
-                        composition.elements[i, j] += factor1.elements[i, k] * factor2.elements[k, j];
+                        composition[i, j] += factor1[i, k] * factor2[k, j];
                     }
                 }
             }
@@ -140,10 +140,10 @@ namespace Arithmetics.Matrix
             {
                 for (int j = 0; j < matrix.columns; j++)
                 {
-                    CompositionOfMatrixs.elements[i, j] = matrix.elements[i, j];
+                    CompositionOfMatrixs[i, j] = matrix[i, j];
                     if (i == j)
                     {
-                        Neutral.elements[i, j] = 1;
+                        Neutral[i, j] = 1;
                     }
                 }
             }
@@ -175,10 +175,10 @@ namespace Arithmetics.Matrix
             {
                 for (int j = 0; j < matrix.columns; j++)
                 {
-                    CompositionOfMatrixs.elements[i, j] = matrix.elements[i, j];
+                    CompositionOfMatrixs[i, j] = matrix[i, j];
                     if (i == j)
                     {
-                        Neutral.elements[i, j] = 1;
+                        Neutral[i, j] = 1;
                     }
                 }
             }
