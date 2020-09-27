@@ -5,45 +5,43 @@ namespace Arithmetics.Matrix
     public class Matrix<T>
     {
         protected T[,] elements;
-        protected int rows;
-        protected int columns;
+        public int Rows { get; }
+        public int Columns { get; }
+
         public T this[int index0, int index1]
         {
             get
             {
-                if ((elements.GetLength(0) < index0)&& (elements.GetLength(1) < index1))
+                if ((elements.GetLength(0) < index0) && (elements.GetLength(1) < index1))
                 {
-                    return elements[index0,index1];
+                    return elements[index0, index1];
                 }
-                else return default(T);
+                else return default;
             }
-            set
-            {
-                elements[index0, index1] = value;
-            }
+            set => elements[index0, index1] = value;
         }
         public Matrix(int n, int m)
         {
             elements = new T[n, m];
-            rows = n;
-            columns = m;
+            Rows = n;
+            Columns = m;
 
         }
         public Matrix()
         {
             elements = new T[0, 0];
-            rows = 0;
-            columns = 0;
+            Rows = 0;
+            Columns = 0;
 
         }
         public Matrix(T[,] coeff)
         {
-            rows = coeff.GetLength(0);
-            columns = coeff.GetLength(1);
-            elements = new T[rows, columns];
-            for (int i = 0; i < rows; i++)
+            Rows = coeff.GetLength(0);
+            Columns = coeff.GetLength(1);
+            elements = new T[Rows, Columns];
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     elements[i, j] = coeff[i, j];
                 }
@@ -51,12 +49,12 @@ namespace Arithmetics.Matrix
         }
         public Matrix(Matrix<T> matrix)
         {
-            rows = matrix.rows;
-            columns = matrix.columns;
-            elements = new T[matrix.rows, matrix.columns];
-            for (int i = 0; i < matrix.rows; i++)
+            Rows = matrix.Rows;
+            Columns = matrix.Columns;
+            elements = new T[matrix.Rows, matrix.Columns];
+            for (int i = 0; i < matrix.Rows; i++)
             {
-                for (int j = 0; j < matrix.columns; j++)
+                for (int j = 0; j < matrix.Columns; j++)
                 {
                     elements[i, j] = matrix.elements[i, j];
                 }
@@ -65,12 +63,12 @@ namespace Arithmetics.Matrix
        
         public Matrix(int n, int m, T[,] coeff)
         {
-            rows = n;
-            columns = m;
+            Rows = n;
+            Columns = m;
             elements = new T[n, m];
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     elements[i, j] = coeff[i, j];
                 }
@@ -80,9 +78,9 @@ namespace Arithmetics.Matrix
         public void Transpose(Matrix<T> matrix)
         {
             T temp;
-            for (int i = 0; i < matrix.rows; i++)
+            for (int i = 0; i < matrix.Rows; i++)
             {
-                for (int j = i; j < matrix.columns; j++)
+                for (int j = i; j < matrix.Columns; j++)
                 {
                     temp = matrix[i, j];
                     matrix[i, j] = matrix[j, i];
@@ -93,7 +91,7 @@ namespace Arithmetics.Matrix
 
         public Matrix<T> GetTransposed()
         {
-            Matrix<T> matrix = new Matrix<T>(rows, columns);
+            Matrix<T> matrix = new Matrix<T>(Rows, Columns);
             Transpose(matrix);
             return matrix;
         }
@@ -101,9 +99,9 @@ namespace Arithmetics.Matrix
         public override string ToString()
         {
             string s = "";
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     s += Convert.ToString(elements[i, j]) + " ";
 

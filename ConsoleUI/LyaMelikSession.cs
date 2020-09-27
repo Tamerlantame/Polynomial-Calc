@@ -189,12 +189,15 @@ namespace ConsoleUI
         }
         private void Create()
         {
-            Console.WriteLine("Введите путь к текстовому файлу с матрицей смежности");
+            Console.WriteLine("Временно не доступно");
+            // Нужно исправить конструктор матриц по переданному пути.
+
+            /*Console.WriteLine("Введите путь к текстовому файлу с матрицей смежности");
             Console.Write(">");
             string path = Console.ReadLine();
             Arithmetics.Matrix.IntegerSquareMatrix a = new Arithmetics.Matrix.IntegerSquareMatrix(path);
             Console.WriteLine(a);
-            if (a.columns == 0)
+            if (a.Columns == 0)
                 return;
             Console.WriteLine("Введите имя графа");
             Console.Write(">");
@@ -209,7 +212,7 @@ namespace ConsoleUI
             else
             {
                 Console.WriteLine("это имя уже занято");
-            }
+            }*/
         }
         private void Change()
         {
