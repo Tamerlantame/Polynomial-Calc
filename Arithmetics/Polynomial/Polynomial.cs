@@ -1,17 +1,17 @@
 ﻿// verified by ususucsus. gadost' detected and destructed
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Arithmetics.Parsers;
 
 namespace Arithmetics.Polynomial1
 {
-    public class Polynomial : IComparable
+    public class Polynomial : IComparable<Polynomial>, IEnumerable<int>
     {
-        private SortedList<int, double> coeff;
-        private readonly int deg;
+        private readonly SortedList<int, double> coeff;
 
-        public int Deg { get => deg; }
+        public int Deg { get; }
 
         public double this[int index]
         {
@@ -33,26 +33,26 @@ namespace Arithmetics.Polynomial1
         [Obsolete("Use Polynomial(SortedList<int, double> coeff) instead")]
         public Polynomial(string poly)
         {
-            try 
+            try
             {
                 coeff = PolynomialParser.Parse(poly);
             }
-            catch(InvalidPolynomialStringException)
+            catch (InvalidPolynomialStringException)
             {
                 coeff.Add(0, 0);
             }
-            deg = coeff.Keys[coeff.Keys.Count - 1];
+            Deg = coeff.Keys[coeff.Keys.Count - 1];
         }
 
         public Polynomial()
         {
-            deg = 0;
+            Deg = 0;
             coeff = new SortedList<int, double>();
         }
 
         public Polynomial(int Deg)
         {
-            this.deg = Deg;
+            this.Deg = Deg;
             coeff = new SortedList<int, double>();
             for (int i = 0; i < this.Deg + 1; i++)
             {
@@ -62,43 +62,22 @@ namespace Arithmetics.Polynomial1
 
         public Polynomial(SortedList<int, double> coeff)
         {
-            
-                deg = coeff.Keys[coeff.Count - 1];
-                this.coeff = new SortedList<int, double>();
-                for (int i = 0; i < Deg + 1; i++)
-                {
-                    if (coeff.ContainsKey(i))
-                        this.coeff.Add(i, coeff[i]);
-                }
-            
+
+            Deg = coeff.Keys[coeff.Count - 1];
+            foreach (int deg in coeff.Keys)
+            {
+                this.coeff.Add(deg, coeff[deg]);
+            }
 
         }
 
         public Polynomial(Polynomial a)
         {
-            deg = a.Deg;
+            Deg = a.Deg;
             coeff = new SortedList<int, double>();
-            for (int i = 0; i < Deg + 1; i++)
+            foreach (int deg in a.coeff.Keys)
             {
-                if (a.coeff.ContainsKey(i))
-                    coeff.Add(i, a.coeff[i]);
-            }
-
-        }
-
-        public int CompareTo(object obj)
-        {
-            try
-            {
-                Polynomial a = obj as Polynomial;
-                if (this.Deg != a.Deg)
-                    return this.Deg.CompareTo(a.Deg);
-                else
-                    return this.coeff[this.Deg].CompareTo(a.coeff[a.Deg]);
-            }
-            catch
-            {
-                throw new NotImplementedException();
+                this.coeff.Add(deg, a.coeff[deg]);
             }
 
         }
@@ -196,122 +175,100 @@ namespace Arithmetics.Polynomial1
 
         public static Polynomial operator +(Polynomial p1, Polynomial p2)
         {
-            int localmaxdeg = Math.Max(p1.Deg, p2.Deg);
-            Polynomial p3 = new Polynomial(localmaxdeg);
-            for (int i = 0; i < localmaxdeg + 1; i++)
+            SortedList<int, double> coeff = new SortedList<int, double>();
+            foreach (int deg in p1.coeff.Keys)
             {
-                if (p1.coeff.ContainsKey(i) && p2.coeff.ContainsKey(i))
-                    p3.coeff.Add(i, p1.coeff[i] + p2.coeff[i]);
-                if (p1.coeff.ContainsKey(i) && !p2.coeff.ContainsKey(i))
-                    p3.coeff.Add(i, p1.coeff[i]);
-                if (!p1.coeff.ContainsKey(i) && p2.coeff.ContainsKey(i))
-                    p3.coeff.Add(i, p2.coeff[i]);
+                coeff.Add(deg, p1.coeff[deg]);
             }
-            return p3;
+            foreach (int deg in p2.coeff.Keys)
+            {
+                if (coeff.ContainsKey(deg))
+                    coeff[deg] += p2.coeff[deg];
+                else
+                    coeff.Add(deg, p2.coeff[deg]);
+            }
+            return new Polynomial(coeff);
+
         }
 
         public static Polynomial operator -(Polynomial p1, Polynomial p2)
         {
-            int localmaxdeg = Math.Max(p1.Deg, p2.Deg);
-            Polynomial p3 = new Polynomial(localmaxdeg);
-            for (int i = 0; i < localmaxdeg + 1; i++)
+            SortedList<int, double> coeff = new SortedList<int, double>();
+            foreach (int deg in p1.coeff.Keys)
             {
-                if (p1.coeff.ContainsKey(i) && p2.coeff.ContainsKey(i))
-                    p3.coeff.Add(i, p1[i] - p2[i]);
-                if (p1.coeff.ContainsKey(i) && !p2.coeff.ContainsKey(i))
-                    p3.coeff.Add(i, p1[i]);
-                if (!p1.coeff.ContainsKey(i) && p2.coeff.ContainsKey(i))
-                    p3.coeff.Add(i, -p2[i]);
+                coeff.Add(deg, p1.coeff[deg]);
             }
-            return p3;
+            foreach (int deg in p2.coeff.Keys)
+            {
+                if (coeff.ContainsKey(deg))
+                    coeff[deg] -= p2.coeff[deg];
+                else
+                    coeff.Add(deg, p2.coeff[deg]);
+            }
+            return new Polynomial(coeff);
         }
 
         public static Polynomial operator *(Polynomial p1, Polynomial p2)
         {
-            Polynomial p3 = new Polynomial(p1.Deg + p2.Deg);
-            for (int i = p1.Deg + 1; i >= 0; i--)
+            SortedList<int, double> coeff = new SortedList<int, double>();
+            foreach (int deg1 in p1)
             {
-                if (p1.coeff.ContainsKey(i))
+                foreach (int deg2 in p2)
                 {
-                    for (int j = 0; j < p2.Deg + 1; j++)
+                    if (!coeff.ContainsKey(deg1 + deg2))
                     {
-                        if (p2.coeff.ContainsKey(j))
-                            p3.coeff[i + j] += p1.coeff[i] * p2.coeff[j];
+                        coeff.Add(deg1 + deg2, p1[deg1] * p2[deg2]);
+                    }
+                    else
+                    {
+                        coeff[deg1 + deg2] += p1[deg1] * p2[deg2];
                     }
                 }
             }
-            return p3;
+            return new Polynomial(coeff);
         }
 
         public static Polynomial operator *(Polynomial p1, int number)
         {
-            Polynomial p3 = new Polynomial(p1);
-            for (int i = p1.Deg + 1; i > -(1); i--)
+            SortedList<int, double> coeff = new SortedList<int, double>();
+            foreach(int deg in p1.coeff.Keys)
             {
-                if (p1.coeff.ContainsKey(i))
-                    p3.coeff[i] = p1.coeff[i] * number;
+                coeff.Add(deg, p1.coeff[deg] * number);
             }
-            return p3;
+            return new Polynomial(coeff);
         }
 
         public static Polynomial operator *(int number, Polynomial p1)
         {
-            return p1*number;
+            return p1 * number;
         }
         public static Polynomial operator /(Polynomial p1, int number)
         {
-            Polynomial result = new Polynomial(p1);
-            for (int i = 0; i < result.Deg; i++)
+            SortedList<int, double> coeff = new SortedList<int, double>();
+            foreach (int deg in p1.coeff.Keys)
             {
-                if (result.coeff.ContainsKey(i))
-                    result.coeff[i] /= number;
+                coeff.Add(deg, p1.coeff[deg] / number);
             }
-
-            return result;
+            return new Polynomial(coeff);
         }
-        public static Polynomial operator /(Polynomial p1, Polynomial p2)
-        {
-
-            if (p1.Deg < p2.Deg)
-            {
-                string s = "Error 431, polynomial was input in incorrect form.'/n' please reload the program.";
-                Console.WriteLine(s);
-                return null;
-            }
-            else
-            {
-                Polynomial p4 = new Polynomial(p1.Deg - (p2.Deg - 1));
-                Polynomial p3 = new Polynomial(p1.coeff);
-
-
-
-                //result.deg = result.coeff.Keys[result.coeff.Count - 1];
-                return null;
-            }
-        }
-
         public static bool operator ==(Polynomial p1, Polynomial p2)
         {
-            int localmindeg = Math.Min(p1.Deg, p2.Deg);
-            for (int i = 0; i < localmindeg; i++)
+            foreach (int deg in p1.coeff.Keys)
             {
-                if (!(p1.coeff.ContainsKey(i) && p2.coeff.ContainsKey(i) && (p1.coeff[i] == p2.coeff[i])))
+                if (p1[deg] != p2[deg])
                     return false;
-
+            }
+            foreach (int deg in p2.coeff.Keys)
+            {
+                if (p2[deg] != p1[deg])
+                    return false;
             }
             return true;
         }
 
         public static bool operator !=(Polynomial p1, Polynomial p2)
         {
-            int localmindeg = Math.Min(p1.Deg, p2.Deg);
-            for (int i = 0; i < localmindeg; i++)
-            {
-                if (!(p1.coeff.ContainsKey(i) && p2.coeff.ContainsKey(i) && (p1.coeff[i] == p2.coeff[i])))
-                    return true;
-
-            }
-            return false;
+            return !(p1==p2);
         }
 
         public override bool Equals(object obj)
@@ -326,5 +283,25 @@ namespace Arithmetics.Polynomial1
             return base.GetHashCode();
         }
 
+        //TODO подумать как реализовать CompareTo более детально
+        public int CompareTo(Polynomial a)
+        {
+            if (this.Deg != a.Deg)
+                return this.Deg.CompareTo(a.Deg);
+            else
+                return this.coeff[this.Deg].CompareTo(a.coeff[a.Deg]);
+
+        }
+
+        public IEnumerator<int> GetEnumerator()
+        {
+
+            return coeff.Keys.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return coeff.Keys.GetEnumerator();
+        }
     }
 }
