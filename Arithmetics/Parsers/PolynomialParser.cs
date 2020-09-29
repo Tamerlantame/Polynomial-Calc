@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Arithmetics.Polynomial1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arithmetics.Polynomial
+namespace Arithmetics.Parsers
 {
     /// <summary>
     /// Contains method for convertion of a given string representation of polynomials into lists of coefficients.
     /// </summary>
-    class PolynomialParser
+    public class PolynomialParser
     {
         /// <summary>
         /// Converts a given string representation <paramref name="polyString"/> of a polynomial in one variable to a <see cref="SortedList{int, double}"/> of integer powers as keys

@@ -1,13 +1,10 @@
 ﻿// verified by ususucsus. gadost' detected and destructed
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Arithmetics.Parsers;
 
-namespace Arithmetics.Polynomial
+namespace Arithmetics.Polynomial1
 {
     public class Polynomial : IComparable
     {
@@ -65,8 +62,7 @@ namespace Arithmetics.Polynomial
 
         public Polynomial(SortedList<int, double> coeff)
         {
-            try
-            {
+            
                 deg = coeff.Keys[coeff.Count - 1];
                 this.coeff = new SortedList<int, double>();
                 for (int i = 0; i < Deg + 1; i++)
@@ -74,13 +70,7 @@ namespace Arithmetics.Polynomial
                     if (coeff.ContainsKey(i))
                         this.coeff.Add(i, coeff[i]);
                 }
-            }
-            catch (Exception e) // не вполне ясно, что означает это исключение.
-            {
-                deg = 0;
-                this.coeff = null;
-                Console.WriteLine(e + "Error. Not correct input");
-            }
+            
 
         }
 
@@ -299,114 +289,6 @@ namespace Arithmetics.Polynomial
                 return null;
             }
         }
-        /*
-         * 
-         * public static Polynomial operator /(Polynomial p1, Polynomial p2)//Определяю целочисленное деление полиномов. Тут написал почти полную фигню, но она работает)
-        {
-            if (p1.deg >= p2.deg)
-            {
-
-                Polynomial p4 = new Polynomial(p1.deg-(p2.deg-1));
-                Polynomial p3 = new Polynomial(p1.coeff);
-
-                for (int i = p3.deg, m = 0 ; i >= p2.deg; i--)
-                {
-                    int j = p2.deg;
-                    
-                    if (p3.coeff[i ] >= 0 && p2.coeff[j] >= 0)
-                    {
-                        while (p3.coeff[i ] >= p2.coeff[j])
-
-                        {
-                            p3.coeff[i ] -= p2.coeff[j];
-                            int k = 1;
-                            while (k - 1 < j)
-                            {
-                                p3.coeff[i - k] -= p2.coeff[j - k];
-                                k++;
-                            }
-                            p4.coeff[p1.deg - p2.deg  - m]++;
-                        }
-                    }
-                    else
-                    {
-                        if (p3.coeff[i] >= 0 && p2.coeff[j] < 0)
-                        {
-                            while (p3.coeff[i ] >= -(p2.coeff[j]))
-
-                            {
-                                p3.coeff[i ] += p2.coeff[j];
-                                int k = 1;
-                                while (k - 1 < j)
-                                {
-                                    p3.coeff[i  - k] += p2.coeff[j - k];
-                                    k++;
-                                }
-                                p4.coeff[p1.deg - p2.deg - m]--;
-                            }
-                        }
-                        else
-                        {
-                            if (p3.coeff[i ] < 0 && p2.coeff[j] >= 0)
-                            {
-                                while (-(p3.coeff[i ]) >= p2.coeff[j])
-
-                                {
-                                    p3.coeff[i ] += p2.coeff[j];
-                                    int k = 1;
-                                    while (k - 1 < j)
-                                    {
-                                        p3.coeff[i  - k] += p2.coeff[j - k];
-                                        k++;
-                                    }
-                                    p4.coeff[p1.deg - p2.deg - m]--;
-                                }
-                            }
-                            else
-                            {
-                                if (p3.coeff[i ] >= 0 && p2.coeff[j] >= 0)
-                                {
-                                    while (p3.coeff[i ] >= p2.coeff[j])
-                                    {
-                                        p3.coeff[i ] -= p2.coeff[j];
-                                        int k = 1;
-                                        while (k - 1 < j)
-                                        {
-                                            p3.coeff[i  - k] -= p2.coeff[j - k];
-                                            k++;
-                                        }
-                                        p4.coeff[p1.deg - p2.deg - m]++;
-                                    }
-                                }
-                                else
-                                {
-                                    string s = "Error 431, polynomial was input in incorrect form.'/n' please reload the program.";
-                                    Console.WriteLine(s);
-                                    
-                                    
-                                }
-                            }
-
-                        }
-                    }
-                    m++;
-                }
-
-
-                p4.deg = p4.coeff.Length;
-                p3.deg = p3.coeff.Length;
-                return p4;
-            }
-
-            else
-            {
-                Polynomial p4 = new Polynomial(1);
-                return p4;
-            }
-
-        }
-         * 
-         */
 
         public static bool operator ==(Polynomial p1, Polynomial p2)
         {

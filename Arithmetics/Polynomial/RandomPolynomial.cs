@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arithmetics.Polynomial
+namespace Arithmetics.Polynomial1
 {
     class RandomPolynomial : ISequence<Polynomial>
     {

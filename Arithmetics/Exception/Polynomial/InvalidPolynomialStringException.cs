@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arithmetics.Polynomial
+namespace Arithmetics.Polynomial1
 
 {
-    class InvalidPolynomialStringException : Exception
+    public class InvalidPolynomialStringException : Exception
     {
         public InvalidPolynomialStringException(string massage) : base(massage)
         {
