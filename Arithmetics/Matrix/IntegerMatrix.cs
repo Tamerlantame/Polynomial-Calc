@@ -43,7 +43,7 @@ namespace Arithmetics.Matrix
 
 
 
-        public IntegerMatrix GetFromFile(string path)
+        public void GetFromFile(string path)
         {
 
             try
@@ -78,7 +78,8 @@ namespace Arithmetics.Matrix
                 }
                 Columns = RowLength;
                 Rows = text.Length;
-                return null;
+                
+                 
                 
             }
             catch
