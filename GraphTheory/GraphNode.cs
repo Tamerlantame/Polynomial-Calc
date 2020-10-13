@@ -19,8 +19,8 @@ namespace GraphTheory
         {
             adjList = new List<GraphNode>();
             Color = Colors.Grey;
-            OpenTime = -1;
-            CloseTime = -1;
+            OpenTime = 0;
+            CloseTime = 0;
         }
     }
 
