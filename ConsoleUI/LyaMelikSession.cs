@@ -47,9 +47,6 @@ namespace ConsoleUI
                     case "help":
                         Help();
                         break;
-                    case "polynomial":
-                        PolynomialCulc();
-                        break;
                     case "create":
                         Create();
                         break;
@@ -139,122 +136,12 @@ namespace ConsoleUI
             }
         }
         //<<<<<<< HEAD
-        public void PolynomialCulc()//сменить на private
-        {
-            SortedList<string, Polynomial> polynomialList = new SortedList<string, Polynomial>();
-            do
-            {
-                string str = Console.ReadLine();
-                try
-                {
-                    str.Replace(" ", "");
-                    string name = str.Substring(0, str.IndexOf('='));
-                    string value = str.Substring(str.IndexOf('='));
-                    try
-                    {
-                        Polynomial polynomial = new Polynomial(value);
-                        polynomialList.Add(name, polynomial);
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                    if (polynomialList.ContainsKey(name))
-                    {
-                        try // переопределение
-                        {
-                            polynomialList.Remove(name);
-                            polynomialList.Add(name, new Polynomial(value));
-                        }
-                        catch // вычисление
-                        {
-                            for (int i = 0; i < value.Length; i++)
-                            {
-                                char symbol = value[i];
-                                switch (symbol)
-                                {
-                                    case '*':
-                                        string name1, name2;
-                                        name1 = value.Substring(0, i);
-                                        name2 = value.Substring(i);
-                                        break;
-                                    case '+':
-
-                                        break;
-                                    case '-':
-                                        break;
-                                    default:
-                                        break;
-
-
-                                }
-
-                            }
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Error format" + e);
-                }
-
-            } while (Console.ReadKey().Key != ConsoleKey.Enter);
-            foreach (KeyValuePair<string, Polynomial> kvp in polynomialList)
-
-                Console.WriteLine(kvp.Key + " = " + kvp.Value);
-
-            string path = Console.ReadLine();
-        }
-//=======
-    /*    private void PolynomialCulc()
-        {
-            SortedList<string, Polynomial> polynomialList = new SortedList<string, Polynomial>();
-            ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
-            while (keyInfo.Key != ConsoleKey.Enter)
-            {
-                Console.WriteLine("Введите имя полинома");
-                string name = Console.ReadLine();
-               Console.WriteLine("Введите Полином");
-                Polynomial polynomial = new Polynomial(Console.ReadLine());
-                polynomialList.Add(name, polynomial);
-            }
->>>>>>> ConsoleGraph
-
-        }*/
+       
         private void Create()
         {
             Console.WriteLine("Временно не доступно");
             // Нужно исправить конструктор матриц по переданному пути.
 
-            /*Console.WriteLine("Введите путь к текстовому файлу с матрицей смежности");
-            Console.Write(">");
-            string path = Console.ReadLine();
-            Arithmetics.Matrix.IntegerSquareMatrix a = new Arithmetics.Matrix.IntegerSquareMatrix(path);
-            Console.WriteLine(a);
-<<<<<<< HEAD
-            if (a.Columns == 0)
-=======
-            if (a.columns == 0)
-            {
->>>>>>> ConsoleGraph
-                return;
-            }
-
-            Console.WriteLine("Введите имя графа");
-            Console.Write(">");
-            string name = Console.ReadLine();
-            if (graphs.ContainsKey(name) == false)
-            {
-                Graph NewGraph = new Graph(a);
-                graphs.Add(name, NewGraph);
-                Console.WriteLine("Граф " + name + " успешно добавлен");
-                activeGraph = name;
-            }
-            else
-            {
-                Console.WriteLine("это имя уже занято");
-            }*/
         }
         private void Change()
         {
@@ -312,77 +199,6 @@ namespace ConsoleUI
             graphs[activeGraph].SaveGraph(p);
         }
 
-        private Polynomial Culc(string str, SortedList<string, Polynomial> polynomialList)
-        {
-
-            int countleft=0, countright=0;
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == '(')
-                    countleft++;
-                if (str[i] == ')')
-                    countright++;
-            }
-            if (
-                (countleft != countright)
-                ||
-                ((str.Contains("(")) && (!str.Contains(")")))
-                ||
-                ((str.Contains("(")) && (!str.Contains(")")))
-                )
-            {
-                Console.WriteLine("ошибка со скобками"); // Exception для скобок
-                return null;
-            }
-            if (countleft>0)//часть кода для реализации скобок
-            {
-              
-            }
-
-            for (int i = 0; i < str.Length; i++)//цикл для выполнения оперaций первого приоритета
-            {
-                if (str[i] == '*')
-                {
-                    int j = i; 
-                    while((str[j]!='+')||(str[j]!='-'))        ///  выделяю операнды при операции "*"
-                        j--;                                     ///  name1 и name2 это строки с
-                                                                 ///  названиями переменных слева и 
-                    string name1 = str.Substring(j, i - j);     ///  справа от "*" соответственно
-                    int k = i;
-                    while ((str[k] != '+') || (str[k] != '-')) 
-                        k++;
-
-                    string name2 = str.Substring(i, i + k);
-                    string path1 = str.Substring(0, i-j);
-                    string path2 = str.Substring(i + k);
-                    Polynomial result;
-                    try
-                    {
-                        result = (polynomialList[name1] * polynomialList[name2]);
-                        if(!polynomialList.ContainsKey(result.ToString()))
-                        {
-                            polynomialList.Add(result.ToString(), result);
-                        }
-                    }
-                    catch (KeyNotFoundException t)
-                    {
-                        throw t;
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                }
-            }
-        return null;
-            
-        }
-        private Polynomial Computation(string str)
-        {
-            string path = str;
-
-            return null;
-        }
+        
     }
 }
