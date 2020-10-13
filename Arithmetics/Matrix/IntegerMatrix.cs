@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq.Expressions;
 
 namespace Arithmetics.Matrix
 {
@@ -78,9 +78,46 @@ namespace Arithmetics.Matrix
         public IntegerMatrix GetFromFile(string path)
         {
 
+            try
+            {
+                string[] text = File.ReadAllLines(path);
+                string[] RowElemnts;
+                List<string[]> AllElements = new List<string[]>();
+                RowElemnts = text[0].Split(' ');
+                AllElements.Add(RowElemnts);
+                int RowLength = RowElemnts.Length;
+                for (int i = 1; i < text.Length; i++)
+                {
+                    RowElemnts = text[i].Split(' ');
+                    if (RowElemnts.Length != RowLength)
+                    {
+                        throw new Exception();
+                    }
+                    AllElements.Add(RowElemnts);
+                }
+                //проверяем, чтобы все строки содержали одинаковое количество элементов, создаем список массивов строк, каждая строка в массиве-элемент матрицы
+                elements = new int[text.Length, RowLength];
+                foreach (string[] item in AllElements)
+                {
 
-            return 
-        }
+                    for (int j = 0; j < RowElemnts.Length; j++)
+                    {
+                        int number;
+                        bool success = Int32.TryParse(item[j], out number);
+                        if (success)
+                            elements[AllElements.IndexOf(item), j] = number;
+                        else throw new Exception();
+
+                    }
+
+                }
+                Columns = RowLength;
+                Rows = text.Length;
+                return null;
+                
+            }
+        
+    }
         public virtual bool IsSymmetric()
         {
             if (Rows != Columns)
