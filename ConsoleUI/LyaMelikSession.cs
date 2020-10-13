@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Arithmetics.Polynomial;
+using Arithmetics.Polynomial1;
 using GraphTheory;
 
 
