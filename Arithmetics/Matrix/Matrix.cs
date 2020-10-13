@@ -5,8 +5,8 @@ namespace Arithmetics.Matrix
     public class Matrix<T>
     {
         protected T[,] elements;
-        public int Rows { get; }
-        public int Columns { get; }
+        public  int Rows { get; set; }
+        public int Columns { get; set; }
 
         public T this[int index0, int index1]
         {

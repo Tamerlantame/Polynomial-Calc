@@ -36,19 +36,19 @@ namespace GraphTheory
         /// <param name="matrix"></param>
         public Graph(IntegerSquareMatrix matrix)
         {
-            adjNodesList = new List<GraphNode>(matrix.columns);
-            for (int i = 0; i < matrix.columns; i++)
+            adjNodesList = new List<GraphNode>(matrix.Columns);
+            for (int i = 0; i < matrix.Columns; i++)
             {
                 ///create List of empty Nodes
                 GraphNode a = new GraphNode();
                 adjNodesList.Add(a);
                 a.Number = i;
             }
-            for (int i = 0; i < matrix.columns; i++)
+            for (int i = 0; i < matrix.Columns; i++)
             {
-                for (int j = 0; j < matrix.columns; j++)
+                for (int j = 0; j < matrix.Columns; j++)
                 {
-                    if (matrix.elements[i, j] != 0)
+                    if (matrix[i, j] != 0)
                     {
                         this[i].adjList.Add(this[j]);
                     }
@@ -185,16 +185,16 @@ namespace GraphTheory
             Directory.CreateDirectory(path);
             IntegerSquareMatrix a = ToMatrix();
             string line = "";
-            for (int i = 0; i < a.rows; i++)
+            for (int i = 0; i < a.Rows; i++)
             {
                 line = "";
-                for (int j = 0; j < a.columns; j++)
+                for (int j = 0; j < a.Columns; j++)
                 {
-                    line += Convert.ToString(a.elements[i, j]);
-                    if (j != a.columns - 1) line += " ";
+                    line += Convert.ToString(a[i, j]);
+                    if (j != a.Columns - 1) line += " ";
                 }
 
-                if (i != a.rows - 1) line += "\n";
+                if (i != a.Rows - 1) line += "\n";
                 System.IO.File.AppendAllText(path + "\\AdjMatrix", line);
             }
 

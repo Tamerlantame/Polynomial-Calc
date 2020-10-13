@@ -32,10 +32,9 @@ namespace Arithmetics.Matrix
         ///Это должно быть не здесь.
         ///
 
-
-        /*public IntegerMatrix(string path)
+        [ObsoleteAttribute("Избавиться от этого конструктора.")]
+        public IntegerMatrix(string path)
         {
-            try
             {
                 string[] text = File.ReadAllLines(path);
                 string[] RowElemnts;
@@ -59,21 +58,34 @@ namespace Arithmetics.Matrix
 
                     for (int j = 0; j < RowElemnts.Length; j++)
                     {
-                        elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
+                        int number;
+                        bool success = Int32.TryParse(item[j], out number);
+                        if (success)
+                            elements[AllElements.IndexOf(item), j] = number;
+                        else throw new Exception();
+                    
                     }
+                    
                 }
-                Rows = text.Length;
                 Columns = RowLength;
+                Rows = text.Length;
             }
-            catch
-            {
-                Console.WriteLine("Неверный формат");
-            }
-        }*/
+            
+        }
 
+
+
+        public IntegerMatrix GetFromFile(string path)
+        {
+
+
+            return 
+        }
         public virtual bool IsSymmetric()
         {
             if (Rows != Columns)
+
+
             {
                 return false;
             }

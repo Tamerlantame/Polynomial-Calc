@@ -20,7 +20,6 @@ namespace ConsoleUI
         private void Form1_Load(object sender, EventArgs e)
         {
             graphs = new SortedList<string, Graph>();
-
         }
 
         private void help_button_Click(object sender, EventArgs e)
@@ -42,7 +41,7 @@ namespace ConsoleUI
             try
             {
                 Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
-                if (graphMatrix.columns == 0)
+                if (graphMatrix.Columns == 0)
                 {
                     return;
                 }
@@ -76,7 +75,7 @@ namespace ConsoleUI
 
         }
 
-       
+
 
         private void transpose_button_Click(object sender, EventArgs e)
         {
@@ -105,24 +104,60 @@ namespace ConsoleUI
         }
 
         private void delete_button_Click(object sender, EventArgs e)
-        {for (int i=0; i<graphs_ToolStripMenuItem.DropDownItems.Count;i++)
+        { for (int i = 0; i < graphs_ToolStripMenuItem.DropDownItems.Count; i++)
             {
                 if (graphs_ToolStripMenuItem.DropDownItems[i].Text == activeGraph) graphs_ToolStripMenuItem.DropDownItems.RemoveAt(i);
             }
-                   
+
             menuStrip1.Items.Remove(menuStrip1.Items[activeGraph]);
             graphs.Remove(activeGraph);
             activeGraph = null;
             richTextBox1.Text = "";
         }
 
-        private void graphs_ToolStripMenuItem_DropDownItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
+        /*private void graphs_ToolStripMenuItem_DropDownItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
         {
             string name = e.ClickedItem.Text;
             activeGraph = name;
             richTextBox1.Text = graphs[name].ToString();
+        }*/
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = dialog.FileName;
+
+
+                Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
+                if (graphMatrix.Columns == 0)
+                {
+                    return;
+                }
+                string name = Interaction.InputBox("Введите имя графа", "", "");
+                if (graphs.ContainsKey(name) == false)
+                {
+                    Graph NewGraph = new Graph(graphMatrix);
+                    graphs.Add(name, NewGraph);
+                    Console.WriteLine("Граф " + name + " успешно добавлен");
+                    activeGraph = name;
+                    richTextBox1.Text = graphs[activeGraph].ToString();
+                    graphs_ToolStripMenuItem.DropDownItems.Add(name);
+
+                }
+                else
+                {
+                    Console.WriteLine("это имя уже занято");
+                }
+            }
+
         }
+
     }
+     
+    
 }
 
 

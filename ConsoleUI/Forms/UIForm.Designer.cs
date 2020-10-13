@@ -33,10 +33,10 @@
             this.help_button = new System.Windows.Forms.Button();
             this.create_button = new System.Windows.Forms.Button();
             this.transpose_button = new System.Windows.Forms.Button();
-            this.matrix_openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.isbiparted_button = new System.Windows.Forms.Button();
             this.delete_button = new System.Windows.Forms.Button();
             this.graphs_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -90,10 +90,6 @@
             this.transpose_button.UseVisualStyleBackColor = true;
             this.transpose_button.Click += new System.EventHandler(this.transpose_button_Click);
             // 
-            // matrix_openFileDialog
-            // 
-            this.matrix_openFileDialog.FileName = "matrix_openFileDialog";
-            // 
             // isbiparted_button
             // 
             this.isbiparted_button.Location = new System.Drawing.Point(170, 300);
@@ -116,10 +112,18 @@
             // 
             // graphs_ToolStripMenuItem
             // 
+            this.graphs_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createToolStripMenuItem});
             this.graphs_ToolStripMenuItem.Name = "graphs_ToolStripMenuItem";
             this.graphs_ToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
             this.graphs_ToolStripMenuItem.Text = "graphs";
-            this.graphs_ToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.graphs_ToolStripMenuItem_DropDownItemClicked_1);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.createToolStripMenuItem.Text = "Create";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -162,10 +166,10 @@
         private System.Windows.Forms.Button help_button;
         private System.Windows.Forms.Button create_button;
         private System.Windows.Forms.Button transpose_button;
-        private System.Windows.Forms.OpenFileDialog matrix_openFileDialog;
         private System.Windows.Forms.Button isbiparted_button;
         private System.Windows.Forms.Button delete_button;
         private System.Windows.Forms.ToolStripMenuItem graphs_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
     }
 }

@@ -48,14 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UIForm.cs">
+    <Compile Include="Forms\UIForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UIForm.Designer.cs">
+    <Compile Include="Forms\UIForm.Designer.cs">
       <DependentUpon>UIForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LyaMelikSession.cs" />
-    <Compile Include="MatchParser.cs" />
     <Compile Include="Program.cs">
       <SubType>
       </SubType>
@@ -84,9 +83,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UIForm.resx">
+    <EmbeddedResource Include="Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Console\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
