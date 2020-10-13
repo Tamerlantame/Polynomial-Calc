@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using GraphTheory;
-using Arithmetics.Polynomial;
+using Arithmetics.Polynomial1;
+using Arithmetics.Parsers;
 
 
 namespace ConsoleUI
@@ -131,12 +132,14 @@ namespace ConsoleUI
                     string name = str.Substring(0, str.IndexOf('='));
                     string value = str.Substring(str.IndexOf('='));
                     try
-                    { 
-                        Polynomial polynomial = new Polynomial(value);
-                        polynomialList.Add(name, polynomial);
-                    }
-                    catch
                     {
+                        SortedList<int,double>  coeff  = PolynomialParser.Parse(value);
+                        Polynomial poly = new Polynomial(coeff);
+                        polynomialList.Add(name, poly);
+                    }
+                    catch (InvalidPolynomialStringException)
+                    {
+                        Console.WriteLine("Error polynomial format");
                         continue;
                     }
                     if (polynomialList.ContainsKey(name))
@@ -268,84 +271,6 @@ namespace ConsoleUI
             string p = Console.ReadLine();
             p = p + "\\" + activeGraph;
             graphs[activeGraph].SaveGraph(p, graphs[activeGraph]);
-        }
-
-        private Polynomial Culc(string str, SortedList<string, Polynomial> polynomialList)
-        {
-
-            int countleft=0, countright=0;
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == '(')
-                    countleft++;
-                if (str[i] == ')')
-                    countright++;
-            }
-            if (
-                (countleft != countright)
-                ||
-                ((str.Contains("(")) && (!str.Contains(")")))
-                ||
-                ((str.Contains("(")) && (!str.Contains(")")))
-                )
-            {
-                Console.WriteLine("ошибка со скобками"); // Exception для скобок
-                return null;
-            }
-            if (countleft>0)//часть кода для реализации скобок
-            {
-              
-            }
-
-            for (int i = 0; i < str.Length; i++)//цикл для выполнения оперaций первого приоритета
-            {
-                if (str[i] == '*')
-                {
-                    int j = i; 
-                    while((str[j]!='+')||(str[j]!='-'))        ///  выделяю операнды при операции "*"
-                        j--;                                     ///  name1 и name2 это строки с
-                                                                 ///  названиями переменных слева и 
-                    string name1 = str.Substring(j, i - j);     ///  справа от "*" соответственно
-                    int k = i;
-                    while ((str[k] != '+') || (str[k] != '-')) 
-                        k++;
-
-                    string name2 = str.Substring(i, i + k);
-                    string path1 = str.Substring(0, i-j);
-                    string path2 = str.Substring(i + k);
-                    Polynomial result;
-                    try
-                    {
-                        result = (polynomialList[name1] * polynomialList[name2]);
-                        if(!polynomialList.ContainsKey(result.ToString()))
-                        {
-                            polynomialList.Add(result.ToString(), result);
-                        }
-                    }
-                    catch (KeyNotFoundException t)
-                    {
-                        throw t;
-                    }
-                    catch(Exception e)
-                    {
-                        throw e;
-                    }
-
-                }
-            }
-            
-            
-
-
-
-            return null;
-            
-        }
-        private Polynomial Computation(string str)
-        {
-            string path = str;
-
-            return null;
         }
     }
 }

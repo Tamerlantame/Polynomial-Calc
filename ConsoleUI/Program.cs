@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GraphTheory;
 using Arithmetics;
 using System.IO;
-using Arithmetics.Polynomial;
+using Arithmetics.Polynomial1;
 
 namespace ConsoleUI
 {

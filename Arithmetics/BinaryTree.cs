@@ -33,24 +33,6 @@ namespace Arithmetics
 
         public override string ToString()
         {
-
-            /*
-            int numberOfSpace = Convert.ToInt32(Math.Pow(2, Convert.ToDouble(this.level)));
-            char space = ' ';
-            string s = "";
-            int j = 0;
-            while (j < numberOfSpace / 2)
-            {
-                s += space;
-                j++;
-            }
-            s += value.ToString();
-            while (j < numberOfSpace)
-            {
-                s += space;
-                j++;
-            }
-            */
             return String.Format("{0} {1} {2}", left, value, right);
         }
 
