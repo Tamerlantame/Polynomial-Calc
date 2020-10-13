@@ -5,8 +5,8 @@ namespace Arithmetics.Matrix
     public class Matrix<T>
     {
         protected T[,] elements;
-        public int Rows { get; }
-        public int Columns { get; }
+        public  int Rows { get; set; }
+        public int Columns { get; set; }
 
         public T this[int index0, int index1]
         {
@@ -88,7 +88,6 @@ namespace Arithmetics.Matrix
                 }
             }
         }
-
         public Matrix<T> GetTransposed()
         {
             Matrix<T> matrix = new Matrix<T>(Rows, Columns);

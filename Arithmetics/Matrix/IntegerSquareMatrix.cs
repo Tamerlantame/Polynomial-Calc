@@ -38,12 +38,12 @@ namespace Arithmetics.Matrix
         }
 
         //TODO Если из файла, то надо проверять, что в файле, квадратная ли?
-        /*
+        
         public IntegerSquareMatrix(string path) : base(path)
         {
 
         }
-        */
+        
         public override bool IsSymmetric()
         {
             return base.IsSymmetric();

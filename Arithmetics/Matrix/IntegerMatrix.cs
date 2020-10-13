@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq.Expressions;
 
 namespace Arithmetics.Matrix
 {
@@ -32,9 +32,20 @@ namespace Arithmetics.Matrix
         ///Это должно быть не здесь.
         ///
 
-
-        /*public IntegerMatrix(string path)
+        [ObsoleteAttribute("Избавиться от этого конструктора.")]
+        public IntegerMatrix(string path)
         {
+            {
+                GetFromFile(path);
+            }
+            
+        }
+
+
+
+        public IntegerMatrix GetFromFile(string path)
+        {
+
             try
             {
                 string[] text = File.ReadAllLines(path);
@@ -42,7 +53,7 @@ namespace Arithmetics.Matrix
                 List<string[]> AllElements = new List<string[]>();
                 RowElemnts = text[0].Split(' ');
                 AllElements.Add(RowElemnts);
-              int RowLength = RowElemnts.Length;
+                int RowLength = RowElemnts.Length;
                 for (int i = 1; i < text.Length; i++)
                 {
                     RowElemnts = text[i].Split(' ');
@@ -59,21 +70,28 @@ namespace Arithmetics.Matrix
 
                     for (int j = 0; j < RowElemnts.Length; j++)
                     {
-                        elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
+                        
+                            elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
+
                     }
+
                 }
-                Rows = text.Length;
                 Columns = RowLength;
+                Rows = text.Length;
+                return null;
+                
             }
             catch
             {
-                Console.WriteLine("Неверный формат");
+                throw new Exception("Вы ввели что-то не то");
             }
-        }*/
-
+        
+    }
         public virtual bool IsSymmetric()
         {
             if (Rows != Columns)
+
+
             {
                 return false;
             }
