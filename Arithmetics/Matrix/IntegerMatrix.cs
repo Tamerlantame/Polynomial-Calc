@@ -36,39 +36,7 @@ namespace Arithmetics.Matrix
         public IntegerMatrix(string path)
         {
             {
-                string[] text = File.ReadAllLines(path);
-                string[] RowElemnts;
-                List<string[]> AllElements = new List<string[]>();
-                RowElemnts = text[0].Split(' ');
-                AllElements.Add(RowElemnts);
-              int RowLength = RowElemnts.Length;
-                for (int i = 1; i < text.Length; i++)
-                {
-                    RowElemnts = text[i].Split(' ');
-                    if (RowElemnts.Length != RowLength)
-                    {
-                        throw new Exception();
-                    }
-                    AllElements.Add(RowElemnts);
-                }
-                //проверяем, чтобы все строки содержали одинаковое количество элементов, создаем список массивов строк, каждая строка в массиве-элемент матрицы
-                elements = new int[text.Length, RowLength];
-                foreach (string[] item in AllElements)
-                {
-
-                    for (int j = 0; j < RowElemnts.Length; j++)
-                    {
-                        int number;
-                        bool success = Int32.TryParse(item[j], out number);
-                        if (success)
-                            elements[AllElements.IndexOf(item), j] = number;
-                        else throw new Exception();
-                    
-                    }
-                    
-                }
-                Columns = RowLength;
-                Rows = text.Length;
+                GetFromFile(path);
             }
             
         }
@@ -102,11 +70,8 @@ namespace Arithmetics.Matrix
 
                     for (int j = 0; j < RowElemnts.Length; j++)
                     {
-                        int number;
-                        bool success = Int32.TryParse(item[j], out number);
-                        if (success)
-                            elements[AllElements.IndexOf(item), j] = number;
-                        else throw new Exception();
+                        
+                            elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
 
                     }
 
@@ -115,6 +80,10 @@ namespace Arithmetics.Matrix
                 Rows = text.Length;
                 return null;
                 
+            }
+            catch
+            {
+                throw new Exception("Вы ввели что-то не то");
             }
         
     }
