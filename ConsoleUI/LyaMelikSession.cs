@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Arithmetics.Polynomial;
 using GraphTheory;
-using Arithmetics.Polynomial1;
-using Arithmetics.Parsers;
 
 
 namespace ConsoleUI
@@ -36,7 +35,7 @@ namespace ConsoleUI
         {
             bool exit = false;
             Help();
-            while(!exit)
+            while (!exit)
             {
                 Console.Write("\n>");
                 if (activeGraph != "")
@@ -47,9 +46,6 @@ namespace ConsoleUI
                 {
                     case "help":
                         Help();
-                        break;
-                    case "polynomial":
-                        PolynomialCulc();
                         break;
                     case "create":
                         Create();
@@ -95,17 +91,36 @@ namespace ConsoleUI
                             Console.WriteLine("Вы ввели что-то не то");
                             break;
                         }
-                    case "transpose":
-                        {
-                            graphs[activeGraph].Transponse();
-                            break;
-                        }
+                    
                     case "save":
                         Save();
                         break;
                     case "exit":
                         exit = true;
                         break;
+                    case "isbiparted":
+                        if (!graphs[activeGraph].IsBipartite())
+                        {
+                            Console.WriteLine("Граф" + activeGraph + "не двудолен");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Граф" + activeGraph + "двудолен");
+                        }
+
+                        break;
+                    case "show colors":
+                        foreach (GraphNode item in graphs[activeGraph])
+                        {
+                            Console.WriteLine("{ " + item.Number + " }   " + item.Color);
+                        }
+                        break;
+                    case "transpose":
+                        
+                            graphs[activeGraph] = graphs[activeGraph].Transponse();
+                            break;
+                        
                 }
             }
             return;
@@ -120,102 +135,13 @@ namespace ConsoleUI
                 Console.WriteLine(item);
             }
         }
-        public void PolynomialCulc()//сменить на private
-        {
-            SortedList<string, Polynomial> polynomialList = new SortedList<string, Polynomial>();
-            do
-            {
-                string str = Console.ReadLine();
-                try
-                {
-                    str.Replace(" ", "");
-                    string name = str.Substring(0, str.IndexOf('='));
-                    string value = str.Substring(str.IndexOf('='));
-                    try
-                    {
-                        SortedList<int,double>  coeff  = PolynomialParser.Parse(value);
-                        Polynomial poly = new Polynomial(coeff);
-                        polynomialList.Add(name, poly);
-                    }
-                    catch (InvalidPolynomialStringException)
-                    {
-                        Console.WriteLine("Error polynomial format");
-                        continue;
-                    }
-                    if (polynomialList.ContainsKey(name))
-                    {
-                        try // переопределение
-                        {
-                            polynomialList.Remove(name);
-                            polynomialList.Add(name, new Polynomial(value));
-                        }
-                        catch // вычисление
-                        {
-                            for (int i = 0; i < value.Length; i++)
-                            {
-                                char symbol = value[i];
-                                switch (symbol)
-                                {
-                                    case '*':
-                                        string name1, name2;
-                                        name1 = value.Substring(0, i);
-                                        name2 = value.Substring(i);
-                                        break;
-                                    case '+':
-
-                                        break;
-                                    case '-':
-                                        break;
-                                    default:
-                                        break;
-
-
-                                }
-
-                            }
-                        }
-                    }
-
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine("Error format"+e);
-                }
-
-            } while (Console.ReadKey().Key != ConsoleKey.Enter);
-           foreach (KeyValuePair<string, Polynomial> kvp in polynomialList)
-
-                Console.WriteLine(kvp.Key + " = " + kvp.Value);
-
-            string path = Console.ReadLine();
-
-        }
+        //<<<<<<< HEAD
+       
         private void Create()
         {
             Console.WriteLine("Временно не доступно");
             // Нужно исправить конструктор матриц по переданному пути.
 
-            /*Console.WriteLine("Введите путь к текстовому файлу с матрицей смежности");
-            Console.Write(">");
-            string path = Console.ReadLine();
-            Arithmetics.Matrix.IntegerSquareMatrix a = new Arithmetics.Matrix.IntegerSquareMatrix(path);
-            Console.WriteLine(a);
-            if (a.Columns == 0)
-                return;
-            Console.WriteLine("Введите имя графа");
-            Console.Write(">");
-            string name = Console.ReadLine();
-            if (graphs.ContainsKey(name) == false)
-            {
-                Graph NewGraph = new Graph(a);
-                graphs.Add(name, NewGraph);
-                Console.WriteLine("Граф " + name + " успешно добавлен");
-                activeGraph = name;
-            }
-            else
-            {
-                Console.WriteLine("это имя уже занято");
-            }*/
         }
         private void Change()
         {
@@ -254,7 +180,7 @@ namespace ConsoleUI
             {
                 incoming.Add(Convert.ToInt32(item));
             }
-            graphs[activeGraph].AddNode(graphs[activeGraph], incoming, outgoing);
+            graphs[activeGraph].AddNode(incoming, outgoing);
             Console.WriteLine("вершина успешно добавлена");
         }
         private void AddEdge()
@@ -263,14 +189,16 @@ namespace ConsoleUI
             string st = Console.ReadLine();
             Console.WriteLine("введите номер конца ребра");
             string st1 = Console.ReadLine();
-            graphs[activeGraph].AddEdge(graphs[activeGraph], Convert.ToInt32(st), Convert.ToInt32(st1));
+            graphs[activeGraph].AddEdge(Convert.ToInt32(st), Convert.ToInt32(st1));
         }
         private void Save()
         {
             Console.WriteLine("Введите путь к папке, в которой будем сохранять");
             string p = Console.ReadLine();
             p = p + "\\" + activeGraph;
-            graphs[activeGraph].SaveGraph(p, graphs[activeGraph]);
+            graphs[activeGraph].SaveGraph(p);
         }
+
+        
     }
 }
