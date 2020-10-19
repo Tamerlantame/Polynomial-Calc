@@ -8,18 +8,6 @@ namespace Arithmetics
 {
     public static class NumberFunctions
     {
-        
-        public static int[] CreateRandomArray(int n)
-        {
-            Random rnd = new Random();
-            int[] randomArray = new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                randomArray[i] = rnd.Next(0, 100);
-            }
-
-            return randomArray;
-        }
         public static int FastPow(int number, int deg)
         {
             int result = 1;
@@ -38,8 +26,7 @@ namespace Arithmetics
             }
             return result;
         }
-
-            public static int ModPow(int number, int deg, int mod)
+        public static int ModPow(int number, int deg, int mod)
             {
             int result = 1;
             List<int> binaryNotation = new List<int>();
@@ -63,20 +50,20 @@ namespace Arithmetics
         {
             try
             { 
-            int composition_of_moduls = mod[0];
-            int inverse_element;
+            int compositionOfModuls = mod[0];
+            int inverseElement;
             int temp;
             for (int i = 1; i < mod.Length; i++)
             {
                 try
                 {
-                        temp = 1 / (EuclidFunctions.Euclid(composition_of_moduls, mod[i]) - 1);
+                        temp = 1 / (EuclidFunctions.Euclid(compositionOfModuls, mod[i]) - 1);
                         throw new Exception("may have no answer");
                 }
                 catch
                 {
                      
-                        composition_of_moduls *= mod[i];
+                        compositionOfModuls *= mod[i];
                 }
         //если числа не взаимно простые, решений может не быть.
                
@@ -85,13 +72,13 @@ namespace Arithmetics
             int result = 0;
             for (int i = 0; i < mod.Length; i++)
             {
-                EuclidFunctions.ExtendedEuclid(composition_of_moduls / mod[i], mod[i], out inverse_element, out temp);
-                result += res[i] * (composition_of_moduls / mod[i]) * inverse_element;
+                EuclidFunctions.ExtendedEuclid(compositionOfModuls / mod[i], mod[i], out inverseElement, out temp);
+                result += res[i] * (compositionOfModuls / mod[i]) * inverseElement;
             }
             if (result < 0)
             {
-                result %= composition_of_moduls;
-                result += composition_of_moduls;
+                result %= compositionOfModuls;
+                result += compositionOfModuls;
             }
             return result;
             }
@@ -101,11 +88,10 @@ namespace Arithmetics
             }
         }
 
-        public static int revers_element_mod_prime(int element, int prime_number)
+        public static int GetMulInverse(int element, int mod)
         {
-            int reverselement = 0;
-            reverselement = ModPow(element, prime_number - 2, prime_number);//по малой теореме ферма
-            return reverselement;
+            EuclidFunctions.ExtendedEuclid(element, mod, out int reversElement,out int reversMod);
+            return reversElement;
         }
 
     }

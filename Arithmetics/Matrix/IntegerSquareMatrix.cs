@@ -135,7 +135,7 @@ namespace Arithmetics.Matrix
                 {
                     if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix[j, i], prime_number);
+                        int reverselement = NumberFunctions.GetMulInverse(triangleMatrix[j, i], prime_number);
                         for (int k = j; k < triangleMatrix.Columns; k++)
                         {
                             triangleMatrix[j, k] *= reverselement;
@@ -174,7 +174,7 @@ namespace Arithmetics.Matrix
                 {
                     if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix[j, i], prime_number);
+                        int reverselement = NumberFunctions.GetMulInverse(triangleMatrix[j, i], prime_number);
                         for (int k = j; k < triangleMatrix.Columns; k++)
                         {
                             triangleMatrix[j, k] *= reverselement;
@@ -224,7 +224,7 @@ namespace Arithmetics.Matrix
                 {
                     if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.revers_element_mod_prime(triangleMatrix[j, i], prime_number);
+                        int reverselement = NumberFunctions.GetMulInverse(triangleMatrix[j, i], prime_number);
                         for (int k = j; k < triangleMatrix.Columns; k++)
                         {
                             triangleMatrix[j, k] *= reverselement;
