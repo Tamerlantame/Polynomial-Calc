@@ -38,7 +38,8 @@ namespace Arithmetics.Matrix
         }
 
         //TODO Если из файла, то надо проверять, что в файле, квадратная ли?
-        
+
+        [Obsolete]
         public IntegerSquareMatrix(string path) : base(path)
         {
 
@@ -125,45 +126,8 @@ namespace Arithmetics.Matrix
             return newMatrix;
 
         }
-        public IntegerSquareMatrix ToTopTriangleMatrixModPrime(int prime_number)
-        {
-            IntegerSquareMatrix triangleMatrix = new IntegerSquareMatrix(Rows, elements);
-            int sign_of_det = 0;
-            for (int i = 0; i < triangleMatrix.Rows; i++)
-            {
-                for (int j = i; j < triangleMatrix.Columns; j++)
-                {
-                    if (triangleMatrix[j, i] != 0)
-                    {
-                        int reverselement = NumberFunctions.GetMulInverse(triangleMatrix[j, i], prime_number);
-                        for (int k = j; k < triangleMatrix.Columns; k++)
-                        {
-                            triangleMatrix[j, k] *= reverselement;
-                            triangleMatrix[j, k] %= prime_number;
-                        }
-                        if (i != j)
-                        {
-                            triangleMatrix = triangleMatrix.SwapLine(j, i);
-                            sign_of_det++;
-                            sign_of_det %= 2;                                            //ОПРЕДЕЛЯЮ ЗНАК det
-                        }
-                        for (int k = j + 1; k < triangleMatrix.Columns; k++)
-                        {
-                            while (triangleMatrix[k, j] != 0)
-                            {
-                                if (triangleMatrix[k, j] > 0)
-                                    triangleMatrix = triangleMatrix.SubtractionOfLines(k, j);
-                                else
-                                    triangleMatrix = triangleMatrix.AdditionOfLines(k, j);
-                            }
-                        }
-                    }
-
-
-                }
-            }
-            return triangleMatrix;
-        }
+        public IntegerSquareMatrix ToTopTriangleMatrixModPrime(int primeNumber) => ToTopTriangleMatrixModPrime(primeNumber, 1);
+        
         public int DetMod(int prime_number)
         {
             IntegerSquareMatrix triangleMatrix = new IntegerSquareMatrix(Rows, elements);
@@ -213,22 +177,22 @@ namespace Arithmetics.Matrix
 
         }
 
-        public IntegerSquareMatrix ToTopTriangleMatrixModPrime(int prime_number1, int degree)
+        public IntegerSquareMatrix ToTopTriangleMatrixModPrime(int primeNumber, int degree)
         {
             IntegerSquareMatrix triangleMatrix = new IntegerSquareMatrix(Rows, elements);
             int sign_of_det = 0;
-            int prime_number = NumberFunctions.FastPow(prime_number1, degree);
+            int primeNumber1 = Convert.ToInt32(Math.Pow(primeNumber, degree));
             for (int i = 0; i < triangleMatrix.Rows; i++)
             {
                 for (int j = i; j < triangleMatrix.Columns; j++)
                 {
                     if (triangleMatrix[j, i] != 0)
                     {
-                        int reverselement = NumberFunctions.GetMulInverse(triangleMatrix[j, i], prime_number);
+                        int reverselement = NumberFunctions.GetMulInverse(triangleMatrix[j, i], primeNumber1);
                         for (int k = j; k < triangleMatrix.Columns; k++)
                         {
                             triangleMatrix[j, k] *= reverselement;
-                            triangleMatrix[j, k] %= prime_number;
+                            triangleMatrix[j, k] %= primeNumber1;
                         }
                         if (i != j)
                         {

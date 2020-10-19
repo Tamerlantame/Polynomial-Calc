@@ -8,24 +8,6 @@ namespace Arithmetics
 {
     public static class NumberFunctions
     {
-        public static int FastPow(int number, int deg)
-        {
-            int result = 1;
-            List<int> binaryNotation = new List<int>();
-            while (deg > 0)
-            {
-                binaryNotation.Add(deg % 2);
-                deg /= 2;
-            }
-            for (int i = 0; i < binaryNotation.Count; i++)
-            {
-                if (binaryNotation[i] == 1)
-                    result = (result * number);
-                number = (number * number);
-
-            }
-            return result;
-        }
         public static int ModPow(int number, int deg, int mod)
             {
             int result = 1;
@@ -45,7 +27,6 @@ namespace Arithmetics
             return result;
             }
 
-        // TODO избавиться от WriteLine и выбрасывать исключения, если вход неверный.
         public static int ChineseRemainderTheorem(int[] res, int[] mod)
         {
             try
