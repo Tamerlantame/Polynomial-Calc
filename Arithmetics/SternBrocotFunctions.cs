@@ -8,14 +8,14 @@ namespace Arithmetics
 {
     static class SternBrocotFunctions
     {
+        // Метод возвращает последовательнсоть Фаррея
         public static List<Fraction> FindFarrey(int n)
         {
 
             List<Fraction> fractions = new List<Fraction>();
-            BinaryTree<BrocotFraction> a = GetSbTree(n).left;
+            BinaryTree<BrocotFraction> a = GetSubTree(n).left;
             fractions.Add(new Fraction(0, 1));
             fractions.AddRange(GetListElements(a, n));
-
             fractions.Add(new Fraction(1, 0));
             for (int i = 0; i < fractions.Count(); i++)
             {
@@ -26,7 +26,8 @@ namespace Arithmetics
             }
             return fractions;
         }
-        public static BinaryTree<BrocotFraction> GetSbTree(int depth)
+        // Рекурсивное построение поддерева заданной глубины(или высоты)
+        public static BinaryTree<BrocotFraction> GetSubTree(int depth)
         {
 
             if (depth <= 0)
@@ -48,6 +49,7 @@ namespace Arithmetics
                 return b;
             }
         }
+        // метод возвращает последовательность Дробей
         public static List<Fraction> GetListElements(BinaryTree<BrocotFraction> binarytree, int q)
         {
             List<Fraction> fractions = new List<Fraction>();
@@ -65,19 +67,7 @@ namespace Arithmetics
             }
             return fractions;
         }
-
-        //TODO что-то странное. 
-        public static Fraction GetFarrey(int n, int m)
-        {
-            Fraction right = new Fraction(1, 1);
-            Fraction left = new Fraction(0, 1);
-            Fraction t = new Fraction(1, 1);
-            BinaryTree<Fraction> tree = new BinaryTree<Fraction>(new Fraction(1, 2));
-
-            return t;
-        }
-
-
+        // Рекурсивное построение поддерева заданной глубины(или высоты), вызвается в методе GetSubThree(int depth)
         public static BinaryTree<BrocotFraction> GetSubTree(BrocotFraction f, int depth)
         {
             if (depth > 0)

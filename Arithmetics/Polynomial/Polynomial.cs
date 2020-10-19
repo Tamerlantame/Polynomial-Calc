@@ -54,10 +54,7 @@ namespace Arithmetics.Polynomial1
         {
             this.Deg = Deg;
             coeff = new SortedList<int, double>();
-            for (int i = 0; i < this.Deg + 1; i++)
-            {
-                coeff.Add(i, 0);
-            }
+            
         }
 
         public Polynomial(SortedList<int, double> coeff)
@@ -71,13 +68,13 @@ namespace Arithmetics.Polynomial1
 
         }
 
-        public Polynomial(Polynomial a)
+        public Polynomial(Polynomial polynimial)
         {
-            Deg = a.Deg;
+            Deg = polynimial.Deg;
             coeff = new SortedList<int, double>();
-            foreach (int deg in a.coeff.Keys)
+            foreach (int deg in polynimial.coeff.Keys)
             {
-                this.coeff.Add(deg, a.coeff[deg]);
+                this.coeff.Add(deg, polynimial.coeff[deg]);
             }
 
         }
@@ -90,53 +87,53 @@ namespace Arithmetics.Polynomial1
         {
             string s = "";
 
-            for (int i = Deg; i >= 0; i--)
+            foreach (int deg in this.coeff.Keys)
             {
-                if (this.coeff.ContainsKey(i))
+                if (this.coeff.ContainsKey(deg))
                 {
-                    if (coeff[i] >= 0)
+                    if (coeff[deg] >= 0)
                     {
-                        switch (i)
+                        switch (deg)
                         {
                             case 0:
-                                if (coeff[i] != 0)
-                                    s += "+" + coeff[i];
+                                if (coeff[deg] != 0)
+                                    s += "+" + coeff[deg];
                                 break;
                             case 1:
-                                if (coeff[i] != 0)
+                                if (coeff[deg] != 0)
                                 {
                                     if (Deg >= 2)
                                     {
-                                        if (coeff[i] == 1)
+                                        if (coeff[deg] == 1)
                                             s += "+x";
                                         else
-                                            s += "+" + coeff[i] + "x";
+                                            s += "+" + coeff[deg] + "x";
                                     }
                                     else
                                     {
-                                        if (coeff[i] == 1)
+                                        if (coeff[deg] == 1)
                                             s += "x";
                                         else
-                                            s += coeff[i] + "x";
+                                            s += coeff[deg] + "x";
                                     }
                                 }
                                 break;
                             default:
-                                if (coeff[i] != 0)
+                                if (coeff[deg] != 0)
                                 {
-                                    if (i != this.coeff.Keys[this.coeff.Keys.Count - 1])
+                                    if (deg != this.coeff.Keys[this.coeff.Keys.Count - 1])
                                     {
-                                        if (coeff[i] == 1)
-                                            s += "+x^" + i;
+                                        if (coeff[deg] == 1)
+                                            s += "+x^" + deg;
                                         else
-                                            s += "+" + coeff[i] + "x^" + i;
+                                            s += "+" + coeff[deg] + "x^" + deg;
                                     }
                                     else
                                     {
-                                        if (coeff[i] == 1)
-                                            s += "x^" + i;
+                                        if (coeff[deg] == 1)
+                                            s += "x^" + deg;
                                         else
-                                            s += coeff[i] + "x^" + i;
+                                            s += coeff[deg] + "x^" + deg;
                                     }
                                 }
                                 break;
@@ -144,23 +141,23 @@ namespace Arithmetics.Polynomial1
                     }
                     else
                     {
-                        switch (i)
+                        switch (deg)
                         {
                             case 0:
-                                s += coeff[i];
+                                s += coeff[deg];
                                 break;
                             case 1:
-                                if (coeff[i] == -1)
+                                if (coeff[deg] == -1)
                                     s += "-x";
                                 else
-                                    s += coeff[i] + "x";
+                                    s += coeff[deg] + "x";
 
                                 break;
                             default:
-                                if (coeff[i] == -1)
-                                    s += "-x^" + i;
+                                if (coeff[deg] == -1)
+                                    s += "-x^" + deg;
                                 else
-                                    s += +coeff[i] + "x^" + i;
+                                    s += +coeff[deg] + "x^" + deg;
 
                                 break;
                         }
@@ -287,9 +284,15 @@ namespace Arithmetics.Polynomial1
         public int CompareTo(Polynomial a)
         {
             if (this.Deg != a.Deg)
-                return this.Deg.CompareTo(a.Deg);
+                return this.Deg.CompareTo(a.Deg)*Convert.ToInt32(Math.Pow(10,Deg));
             else
-                return this.coeff[this.Deg].CompareTo(a.coeff[a.Deg]);
+                for (int i = Deg; i> 0; i++)
+                {
+                    if (this.coeff[i] != a.coeff[i])
+                        return this.coeff[this.Deg].CompareTo(a.coeff[a.Deg])*Convert.ToInt32(Math.Pow(10, i));
+                    
+                }
+            return 0;
 
         }
 

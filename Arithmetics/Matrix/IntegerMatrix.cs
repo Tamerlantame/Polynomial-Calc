@@ -15,6 +15,10 @@ namespace Arithmetics.Matrix
         public IntegerMatrix(Matrix<int> matrix) : base(matrix)
         {
         }
+        public IntegerMatrix(int[,] coeff) : base(coeff)
+        {
+
+        }
 
         public IntegerMatrix()
         {
@@ -38,56 +42,61 @@ namespace Arithmetics.Matrix
             {
                 GetFromFile(path);
             }
-            
+
         }
 
 
 
-        public void GetFromFile(string path)
+        public static IntegerMatrix GetFromFile(string path)
         {
-
+            string[] text;
             try
             {
-                string[] text = File.ReadAllLines(path);
-                string[] RowElemnts;
-                List<string[]> AllElements = new List<string[]>();
-                RowElemnts = text[0].Split(' ');
-                AllElements.Add(RowElemnts);
-                int RowLength = RowElemnts.Length;
-                for (int i = 1; i < text.Length; i++)
-                {
-                    RowElemnts = text[i].Split(' ');
-                    if (RowElemnts.Length != RowLength)
-                    {
-                        throw new Exception();
-                    }
-                    AllElements.Add(RowElemnts);
-                }
-                //проверяем, чтобы все строки содержали одинаковое количество элементов, создаем список массивов строк, каждая строка в массиве-элемент матрицы
-                elements = new int[text.Length, RowLength];
-                foreach (string[] item in AllElements)
-                {
-
-                    for (int j = 0; j < RowElemnts.Length; j++)
-                    {
-                        
-                            elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
-
-                    }
-
-                }
-                Columns = RowLength;
-                Rows = text.Length;
-                
-                 
-                
+                text = File.ReadAllLines(path);
             }
-            catch
+            catch (FileNotFoundException)
             {
-                throw new Exception("Вы ввели что-то не то");
+
+                throw new FileNotFoundException();
+
             }
-        
-    }
+
+            string[] RowElemnts;
+            List<string[]> AllElements = new List<string[]>();
+            RowElemnts = text[0].Split(' ');
+            AllElements.Add(RowElemnts);
+            int RowLength = RowElemnts.Length;
+            for (int i = 1; i < text.Length; i++)
+            {
+                RowElemnts = text[i].Split(' ');
+                AllElements.Add(RowElemnts);
+            }
+            //проверяем, чтобы все строки содержали одинаковое количество элементов, создаем список массивов строк, каждая строка в массиве-элемент матрицы
+            int[,] elements = new int[text.Length, RowLength];
+            foreach (string[] item in AllElements)
+            {
+
+                for (int j = 0; j < RowElemnts.Length; j++)
+                {
+                    try
+                    {
+                        elements[AllElements.IndexOf(item), j] = Convert.ToInt32(item[j]);
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                    catch (FormatException)
+                    {
+                        throw new FormatException();
+                    }
+                }
+
+            }
+            return new IntegerMatrix(elements);
+
+
+        }
         public virtual bool IsSymmetric()
         {
             if (Rows != Columns)
