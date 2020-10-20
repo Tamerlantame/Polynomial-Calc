@@ -33,42 +33,7 @@ namespace ConsoleUI
 
         }
 
-        private void create_button_Click(object sender, EventArgs e)
-        {
 
-            string path = Interaction.InputBox("Введите путь к графу", "", "");
-
-            try
-            {
-                Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
-                if (graphMatrix.Columns == 0)
-                {
-                    return;
-                }
-                string name = Interaction.InputBox("Введите имя графа", "", "");
-                if (graphs.ContainsKey(name) == false)
-                {
-                    Graph NewGraph = new Graph(graphMatrix);
-                    graphs.Add(name, NewGraph);
-                    Console.WriteLine("Граф " + name + " успешно добавлен");
-                    activeGraph = name;
-                    richTextBox1.Text = graphs[activeGraph].ToString();
-                    graphs_ToolStripMenuItem.DropDownItems.Add(name);
-
-                }
-                else
-                {
-                    Console.WriteLine("это имя уже занято");
-                }
-            }
-            catch
-            {
-                dialogue_value.Text = "Вы ввели что-то не то";
-                return;
-            }
-
-
-        }
 
         private void graphs_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -102,29 +67,15 @@ namespace ConsoleUI
                 MessageBox.Show("Вы еще не ввели граф");
             }
         }
-
-        private void delete_button_Click(object sender, EventArgs e)
-        { for (int i = 0; i < graphs_ToolStripMenuItem.DropDownItems.Count; i++)
-            {
-                if (graphs_ToolStripMenuItem.DropDownItems[i].Text == activeGraph) graphs_ToolStripMenuItem.DropDownItems.RemoveAt(i);
-            }
-
-            menuStrip1.Items.Remove(menuStrip1.Items[activeGraph]);
-            graphs.Remove(activeGraph);
-            activeGraph = null;
-            richTextBox1.Text = "";
-        }
-
-        /*private void graphs_ToolStripMenuItem_DropDownItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
-        {
-            string name = e.ClickedItem.Text;
-            activeGraph = name;
-            richTextBox1.Text = graphs[name].ToString();
-        }*/
+      
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CreateClick();
            
+        }
+        private void CreateClick()
+        {
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -141,23 +92,49 @@ namespace ConsoleUI
                 {
                     Graph NewGraph = new Graph(graphMatrix);
                     graphs.Add(name, NewGraph);
-                    Console.WriteLine("Граф " + name + " успешно добавлен");
                     activeGraph = name;
-                    richTextBox1.Text = graphs[activeGraph].ToString();
-                    graphs_ToolStripMenuItem.DropDownItems.Add(name);
+                    richTextBox1.Text = "";
+                    richTextBox1.Text= graphs[activeGraph].ToString();
+                    graphsToolStripMenuItem.DropDownItems.Add(name);
 
+                    DialogResult result = MessageBox.Show("Граф " + name + " успешно добавлен");
                 }
                 else
                 {
-                    Console.WriteLine("это имя уже занято");
+                    DialogResult result = MessageBox.Show("Граф c таким именем уже существует");
                 }
             }
 
         }
+       
 
+        private void graphsToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem == createToolStripMenuItem)
+            {
+                try
+                {
+                    CreateClick();
+                }
+                catch
+                {
+                    DialogResult result = MessageBox.Show(e.ToString());
+
+                }
+            }
+            else ChangeActiveGraph(e.ClickedItem.Text);
+        }
+        public void ChangeActiveGraph(string name)
+        {
+            activeGraph = name;
+            richTextBox1.Text = graphs[activeGraph].ToString();
+
+        }
+
+       
     }
-     
-    
+
+
 }
 
 

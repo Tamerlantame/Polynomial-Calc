@@ -32,7 +32,6 @@ namespace Arithmetics.Matrix
         ///Это должно быть не здесь.
         ///
 
-        [ObsoleteAttribute("Избавиться от этого конструктора.")]
         public IntegerMatrix(string path)
         {
             {
@@ -40,9 +39,6 @@ namespace Arithmetics.Matrix
             }
             
         }
-
-
-
         public void GetFromFile(string path)
         {
 
@@ -77,9 +73,7 @@ namespace Arithmetics.Matrix
 
                 }
                 Columns = RowLength;
-                Rows = text.Length;
-                
-                 
+                Rows = text.Length;     
                 
             }
             catch

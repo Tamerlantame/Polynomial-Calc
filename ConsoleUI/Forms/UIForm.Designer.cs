@@ -1,4 +1,6 @@
-﻿namespace ConsoleUI
+﻿using System.ComponentModel;
+
+namespace ConsoleUI
 {
     partial class UIForm
     {
@@ -31,13 +33,12 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.dialogue_value = new System.Windows.Forms.Label();
             this.help_button = new System.Windows.Forms.Button();
-            this.create_button = new System.Windows.Forms.Button();
             this.transpose_button = new System.Windows.Forms.Button();
             this.isbiparted_button = new System.Windows.Forms.Button();
             this.delete_button = new System.Windows.Forms.Button();
-            this.graphs_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,19 +71,9 @@
             this.help_button.UseVisualStyleBackColor = true;
             this.help_button.Click += new System.EventHandler(this.help_button_Click);
             // 
-            // create_button
-            // 
-            this.create_button.Location = new System.Drawing.Point(41, 300);
-            this.create_button.Name = "create_button";
-            this.create_button.Size = new System.Drawing.Size(81, 43);
-            this.create_button.TabIndex = 4;
-            this.create_button.Text = "create";
-            this.create_button.UseVisualStyleBackColor = true;
-            this.create_button.Click += new System.EventHandler(this.create_button_Click);
-            // 
             // transpose_button
             // 
-            this.transpose_button.Location = new System.Drawing.Point(41, 424);
+            this.transpose_button.Location = new System.Drawing.Point(41, 300);
             this.transpose_button.Name = "transpose_button";
             this.transpose_button.Size = new System.Drawing.Size(81, 43);
             this.transpose_button.TabIndex = 5;
@@ -108,33 +99,35 @@
             this.delete_button.TabIndex = 8;
             this.delete_button.Text = "delete";
             this.delete_button.UseVisualStyleBackColor = true;
-            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
-            // 
-            // graphs_ToolStripMenuItem
-            // 
-            this.graphs_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createToolStripMenuItem});
-            this.graphs_ToolStripMenuItem.Name = "graphs_ToolStripMenuItem";
-            this.graphs_ToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
-            this.graphs_ToolStripMenuItem.Text = "graphs";
-            // 
-            // createToolStripMenuItem
-            // 
-            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.createToolStripMenuItem.Text = "Create";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.graphs_ToolStripMenuItem});
+            this.graphsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(920, 28);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // graphsToolStripMenuItem
+            // 
+            this.graphsToolStripMenuItem.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createToolStripMenuItem});
+            this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
+            this.graphsToolStripMenuItem.Text = "Graphs";
+            this.graphsToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.graphsToolStripMenuItem_DropDownItemClicked);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.createToolStripMenuItem.ForeColor = System.Drawing.Color.Thistle;
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.createToolStripMenuItem.Text = "create";
             // 
             // UIForm
             // 
@@ -144,7 +137,6 @@
             this.Controls.Add(this.delete_button);
             this.Controls.Add(this.isbiparted_button);
             this.Controls.Add(this.transpose_button);
-            this.Controls.Add(this.create_button);
             this.Controls.Add(this.help_button);
             this.Controls.Add(this.dialogue_value);
             this.Controls.Add(this.richTextBox1);
@@ -164,12 +156,11 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label dialogue_value;
         private System.Windows.Forms.Button help_button;
-        private System.Windows.Forms.Button create_button;
         private System.Windows.Forms.Button transpose_button;
         private System.Windows.Forms.Button isbiparted_button;
         private System.Windows.Forms.Button delete_button;
-        private System.Windows.Forms.ToolStripMenuItem graphs_ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem graphsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
     }
 }
