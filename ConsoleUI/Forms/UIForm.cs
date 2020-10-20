@@ -21,27 +21,7 @@ namespace ConsoleUI
         {
             graphs = new SortedList<string, Graph>();
         }
-
-        private void help_button_Click(object sender, EventArgs e)
-        {
-            richTextBox1.Text = "";
-            string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Help.txt"));
-            foreach (string item in text)
-            {
-                richTextBox1.Text = richTextBox1.Text + item + "\n";
-            }
-
-        }
-
-
-
-        private void graphs_ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-
+       
         private void transpose_button_Click(object sender, EventArgs e)
         {
             graphs[activeGraph] = graphs[activeGraph].Transponse();
@@ -67,13 +47,7 @@ namespace ConsoleUI
                 MessageBox.Show("Вы еще не ввели граф");
             }
         }
-      
-
-        private void createToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CreateClick();
-           
-        }
+            
         private void CreateClick()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -131,7 +105,15 @@ namespace ConsoleUI
 
         }
 
-       
+        private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Text = "";
+            string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Help.txt"));
+            foreach (string item in text)
+            {
+                richTextBox1.Text = richTextBox1.Text + item + "\n";
+            }
+        }
     }
 
 
