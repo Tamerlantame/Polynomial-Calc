@@ -11,8 +11,9 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("ssssssss");
             //SortedList<string, Graph> Graphs = new SortedList<string, Graph>();
-            LyaMelikSession session = new LyaMelikSession();
+            /*LyaMelikSession session = new LyaMelikSession();
             //session.Start();
             //Console.ReadKey();
             string str = "1234567890";
@@ -69,7 +70,7 @@ namespace ConsoleUI
 
                 }
             }
-            Console.WriteLine(path);
+            Console.WriteLine(path);*/
         }
     }
-}
+    }

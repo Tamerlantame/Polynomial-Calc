@@ -172,35 +172,26 @@ namespace Arithmetics.Polynomial1
 
         public static Polynomial operator +(Polynomial p1, Polynomial p2)
         {
-            SortedList<int, double> coeff = new SortedList<int, double>();
-            foreach (int deg in p1.coeff.Keys)
-            {
-                coeff.Add(deg, p1.coeff[deg]);
-            }
-            foreach (int deg in p2.coeff.Keys)
+            SortedList<int, double> coeff = new SortedList<int, double>(p1.coeff);
+            foreach (int deg in p2)
             {
                 if (coeff.ContainsKey(deg))
-                    coeff[deg] += p2.coeff[deg];
+                    coeff[deg] += p2[deg];
                 else
-                    coeff.Add(deg, p2.coeff[deg]);
+                    coeff.Add(deg, p2[deg]);
             }
             return new Polynomial(coeff);
-
         }
 
         public static Polynomial operator -(Polynomial p1, Polynomial p2)
         {
-            SortedList<int, double> coeff = new SortedList<int, double>();
-            foreach (int deg in p1.coeff.Keys)
-            {
-                coeff.Add(deg, p1.coeff[deg]);
-            }
-            foreach (int deg in p2.coeff.Keys)
+            SortedList<int, double> coeff = new SortedList<int, double>(p1.coeff);
+            foreach (int deg in p2)
             {
                 if (coeff.ContainsKey(deg))
-                    coeff[deg] -= p2.coeff[deg];
+                    coeff[deg] -= p2[deg];
                 else
-                    coeff.Add(deg, p2.coeff[deg]);
+                    coeff.Add(deg, p2[deg]);
             }
             return new Polynomial(coeff);
         }

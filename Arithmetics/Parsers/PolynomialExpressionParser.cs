@@ -70,7 +70,7 @@ namespace Arithmetics.Parsers
                 return TokenType.Operator;
             throw new Exception("Wrong character");
         }
-        public IEnumerable<Token> Tokenize(string formula)//TextReader reader)
+        /*(public IEnumerable<Token> Tokenize(string formula)//TextReader reader)
         {
             //formula = formula.Replace(" ", "");
             var token = new StringBuilder();
@@ -97,7 +97,7 @@ namespace Arithmetics.Parsers
                     token.Clear();
                 }
             }
-        }
+        }*/
 
 
         //private SortedList<string, Polynomial> polynomialList;
