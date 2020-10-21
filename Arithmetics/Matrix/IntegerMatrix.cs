@@ -76,9 +76,9 @@ namespace Arithmetics.Matrix
                 Rows = text.Length;     
                 
             }
-            catch
+            catch(Exception e)
             {
-                throw new Exception("Вы ввели что-то не то");
+                throw new Exception("Вы ввели что-то не то "+e.Message);
             }
         
     }
