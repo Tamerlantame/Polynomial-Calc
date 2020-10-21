@@ -5,8 +5,9 @@ using Arithmetics;
 using System.IO;
 using Arithmetics.Polynomial1;
 using System.Windows.Forms;
+using WinFormsUI.Forms;
 
-namespace ConsoleUI
+namespace WinFormsUI
 {
     class Program
     {
@@ -16,7 +17,7 @@ namespace ConsoleUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UIForm());
+            Application.Run(new UIFormWithTabs());
 
             /*  string str = "1234567890";
               Console.WriteLine(str.Substring(0, 4));

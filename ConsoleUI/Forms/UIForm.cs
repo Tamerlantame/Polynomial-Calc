@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using GraphTheory;
 using Microsoft.VisualBasic;
 
-namespace ConsoleUI
+namespace WinFormsUI
 {
     public partial class UIForm : Form
 

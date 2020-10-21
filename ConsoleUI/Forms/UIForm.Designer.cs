@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ConsoleUI
+namespace WinFormsUI
 {
     partial class UIForm
     {
