@@ -84,31 +84,18 @@ namespace ConsoleUI
 
         private void graphsToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if (e.ClickedItem == createToolStripMenuItem)
-            {
-                try
-                {
-                    CreateClick();
-                }
-                catch
-                {
-                    DialogResult result = MessageBox.Show(e.ToString());
 
-                }
-            }
-            else ChangeActiveGraph(e.ClickedItem.Text);
         }
         public void ChangeActiveGraph(string name)
         {
             activeGraph = name;
             richTextBox1.Text = graphs[activeGraph].ToString();
-
         }
 
-        private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             richTextBox1.Text = "";
-            string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Help.txt"));
+            string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Menu//GraphHelp.txt"));
             foreach (string item in text)
             {
                 richTextBox1.Text = richTextBox1.Text + item + "\n";

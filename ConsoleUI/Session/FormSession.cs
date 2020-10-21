@@ -19,8 +19,5 @@ namespace ConsoleUI
         {
             this.graphs = new SortedList<string, Graph>(graphs);
         }
-
-
-
     }
 }

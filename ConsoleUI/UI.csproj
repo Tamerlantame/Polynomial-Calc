@@ -48,14 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormSession.cs" />
+    <Compile Include="Session\FormSession.cs" />
     <Compile Include="Forms\UIForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\UIForm.Designer.cs">
       <DependentUpon>UIForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LyaMelikSession.cs" />
+    <Compile Include="Session\LyaMelikSession.cs" />
     <Compile Include="Program.cs">
       <SubType>
       </SubType>
@@ -77,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Help.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Menu\GraphHelp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Menu\Help.txt">
