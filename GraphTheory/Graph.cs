@@ -22,6 +22,7 @@ namespace GraphTheory
         }
         public int Count => adjNodesList.Count;
 
+        public string Name { get; set; }
 
         public GraphNode this[int index]
         {
@@ -34,7 +35,7 @@ namespace GraphTheory
         /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
         /// </summary>
         /// <param name="matrix"></param>
-        public Graph(IntegerSquareMatrix matrix)
+        public Graph(IntegerSquareMatrix matrix, string name = "")
         {
             adjNodesList = new List<GraphNode>(matrix.Columns);
             for (int i = 0; i < matrix.Columns; i++)
@@ -55,11 +56,12 @@ namespace GraphTheory
                 }
             }
             DFS();
+            Name = name;
         }
-        public Graph(List<GraphNode> adjList)
+        public Graph(List<GraphNode> adjList, string name = "")
         {
             adjNodesList = adjList;
-            
+            Name = name;
         }
 
         public override string ToString()
@@ -197,8 +199,23 @@ namespace GraphTheory
                 if (i != a.Rows - 1) line += "\n";
                 System.IO.File.AppendAllText(path + "\\AdjMatrix", line);
             }
-
         }
+
+        /// <summary>
+        /// Аналог GetFromFile в <see cref="IntegerMatrix"/>
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static Graph GetFromFile(string path)
+        {
+            Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
+            if (graphMatrix.Columns == 0)
+            {
+                return null;
+            }
+            return new Graph(graphMatrix);
+        }
+
         public bool IsBipartite()
         {
             Queue<GraphNode> q = new Queue<GraphNode>();
