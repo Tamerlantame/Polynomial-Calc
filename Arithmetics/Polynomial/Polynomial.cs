@@ -61,10 +61,12 @@ namespace Arithmetics.Polynomial1
         {
 
             Deg = coeff.Keys[coeff.Count - 1];
+            this.coeff = new SortedList<int, double>();
             foreach (int deg in coeff.Keys)
             {
                 this.coeff.Add(deg, coeff[deg]);
             }
+
 
         }
 
@@ -87,7 +89,7 @@ namespace Arithmetics.Polynomial1
         {
             string s = "";
 
-            foreach (int deg in this.coeff.Keys)
+            for (int deg = this.Deg;deg>=0;deg--)
             {
                 if (this.coeff.ContainsKey(deg))
                 {
@@ -100,12 +102,10 @@ namespace Arithmetics.Polynomial1
                                     s += "+" + coeff[deg];
                                 break;
                             case 1:
-                                if (coeff[deg] != 0)
-                                {
                                     if (Deg >= 2)
                                     {
                                         if (coeff[deg] == 1)
-                                            s += "+x";
+                                            s += "+x" ;
                                         else
                                             s += "+" + coeff[deg] + "x";
                                     }
@@ -116,7 +116,6 @@ namespace Arithmetics.Polynomial1
                                         else
                                             s += coeff[deg] + "x";
                                     }
-                                }
                                 break;
                             default:
                                 if (coeff[deg] != 0)
@@ -275,16 +274,24 @@ namespace Arithmetics.Polynomial1
         public int CompareTo(Polynomial a)
         {
             if (this.Deg != a.Deg)
-                return this.Deg.CompareTo(a.Deg)*Convert.ToInt32(Math.Pow(10,Deg));
+                return this.Deg.CompareTo(a.Deg);
             else
-                for (int i = Deg; i> 0; i++)
+                for (int i = Deg; i > 0; i++)
                 {
-                    if (this.coeff[i] != a.coeff[i])
-                        return this.coeff[this.Deg].CompareTo(a.coeff[a.Deg])*Convert.ToInt32(Math.Pow(10, i));
-                    
+                    try
+                    {
+                        if (this.coeff[i] != a.coeff[i])
+                            return this[i].CompareTo(a[i]);
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        if (this.coeff.ContainsKey(i))
+                            return 1;
+                        else
+                            return -1;
+                    }
                 }
             return 0;
-
         }
 
         public IEnumerator<int> GetEnumerator()

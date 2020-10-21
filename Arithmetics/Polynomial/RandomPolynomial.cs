@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Arithmetics.Polynomial1
 {
-    class RandomPolynomial : ISequence<Polynomial>
+    public class RandomPolynomial : ISequence<Polynomial>
     {
         public int deg;
-        protected int minimumdeg = 0, maximumdeg, minimumcoeff = 0, maximumcoeff;
+        protected int minimumdeg = 0, maximumdeg=10, minimumcoeff = 0, maximumcoeff=10;
         public SortedList<int, double> coeff = new SortedList<int, double>();
         public RandomPolynomial()
         {
-            maximumdeg = 10;
-            maximumcoeff = 10;
             Random rnd = new Random();
             deg = rnd.Next(maximumdeg);
             Random rndcoeff = new Random();
