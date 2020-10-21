@@ -11,11 +11,13 @@ namespace WinFormsUI.Sessions
     {
         protected readonly RichTextBox inputRichTextBox;
         protected readonly RichTextBox outputRichTextBox;
+        public string Name { get; }
 
         public Session(RichTextBox input, RichTextBox output)
         {
             inputRichTextBox = input;
             outputRichTextBox = output;
+            Name = inputRichTextBox.Name;
         }
     }
 }

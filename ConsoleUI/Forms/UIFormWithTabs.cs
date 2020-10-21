@@ -18,6 +18,8 @@ namespace WinFormsUI.Forms
         public UIFormWithTabs()
         {
             InitializeComponent();
+            GraphSession newSession = new GraphSession(richTextBox1, richTextBoxOutput);
+            newSession.Start();
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -33,13 +35,16 @@ namespace WinFormsUI.Forms
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string title = "untitled " + (tabControl1.TabCount + 1).ToString();
-            TabPage newTabPage = new TabPage(title);
+            TabPage newTabPage = new TabPage(title)
+            {
+                Name = title
+            };
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectTab(newTabPage);
             RichTextBox newRichTextBox = new RichTextBox
             {
                 Location = new System.Drawing.Point(0, 0),
-                Name = "richTextBox" + newTabPage.Name,
+                Name = newTabPage.Name,
                 Size = newTabPage.Size,
                 Text = ""
             };

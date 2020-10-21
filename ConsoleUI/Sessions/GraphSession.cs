@@ -21,9 +21,40 @@ namespace WinFormsUI.Sessions
         {
             this.graphs = new SortedList<string, Graph>(graphs);
         }
+
         public void Start()
         {
-            
+            inputRichTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(Execute);
+            //outputRichTextBox.Text += $"{Name} - session Execution: \n";
+        }
+
+        /// <summary>
+        /// Вычисляет последнюю строчку программы, если нажали Enter. 
+        /// После необходимо сделать, чтобы "вычислялась" выделенная пользователем часть программы.
+        /// </summary>
+        private void Execute(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                if(inputRichTextBox.SelectedText != "") {
+                    //Вычисляем выделенную часть программы    
+                    //outputRichTextBox.Text += $"{inputRichTextBox.SelectedText}\n";
+                } else
+                {
+                    GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
+                    if (result.ExceptionsList.Count != 0)
+                    {
+                        foreach (Exception exc in result.ExceptionsList)
+                        {
+                            outputRichTextBox.Text += $"{exc.Message}\n";
+                        }
+                    }
+                    else foreach(Graph g in result.GraphsList)
+                        {
+                            outputRichTextBox.Text += $"{g}\n";
+                        }
+                }
+            }
         }
     }
 }
