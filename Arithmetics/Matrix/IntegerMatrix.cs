@@ -45,8 +45,6 @@ namespace Arithmetics.Matrix
 
         }
 
-
-
         public static IntegerMatrix GetFromFile(string path)
         {
             string[] text;
@@ -97,6 +95,7 @@ namespace Arithmetics.Matrix
 
 
         }
+
         public virtual bool IsSymmetric()
         {
             if (Rows != Columns)
@@ -165,5 +164,37 @@ namespace Arithmetics.Matrix
 
             return result;
         }
+
+        public IntegerSquareMatrix ConvertToIntegerSquareMatrix()
+        {
+            if (this.Rows != this.Columns)
+                return null;
+            IntegerSquareMatrix matrix = new IntegerSquareMatrix(this.Columns);
+            
+                for (int i = 0; i < this.Rows; i++)
+                {
+                    for (int j = 0; j < this.Columns; j++)
+                    {
+                        matrix[i, j] = this[i, j];
+                    }
+                }
+
+                return matrix;
+           
+            
+        }
+        public static IntegerSquareMatrix ConvertToIntegerSquareMatrix(IntegerMatrix matrix)
+        {
+            try
+            {
+                return matrix as IntegerSquareMatrix;
+            }
+            catch (InvalidCastException)
+            {
+                throw new InvalidCastException();
+            }
+
+        }
+
     }
 }
