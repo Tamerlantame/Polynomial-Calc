@@ -1,0 +1,2 @@
+﻿Допустимые команды:
+CreateFromFile(string path) - создание графа из файла path.

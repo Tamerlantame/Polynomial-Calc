@@ -5,7 +5,7 @@ using Arithmetics.Polynomial1;
 using GraphTheory;
 
 
-namespace ConsoleUI
+namespace WinFormsUI
 {
     /// <summary>
     /// Класс сеанса работы с графами. 
@@ -135,7 +135,7 @@ namespace ConsoleUI
                 Console.WriteLine(item);
             }
         }
-        //<<<<<<< HEAD
+       
        
         private void Create()
         {

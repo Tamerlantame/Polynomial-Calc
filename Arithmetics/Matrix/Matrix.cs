@@ -10,14 +10,15 @@ namespace Arithmetics.Matrix
 
         public T this[int index0, int index1]
         {
-            get
-            {
-                if ((elements.GetLength(0) < index0) && (elements.GetLength(1) < index1))
+            get  => elements[index0, index1] ;
+            /*{ 
+               /* if ((elements.GetLength(0) < index0) && (elements.GetLength(1) < index1))
                 {
                     return elements[index0, index1];
                 }
                 else return default;
-            }
+
+            }*/
             set => elements[index0, index1] = value;
         }
         public Matrix(int n, int m)
@@ -59,8 +60,7 @@ namespace Arithmetics.Matrix
                     elements[i, j] = matrix.elements[i, j];
                 }
             }
-        }
-       
+        }       
         public Matrix(int n, int m, T[,] coeff)
         {
             Rows = n;
