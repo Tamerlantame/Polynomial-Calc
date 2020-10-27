@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConsoleUI.Forms;
 using WinFormsUI.Sessions;
 
 namespace WinFormsUI.Forms
 {
+
     public partial class UIFormWithTabs : Form
+
     {
         public UIFormWithTabs()
         {
@@ -32,25 +27,43 @@ namespace WinFormsUI.Forms
             }
         }
 
+      //!!!!!!!!!!!!!!!!
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string title = "untitled " + (tabControl1.TabCount + 1).ToString();
-            TabPage newTabPage = new TabPage(title)
-            {
-                Name = title
-            };
-            tabControl1.TabPages.Add(newTabPage);
-            tabControl1.SelectTab(newTabPage);
+
             RichTextBox newRichTextBox = new RichTextBox
             {
                 Location = new System.Drawing.Point(0, 0),
-                Name = newTabPage.Name,
-                Size = newTabPage.Size,
+                //  Name = newTabPage.Name,
+
                 Text = ""
             };
-            newTabPage.Controls.Add(newRichTextBox);
             GraphSession newSession = new GraphSession(newRichTextBox, richTextBoxOutput);
+           
+                LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
+                {
+                    Name = title
+                };
+            newRichTextBox.Size = newTabPage.Size;
+
+
+
+            tabControl1.TabPages.Add(newTabPage);
+            tabControl1.SelectTab(newTabPage);
+
+            newTabPage.Controls.Add(newRichTextBox);
             newSession.Start();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // tabControl1.SelectedTab.Name;
+        }
+
+        private void graphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

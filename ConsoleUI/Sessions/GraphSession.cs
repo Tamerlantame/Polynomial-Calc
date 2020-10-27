@@ -41,6 +41,8 @@ namespace WinFormsUI.Sessions
                     //outputRichTextBox.Text += $"{inputRichTextBox.SelectedText}\n";
                 } else
                 {
+                    CommandStory.Add(inputRichTextBox.Text);
+                    
                     GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
                     if (result.ExceptionsList.Count != 0)
                     {

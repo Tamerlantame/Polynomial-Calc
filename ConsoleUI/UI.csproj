@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\LyaMelikTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\UIFormWithTabs.cs">
       <SubType>Form</SubType>
     </Compile>

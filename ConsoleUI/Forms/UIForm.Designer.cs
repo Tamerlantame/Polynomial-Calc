@@ -35,7 +35,6 @@ namespace WinFormsUI
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.createToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +45,7 @@ namespace WinFormsUI
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.logicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,21 +53,20 @@ namespace WinFormsUI
             // 
             this.richTextBox1.Enabled = false;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(475, 45);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.richTextBox1.Location = new System.Drawing.Point(633, 55);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(411, 366);
+            this.richTextBox1.Size = new System.Drawing.Size(547, 450);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
             // dialogue_value
             // 
             this.dialogue_value.AutoSize = true;
-            this.dialogue_value.Location = new System.Drawing.Point(28, 50);
-            this.dialogue_value.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.dialogue_value.Location = new System.Drawing.Point(37, 62);
             this.dialogue_value.Name = "dialogue_value";
-            this.dialogue_value.Size = new System.Drawing.Size(0, 13);
+            this.dialogue_value.Size = new System.Drawing.Size(0, 17);
             this.dialogue_value.TabIndex = 2;
             // 
             // menuStrip1
@@ -79,8 +78,8 @@ namespace WinFormsUI
             this.logicToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(921, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1228, 28);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -93,7 +92,7 @@ namespace WinFormsUI
             this.saveToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
-            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
             this.graphsToolStripMenuItem.Text = "Graph";
             // 
             // createToolStripMenuItem
@@ -101,33 +100,26 @@ namespace WinFormsUI
             this.createToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.createToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.createToolStripMenuItem.Text = "Create";
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(33, 45);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(411, 366);
-            this.richTextBox2.TabIndex = 9;
-            this.richTextBox2.Text = "";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // createToolStripMenuItem1
             // 
             this.createToolStripMenuItem1.Name = "createToolStripMenuItem1";
-            this.createToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.createToolStripMenuItem1.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
@@ -139,31 +131,31 @@ namespace WinFormsUI
             this.saveToolStripMenuItem1,
             this.helpToolStripMenuItem1});
             this.polynomialToolStripMenuItem.Name = "polynomialToolStripMenuItem";
-            this.polynomialToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.polynomialToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
             this.polynomialToolStripMenuItem.Text = "Polynomial";
             // 
             // createToolStripMenuItem2
             // 
             this.createToolStripMenuItem2.Name = "createToolStripMenuItem2";
-            this.createToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem2.Size = new System.Drawing.Size(135, 26);
             this.createToolStripMenuItem2.Text = "Create";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(135, 26);
             this.saveToolStripMenuItem1.Text = "Save";
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(135, 26);
             this.helpToolStripMenuItem1.Text = "Help";
             // 
             // logicToolStripMenuItem
@@ -171,26 +163,35 @@ namespace WinFormsUI
             this.logicToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createToolStripMenuItem3});
             this.logicToolStripMenuItem.Name = "logicToolStripMenuItem";
-            this.logicToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.logicToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.logicToolStripMenuItem.Text = "Logic";
             // 
             // createToolStripMenuItem3
             // 
             this.createToolStripMenuItem3.Name = "createToolStripMenuItem3";
-            this.createToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem3.Size = new System.Drawing.Size(135, 26);
             this.createToolStripMenuItem3.Text = "Create";
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(44, 55);
+            this.richTextBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(547, 450);
+            this.richTextBox2.TabIndex = 9;
+            this.richTextBox2.Text = "";
             // 
             // UIForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(921, 452);
+            this.ClientSize = new System.Drawing.Size(1228, 556);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.dialogue_value);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UIForm";
             this.Text = "TrivialComputerMath";
             this.Load += new System.EventHandler(this.Form1_Load);
