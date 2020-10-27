@@ -35,7 +35,6 @@ namespace WinFormsUI
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.createToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +45,7 @@ namespace WinFormsUI
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.logicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,33 +101,25 @@ namespace WinFormsUI
             this.createToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.createToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem.Text = "Create";
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(33, 45);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(411, 366);
-            this.richTextBox2.TabIndex = 9;
-            this.richTextBox2.Text = "";
             // 
             // createToolStripMenuItem1
             // 
             this.createToolStripMenuItem1.Name = "createToolStripMenuItem1";
-            this.createToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem1.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
@@ -145,25 +137,25 @@ namespace WinFormsUI
             // createToolStripMenuItem2
             // 
             this.createToolStripMenuItem2.Name = "createToolStripMenuItem2";
-            this.createToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem2.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem2.Text = "Create";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             // 
             // logicToolStripMenuItem
@@ -177,8 +169,16 @@ namespace WinFormsUI
             // createToolStripMenuItem3
             // 
             this.createToolStripMenuItem3.Name = "createToolStripMenuItem3";
-            this.createToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem3.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem3.Text = "Create";
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(33, 45);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(411, 366);
+            this.richTextBox2.TabIndex = 9;
+            this.richTextBox2.Text = "";
             // 
             // UIForm
             // 

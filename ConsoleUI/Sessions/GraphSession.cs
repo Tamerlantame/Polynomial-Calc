@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GraphTheory;
 using WinFormsUI;
+using System.IO;
+using Arithmetics.Parsers;
 
 namespace WinFormsUI.Sessions
 {
@@ -39,22 +41,35 @@ namespace WinFormsUI.Sessions
                 if(inputRichTextBox.SelectedText != "") {
                     //Вычисляем выделенную часть программы    
                     //outputRichTextBox.Text += $"{inputRichTextBox.SelectedText}\n";
-                } else
+                }
+                else
                 {
-                    GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
-                    if (result.ExceptionsList.Count != 0)
+                    var text = inputRichTextBox.Lines.Last();
+                    using (var reader = new StringReader(text))
                     {
-                        foreach (Exception exc in result.ExceptionsList)
-                        {
-                            outputRichTextBox.Text += $"{exc.Message}\n";
-                        }
+                        var parser = new Parser();
+                        var tokens = parser.Tokenize(reader).ToList();
+                        //Console.WriteLine(string.Join("\n", tokens));
+
+                        var rpn = parser.ShuntingYard(tokens);
+                        //Console.WriteLine(string.Join(" ", rpn.Select(t => t.Value)));
+                        outputRichTextBox.Text = string.Join(" ", rpn.Select(t => t.Value));
                     }
-                    else foreach(Graph g in result.GraphsList)
-                        {
-                            outputRichTextBox.Text += $"{g}\n";
-                        }
+                    //GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
+                    //if (result.ExceptionsList.Count != 0)
+                    //{
+                    //    foreach (Exception exc in result.ExceptionsList)
+                    //    {
+                    //        outputRichTextBox.Text += $"{exc.Message}\n";
+                    //    }
+                    //}
+                    //else foreach(Graph g in result.GraphsList)
+                    //    {
+                    //        outputRichTextBox.Text += $"{g}\n";
+                    //    }
                 }
             }
+            
         }
     }
 }

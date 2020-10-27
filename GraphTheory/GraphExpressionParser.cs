@@ -8,7 +8,7 @@ namespace GraphTheory
 {
     /// <summary>
     /// Вероятно, совершенно не нужный класс, но удобный для того, чтобы "началась работа".
-    /// Ничего в нём нет отличного от <see cref="Arithmetics.Parsers.PolynomialExpressionParser"/>
+    /// Ничего в нём нет отличного от <see cref="Arithmetics.Parsers.Parser"/>
     /// Сейчас же просто преобразует строку с только одним оператором, создания графа.
     /// </summary>
     public class GraphExpressionParser
