@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Arithmetics.Matrix;
 using GraphTheory;
 using Microsoft.VisualBasic;
 
@@ -56,7 +57,7 @@ namespace WinFormsUI
                 string path = dialog.FileName;
 
 
-                Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
+                Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = (IntegerSquareMatrix)IntegerMatrix.GetFromFile(path);
                 if (graphMatrix.Columns == 0)
                 {
                     return;

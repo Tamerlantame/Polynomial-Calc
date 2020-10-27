@@ -36,14 +36,6 @@ namespace Arithmetics.Matrix
                 E[k, k] = 1;
             return E;
         }
-
-        //TODO Если из файла, то надо проверять, что в файле, квадратная ли?
-
-        [Obsolete]
-        public IntegerSquareMatrix(string path) : base(path)
-        {
-
-        }
         
         public override bool IsSymmetric()
         {

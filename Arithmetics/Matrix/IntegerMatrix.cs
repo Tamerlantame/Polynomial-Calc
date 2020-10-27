@@ -28,23 +28,6 @@ namespace Arithmetics.Matrix
         {
         }
 
-        ///<summary>  Создание матрицы по ссылке на текстовый файл с матрицей; полагается, что матрица написана правильно
-        ///
-        /// 
-        /// 
-        ///TODO: Избавиться от этого конструктора. Не ясно, что должно быть в файле, в каком виде. Какие происходят ошибки???
-        ///Это должно быть не здесь.
-        ///
-
-        [ObsoleteAttribute("Избавиться от этого конструктора.")]
-        public IntegerMatrix(string path)
-        {
-            {
-                GetFromFile(path);
-            }
-
-        }
-
         public static IntegerMatrix GetFromFile(string path)
         {
             string[] text;

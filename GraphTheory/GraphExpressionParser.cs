@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arithmetics.Matrix;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace GraphTheory
                     string path = expr.Substring(startIndex, endIndex-startIndex);
                     string name = expr.Contains(":=") ? expr.Substring(0, expr.IndexOf(":=")) : "";
                     Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = null;
-                    graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
+                    graphMatrix = (IntegerSquareMatrix)IntegerMatrix.GetFromFile(path);
                     if (graphMatrix.Columns == 0)
                     {
                         exceptionsList.Add(new FormatException("Incorrect matrix size in file"));

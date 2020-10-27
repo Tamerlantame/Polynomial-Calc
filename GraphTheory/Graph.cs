@@ -208,7 +208,7 @@ namespace GraphTheory
         /// <returns></returns>
         public static Graph GetFromFile(string path)
         {
-            Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = new Arithmetics.Matrix.IntegerSquareMatrix(path);
+            Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = (IntegerSquareMatrix)IntegerMatrix.GetFromFile(path);
             if (graphMatrix.Columns == 0)
             {
                 return null;
