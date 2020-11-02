@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using ConsoleUI.Forms;
@@ -13,9 +14,7 @@ namespace WinFormsUI.Forms
         public UIFormWithTabs()
         {
             InitializeComponent();
-            GraphSession newSession = new GraphSession(richTextBox1, richTextBoxOutput);
-            newSession.Start();
-        }
+            CreateGraphSession();        }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -27,43 +26,43 @@ namespace WinFormsUI.Forms
             }
         }
 
-      //!!!!!!!!!!!!!!!!
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string title = "untitled " + (tabControl1.TabCount + 1).ToString();
-
-            RichTextBox newRichTextBox = new RichTextBox
-            {
-                Location = new System.Drawing.Point(0, 0),
-                //  Name = newTabPage.Name,
-
-                Text = ""
-            };
-            GraphSession newSession = new GraphSession(newRichTextBox, richTextBoxOutput);
-           
-                LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
-                {
-                    Name = title
-                };
-            newRichTextBox.Size = newTabPage.Size;
-
-
-
-            tabControl1.TabPages.Add(newTabPage);
-            tabControl1.SelectTab(newTabPage);
-
-            newTabPage.Controls.Add(newRichTextBox);
-            newSession.Start();
+            CreateGraphSession();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // tabControl1.SelectedTab.Name;
+            LyaMelikTabPage currentPage=(LyaMelikTabPage)tabControl1.SelectedTab;
+            
+            currentPage.CurrentSession.SaveSession();   
         }
 
         private void graphToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+        private void CreateGraphSession()
+        {
+            string title = "GraphSession " + (tabControl1.TabCount + 1).ToString();
+
+            RichTextBox newRichTextBox = new RichTextBox
+            {
+                Location = new System.Drawing.Point(0, 0),
+                Name = title,
+                Size = richTextBox1.Size,
+                Text = ""
+            };
+            GraphSession newSession = new GraphSession(newRichTextBox, richTextBoxOutput);
+            LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
+            {
+                Name = title
+            };
+            tabControl1.TabPages.Add(newTabPage);
+            tabControl1.SelectTab(newTabPage);
+            newTabPage.Controls.Add(newRichTextBox);
+
+            newSession.Start();
         }
     }
 }

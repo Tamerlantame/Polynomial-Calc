@@ -119,7 +119,7 @@
             this.richTextBoxOutput.TabIndex = 2;
             this.richTextBoxOutput.Text = "";
             // 
-            // tabPage1
+        /*    // tabPage1
             // 
             this.tabPage1.Controls.Add(this.richTextBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
@@ -128,8 +128,8 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Size = new System.Drawing.Size(1025, 292);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "untitled 1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Text = "GraphSession 1";
+            this.tabPage1.UseVisualStyleBackColor = true;*/
             // 
             // richTextBox1
             // 
@@ -142,7 +142,7 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+          //  this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(17, 34);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";

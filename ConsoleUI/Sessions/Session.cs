@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsUI.Sessions
@@ -13,7 +10,7 @@ namespace WinFormsUI.Sessions
         protected readonly RichTextBox inputRichTextBox;
         protected readonly RichTextBox outputRichTextBox;
         public string Name { get; }
-        protected List<string> CommandStory; 
+        protected List<string> CommandStory;
 
         public Session(RichTextBox input, RichTextBox output)
         {
@@ -22,17 +19,12 @@ namespace WinFormsUI.Sessions
             Name = inputRichTextBox.Name;
             CommandStory = new List<string>();
         }
-        private void SaveSession()
+        public void SaveSession()
         {
-
-            foreach (string item in CommandStory)
-            {
-                string writePath = @"C:\";
-                using (StreamWriter sw = new StreamWriter(writePath, true))
-                {
-                    sw.WriteLine(item);
-                }
-            }
+            DirectoryInfo dirInfo = new DirectoryInfo(@"C:\\LyaMelik");
+            if (!dirInfo.Exists) dirInfo.Create();
+            //TODO имена будут повторяться, решить это
+            File.WriteAllLines(Path.Combine(dirInfo.FullName, Name), CommandStory);
         }
 
     }
