@@ -44,29 +44,20 @@ namespace WinFormsUI.Sessions
                 }
                 else
                 {
-                    var text = inputRichTextBox.Lines.Last();
-                    using (var reader = new StringReader(text))
+                    CommandStory.Add(inputRichTextBox.Text);
+                    
+                    GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
+                    if (result.ExceptionsList.Count != 0)
                     {
-                        var parser = new Parser();
-                        var tokens = parser.Tokenize(reader).ToList();
-                        //Console.WriteLine(string.Join("\n", tokens));
-
-                        var rpn = parser.ShuntingYard(tokens);
-                        //Console.WriteLine(string.Join(" ", rpn.Select(t => t.Value)));
-                        outputRichTextBox.Text = string.Join(" ", rpn.Select(t => t.Value));
+                        foreach (Exception exc in result.ExceptionsList)
+                        {
+                            outputRichTextBox.Text += $"{exc.Message}\n";
+                        }
                     }
-                    //GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
-                    //if (result.ExceptionsList.Count != 0)
-                    //{
-                    //    foreach (Exception exc in result.ExceptionsList)
-                    //    {
-                    //        outputRichTextBox.Text += $"{exc.Message}\n";
-                    //    }
-                    //}
-                    //else foreach(Graph g in result.GraphsList)
-                    //    {
-                    //        outputRichTextBox.Text += $"{g}\n";
-                    //    }
+                    else foreach(Graph g in result.GraphsList)
+                        {
+                            outputRichTextBox.Text += $"{g}\n";
+                        }
                 }
             }
             

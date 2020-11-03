@@ -102,6 +102,11 @@ namespace WinFormsUI
                 richTextBox1.Text = richTextBox1.Text + item + "\n";
             }
         }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
