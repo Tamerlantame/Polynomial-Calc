@@ -57,6 +57,7 @@
     <Compile Include="Exception\Polynomial\InvalidPolynomialStringException.cs" />
     <Compile Include="Parsers\Shunting-yard algorithm.cs" />
     <Compile Include="Parsers\PolynomialParser.cs" />
+    <Compile Include="Parsers\Сulculator.cs" />
     <Compile Include="Polynomial\Polynomial.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
     <Compile Include="Functions\SternBrocotFunctions.cs" />
