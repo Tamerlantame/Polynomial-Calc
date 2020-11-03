@@ -41,8 +41,6 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -82,6 +80,7 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -112,29 +111,24 @@
             // richTextBoxOutput
             // 
             this.richTextBoxOutput.Location = new System.Drawing.Point(23, 364);
-            this.richTextBoxOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBoxOutput.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBoxOutput.Name = "richTextBoxOutput";
             this.richTextBoxOutput.ReadOnly = true;
             this.richTextBoxOutput.Size = new System.Drawing.Size(1021, 174);
             this.richTextBoxOutput.TabIndex = 2;
             this.richTextBoxOutput.Text = "";
             // 
-        /*    // tabPage1
+            // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.richTextBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Location = new System.Drawing.Point(0, 0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1025, 292);
+            this.tabPage1.Size = new System.Drawing.Size(200, 100);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "GraphSession 1";
-            this.tabPage1.UseVisualStyleBackColor = true;*/
             // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(1021, 288);
             this.richTextBox1.TabIndex = 0;
@@ -142,9 +136,8 @@
             // 
             // tabControl1
             // 
-          //  this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(17, 34);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1033, 321);
@@ -159,13 +152,11 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UIFormWithTabs";
             this.Text = "TrivialComputerMathematics";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

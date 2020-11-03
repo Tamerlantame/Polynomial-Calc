@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using ConsoleUI.Forms;
@@ -14,7 +13,8 @@ namespace WinFormsUI.Forms
         public UIFormWithTabs()
         {
             InitializeComponent();
-            CreateGraphSession();        }
+            CreateGraphSession();
+        }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -33,9 +33,9 @@ namespace WinFormsUI.Forms
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LyaMelikTabPage currentPage=(LyaMelikTabPage)tabControl1.SelectedTab;
-            
-            currentPage.CurrentSession.SaveSession();   
+            LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+
+            currentPage.CurrentSession.SaveSession();
         }
 
         private void graphToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,6 +63,17 @@ namespace WinFormsUI.Forms
             newTabPage.Controls.Add(newRichTextBox);
 
             newSession.Start();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+               string sessionText =File.ReadAllText(dialog.FileName);
+                LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+                currentPage.CurrentSession.SetInputBoxText(sessionText);
+            }
         }
     }
 }

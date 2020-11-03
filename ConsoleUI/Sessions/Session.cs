@@ -7,7 +7,7 @@ namespace WinFormsUI.Sessions
 {
     abstract class Session
     {
-        protected readonly RichTextBox inputRichTextBox;
+        protected  RichTextBox inputRichTextBox;
         protected readonly RichTextBox outputRichTextBox;
         public string Name { get; }
         protected List<string> CommandStory;
@@ -21,11 +21,16 @@ namespace WinFormsUI.Sessions
         }
         public void SaveSession()
         {
-            DirectoryInfo dirInfo = new DirectoryInfo(@"C:\\LyaMelik");
-            if (!dirInfo.Exists) dirInfo.Create();
-            //TODO имена будут повторяться, решить это
-            File.WriteAllLines(Path.Combine(dirInfo.FullName, Name), CommandStory);
+            SaveFileDialog dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = dialog.InitialDirectory;
+                File.WriteAllLines(path, CommandStory);
+            }
         }
-
+        public void SetInputBoxText(string text)
+        {
+            inputRichTextBox.Text = text;
+        }
     }
 }
