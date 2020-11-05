@@ -28,6 +28,7 @@ namespace Arithmetics.Parsers
             Type = type;
             Value = value;
         }
+
     }
     class Operator : IComparable<Operator>
     {
@@ -131,8 +132,11 @@ namespace Arithmetics.Parsers
                             while (stack.Peek().Value != "(")
                                 yield return stack.Pop();
                             stack.Pop();
-                            if (stack.Peek().Type == TokenType.Function)
-                                yield return stack.Pop();
+                            if (stack.Count != 0)
+                            {
+                                if (stack.Peek().Type == TokenType.Function)
+                                    yield return stack.Pop();
+                            }
                         }
                         break;
                     default:

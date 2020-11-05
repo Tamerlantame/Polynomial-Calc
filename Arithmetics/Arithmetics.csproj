@@ -49,21 +49,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryTree.cs" />
+    <Compile Include="Functions\BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
-    <Compile Include="ISequence.cs" />
+    <Compile Include="Functions\ISequence.cs" />
     <Compile Include="Matrix\IntegerMatrix.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Exception\Polynomial\InvalidPolynomialStringException.cs" />
     <Compile Include="Parsers\Shunting-yard algorithm.cs" />
     <Compile Include="Parsers\PolynomialParser.cs" />
+    <Compile Include="Parsers\Сulculator.cs" />
     <Compile Include="Polynomial\Polynomial.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
-    <Compile Include="SternBrocotFunctions.cs" />
+    <Compile Include="Functions\SternBrocotFunctions.cs" />
     <Compile Include="Fraction\Fraction.cs" />
     <Compile Include="Matrix\IntegerSquareMatrix.cs" />
-    <Compile Include="NumberFunctions.cs" />
-    <Compile Include="EuclidFunctions.cs" />
+    <Compile Include="Functions\NumberFunctions.cs" />
+    <Compile Include="Functions\EuclidFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

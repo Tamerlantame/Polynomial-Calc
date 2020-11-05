@@ -15,25 +15,19 @@ namespace WinFormsUI
     {
         [STAThread]
 
-        static void Main()
+        //static void Main()
+        //{
+        //    Application.EnableVisualStyles();
+        //    Application.SetCompatibleTextRenderingDefault(false);
+        //    Application.Run(new UIFormWithTabs());
+        //}
+        public static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UIFormWithTabs());
+            var text = "(2+2)*2/(4+4)";
+            Console.WriteLine(Arithmetics.Сulculator.ExpressionToRPN(text));
+            Console.WriteLine(Arithmetics.Сulculator.RPNtoAnswer(Arithmetics.Сulculator.ExpressionToRPN(text)));
 
         }
-        //public static void Main(string[] args)
-        //{
-        //    var text = Console.ReadLine();
-        //    using (var reader = new StringReader(text))
-        //    {
-        //        var parser = new Parser();
-        //        var tokens = parser.Tokenize(reader).ToList();
-        //        //Console.WriteLine(string.Join("\n", tokens));
 
-        //        var rpn = parser.ShuntingYard(tokens);
-        //        Console.WriteLine(string.Join(" ", rpn.Select(t => t.Value)));
-        //    }
-        //}
     }
 }

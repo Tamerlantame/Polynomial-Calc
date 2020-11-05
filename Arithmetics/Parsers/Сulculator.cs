@@ -10,6 +10,7 @@ namespace Arithmetics
 {
     public class Сulculator
     {
+        private delegate Token Computation(Token leftOp, Token rightOp);
 
         /// <summary>
         /// Парсит строку в обратную польскую запись
@@ -36,12 +37,10 @@ namespace Arithmetics
             var text = expression;
             var reader = new StringReader(text);
             var parser = new Parser();
-            var tokens = parser.Tokenize(reader).ToList().ToArray();
+            var tokens = parser.Tokenize(reader).ToArray();
             var stack = new Stack<Token>();
-            Token rightOp;
-            Token leftOp;
-            double result;
-            for(int i = 0; i < tokens.Length; i++)
+            Token leftOp, rightOp, result;
+            for (int i = 0; i < tokens.Length; i++)
             {
                 switch (tokens[i].Type)
                 {
@@ -55,40 +54,36 @@ namespace Arithmetics
                     //    stack.Push(tok);
                     //    break;
                     case TokenType.Operator:
-                        rightOp = stack.Pop();
-                        leftOp = stack.Pop();
-
-                        // если в стеке храняться 2 числа
-
-                        if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
+                        Computation computation = new Computation(Add);
+                        try
                         {
-                            switch (tokens[i].Value)
-                            {
-
-                                case "^":
-                                    result = Math.Pow(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
-                                    stack.Push(new Token(TokenType.Number, result.ToString()));
-                                    break;
-                                case "*":
-                                    result = Convert.ToDouble(leftOp.Value) * Convert.ToDouble(rightOp.Value);
-                                    stack.Push(new Token(TokenType.Number, result.ToString()));
-                                    break;
-                                case "/":
-                                    result = Convert.ToDouble(leftOp.Value) / Convert.ToDouble(rightOp.Value);
-                                    stack.Push(new Token(TokenType.Number, result.ToString()));
-                                    break;
-                                case "+":
-                                    result = Convert.ToDouble(leftOp.Value) + Convert.ToDouble(rightOp.Value);
-                                    stack.Push(new Token(TokenType.Number, result.ToString()));
-                                    break;
-                                case "-":
-                                    result = Convert.ToDouble(leftOp.Value) - Convert.ToDouble(rightOp.Value);
-                                    stack.Push(new Token(TokenType.Number, result.ToString()));
-                                    break;
-                                default:
-                                    break;
-                            }
+                            rightOp = stack.Pop();
+                            leftOp = stack.Pop();
                         }
+                        catch (System.InvalidOperationException)
+                        {
+                            throw new System.InvalidOperationException();
+                        }
+                        switch (tokens[i].Value)
+                        {
+                            case "^":
+                                computation = Pow;
+                                break;
+                            case "*":
+                                computation = Multiply;
+                                break;
+                            case "/":
+                                computation = Div;
+                                break;
+                            case "+":
+                                computation = Add;
+                                break;
+                            case "-":
+                                computation = Sub;
+                                break;
+                        }
+                        result = computation(leftOp, rightOp);
+                        stack.Push(result);
                         break;
 
                     default:
@@ -99,5 +94,43 @@ namespace Arithmetics
 
             return text;
         }
+        private static Token Add(Token leftOp, Token rightOp)
+        {
+            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
+                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) + Convert.ToDouble(rightOp.Value)));
+
+            return new Token();
+        }
+        private static Token Sub(Token leftOp, Token rightOp)
+        {
+            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
+                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) - Convert.ToDouble(rightOp.Value)));
+
+            return new Token();
+        }
+        private static Token Multiply(Token leftOp, Token rightOp)
+        {
+            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
+                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) * Convert.ToDouble(rightOp.Value)));
+
+            return new Token();
+        }
+        private static Token Div(Token leftOp, Token rightOp)
+        {
+            if (Convert.ToInt32(rightOp.Value) == 0)
+                throw new DivideByZeroException("Деление на 0 не поддерживается");
+            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
+                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) / Convert.ToDouble(rightOp.Value)));
+
+            return new Token();
+        }
+        private static Token Pow(Token leftOp, Token rightOp)
+        {
+            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
+                return new Token(TokenType.Number, Convert.ToString(Math.Pow(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value))));
+
+            return new Token();
+        }
+
     }
 }
