@@ -150,10 +150,13 @@
             this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.richTextBoxOutput);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.tabControl1);
+
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UIFormWithTabs";
             this.Text = "TrivialComputerMathematics";
+
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
