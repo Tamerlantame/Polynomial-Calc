@@ -39,7 +39,7 @@ namespace Arithmetics
             var parser = new Parser();
             var tokens = parser.Tokenize(reader).ToArray();
             var stack = new Stack<Token>();
-            Token leftOp, rightOp, result;
+            Token leftOp, rightOp;//, result;
             for (int i = 0; i < tokens.Length; i++)
             {
                 switch (tokens[i].Type)
@@ -54,7 +54,8 @@ namespace Arithmetics
                     //    stack.Push(tok);
                     //    break;
                     case TokenType.Operator:
-                        Computation computation = new Computation(Add);
+                        //if(Parser.operators.ContainsKey(tokens[i].Value))
+                        //Computation computation = new Computation(Add);
                         try
                         {
                             rightOp = stack.Pop();
@@ -64,7 +65,7 @@ namespace Arithmetics
                         {
                             throw new System.InvalidOperationException();
                         }
-                        switch (tokens[i].Value)
+                        /*switch (tokens[i].Value)
                         {
                             case "^":
                                 computation = Pow;
@@ -82,8 +83,9 @@ namespace Arithmetics
                                 computation = Sub;
                                 break;
                         }
-                        result = computation(leftOp, rightOp);
-                        stack.Push(result);
+                        result = computation(leftOp, rightOp);*/
+                        double result = Parser.operators[tokens[i].Value].function(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
+                        stack.Push(new Token(TokenType.Number, result.ToString()));
                         break;
 
                     default:
