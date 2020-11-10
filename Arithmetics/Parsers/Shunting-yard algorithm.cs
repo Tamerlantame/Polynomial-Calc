@@ -15,6 +15,8 @@ namespace Arithmetics.Parsers
     //https://www.codeproject.com/Tips/351042/Shunting-Yard-algorithm-in-Csharp
     public enum TokenType { Number, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
 
+    public delegate double BinaryFunc(double leftOp, double rightOp);
+
     public struct Token
     {
         public TokenType Type { get; }
@@ -30,11 +32,13 @@ namespace Arithmetics.Parsers
         }
 
     }
-    class Operator : IComparable<Operator>
+    public class Operator : IComparable<Operator>
     {
         public string Name { get; set; }
         public int Precedence { get; set; }
         public bool RightAssociative { get; set; }
+
+        public BinaryFunc function;
 
         public int CompareTo(Operator other)
         {
@@ -43,13 +47,13 @@ namespace Arithmetics.Parsers
     }
     public class Parser
     {
-        private IDictionary<string, Operator> operators = new Dictionary<string, Operator>
+        public static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
-            ["+"] = new Operator { Name = "+", Precedence = 1 },
-            ["-"] = new Operator { Name = "-", Precedence = 1 },
-            ["*"] = new Operator { Name = "*", Precedence = 2 },
-            ["/"] = new Operator { Name = "/", Precedence = 2 },
-            ["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true }
+            ["+"] = new Operator { Name = "+", Precedence = 1, function = ((double x, double y) => x + y) },
+            ["-"] = new Operator { Name = "-", Precedence = 1, function = ((double x, double y) => x - y) },
+            ["*"] = new Operator { Name = "*", Precedence = 2, function = ((double x, double y) => x * y) },
+            ["/"] = new Operator { Name = "/", Precedence = 2, function = ((double x, double y) => x / y) },
+            ["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
 
         };
         private bool CompareOperators(Operator op1, Operator op2)
