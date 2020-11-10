@@ -57,6 +57,11 @@
     <Compile Include="Forms\UIFormWithTabs.Designer.cs">
       <DependentUpon>UIFormWithTabs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Sessions\GraphSession.cs" />
     <Compile Include="Forms\UIForm.cs">
       <SubType>Form</SubType>
@@ -96,6 +101,7 @@
     <Content Include="Menu\Help.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\CrossImage.bmp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\UIForm.resx">
@@ -103,6 +109,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UIFormWithTabs.resx">
       <DependentUpon>UIFormWithTabs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
