@@ -9,10 +9,9 @@ namespace WinFormsUI.Sessions
     abstract class Session
     {
         protected  RichTextBox inputRichTextBox;
-        protected readonly RichTextBox outputRichTextBox;
+        protected  RichTextBox outputRichTextBox;
         public string Name { get; }
         protected List<string> CommandStory;
-        public Thread SessionThread;
         public Session(RichTextBox input, RichTextBox output)
         {
 

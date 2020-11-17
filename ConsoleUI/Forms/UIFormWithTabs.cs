@@ -23,12 +23,12 @@ namespace WinFormsUI.Forms
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            richTextBoxOutput.Text = "";
-            string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Menu//GraphHelp.txt"));
-            foreach (string item in text)
-            {
-                richTextBoxOutput.Text = richTextBoxOutput.Text + item + "\n";
-            }
+            //    richTextBoxOutput.Text = "";
+            //    string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Menu//GraphHelp.txt"));
+            //    foreach (string item in text)
+            //    {
+            //        richTextBoxOutput.Text = richTextBoxOutput.Text + item + "\n";
+            //    }
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -54,16 +54,19 @@ namespace WinFormsUI.Forms
             RichTextBox newRichTextBox = new RichTextBox
             {
                 Location = new System.Drawing.Point(0, 0),
-                Name = title,
-                Size = richTextBox1.Size,
+                Margin = new System.Windows.Forms.Padding(4),
+                Name = "richTextBox1",
+                Size = new System.Drawing.Size(1021, 288),
+                TabIndex = 0,
                 Text = ""
             };
             RichTextBox newOutputRichTextBox = new RichTextBox
             {
-                Location = richTextBoxOutput.Location,
-                Name = title,
-                Size = richTextBoxOutput.Size,
-                Text = ""
+                Location = new System.Drawing.Point(17, 296),
+                Name = "richTextBoxOutput",
+                ReadOnly = true,
+                Size = new System.Drawing.Size(767, 142),
+                Text = "",
             };
             GraphSession newSession = new GraphSession(newRichTextBox, newOutputRichTextBox);
             LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
@@ -73,7 +76,7 @@ namespace WinFormsUI.Forms
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectTab(newTabPage);
             newTabPage.Controls.Add(newRichTextBox);
-
+            newTabPage.Controls.Add(newOutputRichTextBox);
             newSession.Start();
         }
 
