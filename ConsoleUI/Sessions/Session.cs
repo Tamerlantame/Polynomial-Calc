@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WinFormsUI.Sessions
@@ -11,9 +12,10 @@ namespace WinFormsUI.Sessions
         protected readonly RichTextBox outputRichTextBox;
         public string Name { get; }
         protected List<string> CommandStory;
-
+        public Thread SessionThread;
         public Session(RichTextBox input, RichTextBox output)
         {
+
             inputRichTextBox = input;
             outputRichTextBox = output;
             Name = inputRichTextBox.Name;

@@ -58,7 +58,14 @@ namespace WinFormsUI.Forms
                 Size = richTextBox1.Size,
                 Text = ""
             };
-            GraphSession newSession = new GraphSession(newRichTextBox, richTextBoxOutput);
+            RichTextBox newOutputRichTextBox = new RichTextBox
+            {
+                Location = richTextBoxOutput.Location,
+                Name = title,
+                Size = richTextBoxOutput.Size,
+                Text = ""
+            };
+            GraphSession newSession = new GraphSession(newRichTextBox, newOutputRichTextBox);
             LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
             {
                 Name = title
@@ -90,24 +97,18 @@ namespace WinFormsUI.Forms
         }
         private void tabControl1_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
         {
-            try
-            {
-                Image img = new Bitmap(CloseImage);
-                Rectangle r = e.Bounds;
-                r = this.tabControl1.GetTabRect(e.Index);
-                r.Offset(2, 2);
-                Brush TitleBrush = new SolidBrush(Color.Black);
-                Font f = this.Font;
-                string title = this.tabControl1.TabPages[e.Index].Text;
 
-                e.Graphics.DrawString(title, f, TitleBrush, new PointF(r.X, r.Y));
+            Image img = new Bitmap(CloseImage);
+            Rectangle r = e.Bounds;
+            r = this.tabControl1.GetTabRect(e.Index);
+            r.Offset(2, 2);
+            Brush TitleBrush = new SolidBrush(Color.Black);
+            Font f = this.Font;
+            string title = this.tabControl1.TabPages[e.Index].Text;
 
-                if (tabControl1.SelectedIndex >= 1)
-                {
-                    e.Graphics.DrawImage(img, new Point(r.X + (this.tabControl1.GetTabRect(e.Index).Width - ImageLocation.X), ImageLocation.Y));
-                }
-            }
-            catch (Exception) { }
+            e.Graphics.DrawString(title, f, TitleBrush, new PointF(r.X, r.Y));
+            e.Graphics.DrawImage(img, new Point(r.X + (this.tabControl1.GetTabRect(e.Index).Width - ImageLocation.X), ImageLocation.Y));
+
         }
         private void TabControl1_Mouse_Click(object sender, MouseEventArgs e)
         {
@@ -117,16 +118,15 @@ namespace WinFormsUI.Forms
             rect.Offset(tabWidth, ImgHitArea.Y);
             rect.Width = 100;
             rect.Height = 100;
-            if (tabControl1.SelectedIndex >= 1)
             {
                 if (rect.Contains(e.Location))
                 {
                     TabPage TabP = (TabPage)tc.TabPages[tc.SelectedIndex];
                     tc.TabPages.Remove(TabP);
                 }
+
             }
 
         }
-
     }
 }
