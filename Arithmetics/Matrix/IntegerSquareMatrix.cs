@@ -18,6 +18,9 @@ namespace Arithmetics.Matrix
         public IntegerSquareMatrix(int n, int[,] coeff) : base(n, n, coeff)
         {
         }
+        public IntegerSquareMatrix(int[,] coeff) : base(coeff)
+        {
+        }
 
         public IntegerSquareMatrix(IntegerSquareMatrix matrix) : base(matrix)
         {
@@ -48,23 +51,10 @@ namespace Arithmetics.Matrix
             Transpose(matrix);
             return matrix;
         }
-        public static IntegerSquareMatrix operator *(IntegerSquareMatrix factor1, IntegerSquareMatrix factor2)
-        {
-            IntegerSquareMatrix composition = new IntegerSquareMatrix(factor1.Rows);
 
-            for (int i = 0; i < factor1.Rows; i++)
-            {
-                for (int j = 0; j < factor2.Columns; j++)
-                {
-                    for (int k = 0; k < factor2.Rows; k++)
-                        composition[i, j] += factor1[i, k] * factor2[k, j];
-
-                }
-            }
-            return composition;
-        }
-
-        public static IntegerSquareMatrix operator %(IntegerSquareMatrix divinded, int mod) => divinded % mod;
+        public static IntegerSquareMatrix operator +(IntegerSquareMatrix matrix1, IntegerSquareMatrix matrix2) => (new IntegerMatrix(matrix1) * new IntegerMatrix(matrix2)).ConvertToIntegerSquareMatrix();
+        public static IntegerSquareMatrix operator *(IntegerSquareMatrix factor1, IntegerSquareMatrix factor2) => (new IntegerMatrix(factor1) * new IntegerMatrix(factor2)).ConvertToIntegerSquareMatrix();
+        public static IntegerSquareMatrix operator % (IntegerSquareMatrix divinded, int mod) => (new IntegerMatrix(divinded) % mod).ConvertToIntegerSquareMatrix();
 
         /// <summary>
         /// Repeated Squaring algorithm for <paramref name="deg"/> power of the matrix modulo <paramref name="mod"/>
@@ -239,7 +229,10 @@ namespace Arithmetics.Matrix
             return matrix;
         }
 
+        
     }
+
+
 }
 
 

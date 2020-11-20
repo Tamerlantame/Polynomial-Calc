@@ -110,7 +110,22 @@ namespace Arithmetics.Matrix
             Transpose(matrix);
             return matrix;
         }
+        public static IntegerMatrix operator + (IntegerMatrix matrix1, IntegerMatrix matrix2)
+        {
+            int rows = Math.Max(matrix1.Rows, matrix2.Rows);
+            int columns = Math.Max(matrix1.Columns, matrix2.Columns);
 
+            IntegerMatrix sum = new IntegerMatrix(rows, columns);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    sum[i, j] = matrix1[i, j] + matrix2[i, j];
+                }
+            }
+            return sum;
+        }
         public static IntegerMatrix operator *(IntegerMatrix factor1, IntegerMatrix factor2)
         {
 
