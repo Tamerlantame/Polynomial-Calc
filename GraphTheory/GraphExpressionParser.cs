@@ -33,6 +33,7 @@ namespace GraphTheory
                         exceptionsList.Add(new FormatException("Incorrect matrix size in file"));
                     }
                     graphsList.Add(new Graph(graphMatrix, name));
+                  
                 }
                 catch(Exception e)
                 {

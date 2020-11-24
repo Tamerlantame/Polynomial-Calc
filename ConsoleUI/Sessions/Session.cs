@@ -20,6 +20,7 @@ namespace WinFormsUI.Sessions
             Name = inputRichTextBox.Name;
             CommandStory = new List<string>();
         }
+       
         public void SaveSession()
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -29,9 +30,26 @@ namespace WinFormsUI.Sessions
                 File.WriteAllLines(path, CommandStory);
             }
         }
+       
         public void SetInputBoxText(string text)
         {
             inputRichTextBox.Text = text;
+        }
+       
+        public void SetOutputBoxText(string text)
+        {
+            outputRichTextBox.Text = "";
+            outputRichTextBox.Text = text;
+        }
+       
+        
+        public void SetOutputBoxText(string[] text)
+        {
+            outputRichTextBox.Text = "";
+            foreach (string item in text)
+            {
+                outputRichTextBox.Text = outputRichTextBox.Text + item + "\n";
+            }
         }
     }
 }
