@@ -51,12 +51,12 @@ namespace WinFormsUI.Sessions
                     {
                         foreach (Exception exc in result.ExceptionsList)
                         {
-                            outputRichTextBox.Text += $"{exc.Message}\n";
+                            this.outputRichTextBox.Text += $"{exc.Message}\n";
                         }
                     }
                     else foreach(Graph g in result.GraphsList)
                         {
-                            outputRichTextBox.Text += $"{g}\n";
+                         this.outputRichTextBox.Text += $"{g}\n";
                         }
                 }
             }
