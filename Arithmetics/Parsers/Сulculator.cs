@@ -13,12 +13,18 @@ namespace Arithmetics
     {
         //private delegate Token Computation(Token leftOp, Token rightOp);
 
+        public Dictionary<string, Polynomial> PolyVars { get; private set; }
+        public Сulculator()
+        {
+            PolyVars = new Dictionary<string, Polynomial>();
+        }
+
         /// <summary>
         /// Парсит строку в обратную польскую запись
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static string ExpressionToRPN(string expression)
+        private string ExpressionToRPN(string expression)
         {
             var text = expression;
             var reader = new StringReader(text);
@@ -33,9 +39,9 @@ namespace Arithmetics
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static string RPNtoAnswer(string expression)
+        private string RPNtoAnswer(string expression)
         {
-            var text = expression;
+            var text = ExpressionToRPN(expression);
             var reader = new StringReader(text);
             var parser = new Parser();
             var tokens = parser.Tokenize(reader).ToArray();
@@ -80,5 +86,23 @@ namespace Arithmetics
             return text;
         }
 
+        public string Execute(string operation)
+        {
+            string result;
+            // нужен regex
+            if (operation.Contains(":="))
+            {
+                string[] operands = operation.Split(new string[] { ":="}, StringSplitOptions.None);
+                result = RPNtoAnswer(operands[1]);
+                if (!PolyVars.ContainsKey(operands[0])) PolyVars.Add(operands[0], new Polynomial(PolynomialParser.Parse(result)));
+                else PolyVars[operands[0]] = new Polynomial(PolynomialParser.Parse(result));
+                result = $"{operands[0]}={result}";
+            }
+            else
+            {
+                result = RPNtoAnswer(operation);
+            }
+            return result;
+        }
     }
 }
