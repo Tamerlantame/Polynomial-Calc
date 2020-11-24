@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Arithmetics.Parsers;
+using Arithmetics.Polynomial1;
 
 namespace Arithmetics
 {
     public class Сulculator
     {
-        private delegate Token Computation(Token leftOp, Token rightOp);
+        //private delegate Token Computation(Token leftOp, Token rightOp);
 
         /// <summary>
         /// Парсит строку в обратную польскую запись
@@ -44,7 +45,7 @@ namespace Arithmetics
             {
                 switch (tokens[i].Type)
                 {
-                    case TokenType.Number:
+                    case TokenType.Polynomial:
                         stack.Push(tokens[i]);
                         break;
                     case TokenType.Variable:
@@ -63,9 +64,11 @@ namespace Arithmetics
                         {
                             throw new System.InvalidOperationException();
                         }
-                        
-                        double result = Operator.GetOperators()[tokens[i].Value].function(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
-                        stack.Push(new Token(TokenType.Number, result.ToString()));
+
+                        Polynomial result = Operator.GetOperators()[tokens[i].Value].function(new Polynomial(PolynomialParser.Parse(leftOp.Value)),
+                            new Polynomial(PolynomialParser.Parse(rightOp.Value)));
+                        //Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
+                        stack.Push(new Token(TokenType.Polynomial, result.ToString()));
                         break;
 
                     default:

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arithmetics.Polynomial1;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace Arithmetics.Parsers
     //https://web.archive.org/web/20110718214204/http://en.literateprograms.org/Shunting_yard_algorithm_(C)
     //https://gist.github.com/istupakov/c49ef290c3bc3dbe329bf68f67971470
     //https://www.codeproject.com/Tips/351042/Shunting-Yard-algorithm-in-Csharp
-    public enum TokenType { Number, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
+    public enum TokenType { Polynomial, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
 
-    public delegate double BinaryFunc(double leftOp, double rightOp);
+    public delegate Polynomial BinaryFunc(Polynomial leftOp, Polynomial rightOp);
 
     public struct Token
     {
@@ -36,11 +37,11 @@ namespace Arithmetics.Parsers
     {
         private static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
-            ["+"] = new Operator { Name = "+", Precedence = 1, function = ((double x, double y) => x + y) },
-            ["-"] = new Operator { Name = "-", Precedence = 1, function = ((double x, double y) => x - y) },
-            ["*"] = new Operator { Name = "*", Precedence = 2, function = ((double x, double y) => x * y) },
-            ["/"] = new Operator { Name = "/", Precedence = 2, function = ((double x, double y) => x / y) },
-            ["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
+            ["+"] = new Operator { Name = "+", Precedence = 1, function = ((Polynomial x, Polynomial y) => x + y) },
+            ["-"] = new Operator { Name = "-", Precedence = 1, function = ((Polynomial x, Polynomial y) => x - y) },
+            ["*"] = new Operator { Name = "*", Precedence = 2, function = ((Polynomial x, Polynomial y) => x * y) },
+            //["/"] = new Operator { Name = "/", Precedence = 2, function = ((Polynomial x, Polynomial y) => x / y) },
+            //["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
 
         };
         public string Name { get; set; }
@@ -71,10 +72,10 @@ namespace Arithmetics.Parsers
         private bool CompareOperators(string op1, string op2) => CompareOperators(operators[op1], operators[op2]);
         private TokenType DetermineType(char ch)
         {
-            if (char.IsLetter(ch))
+            if (char.IsLetter(ch) && ch != 'x')
                 return TokenType.Variable;
-            if (char.IsDigit(ch))
-                return TokenType.Number;
+            if (char.IsDigit(ch) || ch == '^' || ch == 'x')
+                return TokenType.Polynomial;
             if (char.IsWhiteSpace(ch))
                 return TokenType.WhiteSpace;
             if (ch == ',')
@@ -120,7 +121,7 @@ namespace Arithmetics.Parsers
             {
                 switch (tok.Type)
                 {
-                    case TokenType.Number:
+                    case TokenType.Polynomial:
                     case TokenType.Variable:
                         yield return tok;
                         break;
