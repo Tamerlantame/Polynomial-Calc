@@ -8,15 +8,17 @@ using Arithmetics.Polynomial1;
 using Arithmetics.Parsers;
 using Arithmetics;
 using System.IO;
-
+using System.Diagnostics;
 
 namespace WinFormsUI.Sessions
 {
     class PolynomialSession : Session
     {
+
+        private Сulculator calculator;
         public PolynomialSession(RichTextBox input, RichTextBox output) : base(input, output)
         {
-
+            calculator = new Сulculator();
         }
         public void Start()
         {
@@ -32,14 +34,16 @@ namespace WinFormsUI.Sessions
             {
                 if (inputRichTextBox.SelectedText != "")
                 {
+                    // A:= some expression
+                    // A:= A*A;
                     //Вычисляем выделенную часть "кода"
                     var text = inputRichTextBox.SelectedText;
-                    outputRichTextBox.Text = Сulculator.RPNtoAnswer(Сulculator.ExpressionToRPN(text));
+                    outputRichTextBox.Text = calculator.Execute(text);
                 }
                 else
                 {
                     var text = inputRichTextBox.Lines.Last();
-                    outputRichTextBox.Text = Сulculator.RPNtoAnswer(Сulculator.ExpressionToRPN(text));
+                    outputRichTextBox.Text = calculator.Execute(text);
                 }
             }
 
