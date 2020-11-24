@@ -69,6 +69,7 @@ namespace WinFormsUI.Forms
 
             newSession.Start();
         }
+        
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -128,5 +129,51 @@ namespace WinFormsUI.Forms
 
         }
 
+
+        //Относится к PolynomialSession
+        private void CreatePolynomialSession()
+        {
+            string title = "CreatePolynomial " + (tabControl1.TabCount + 1).ToString();
+
+            RichTextBox newRichTextBox = new RichTextBox
+            {
+                Location = new System.Drawing.Point(0, 0),
+                Name = title,
+                Size = richTextBox1.Size,
+                Text = ""
+            };
+            PolynomialSession newSession = new PolynomialSession(newRichTextBox, richTextBoxOutput);
+            LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
+            {
+                Name = title
+            };
+            tabControl1.TabPages.Add(newTabPage);
+            tabControl1.SelectTab(newTabPage);
+            newTabPage.Controls.Add(newRichTextBox);
+
+            newSession.Start();
+        }
+        private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreatePolynomialSession();
+        }
+
+        private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+
+            currentPage.CurrentSession.SaveSession();
+        }
+
+        private void LoadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string sessionText = File.ReadAllText(dialog.FileName);
+                LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+                currentPage.CurrentSession.SetInputBoxText(sessionText);
+            }
+        }
     }
 }

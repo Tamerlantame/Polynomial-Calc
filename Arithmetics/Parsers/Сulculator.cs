@@ -39,7 +39,7 @@ namespace Arithmetics
             var parser = new Parser();
             var tokens = parser.Tokenize(reader).ToArray();
             var stack = new Stack<Token>();
-            Token leftOp, rightOp;//, result;
+            Token leftOp, rightOp;
             for (int i = 0; i < tokens.Length; i++)
             {
                 switch (tokens[i].Type)
@@ -54,8 +54,6 @@ namespace Arithmetics
                     //    stack.Push(tok);
                     //    break;
                     case TokenType.Operator:
-                        //if(Parser.operators.ContainsKey(tokens[i].Value))
-                        //Computation computation = new Computation(Add);
                         try
                         {
                             rightOp = stack.Pop();
@@ -65,26 +63,8 @@ namespace Arithmetics
                         {
                             throw new System.InvalidOperationException();
                         }
-                        /*switch (tokens[i].Value)
-                        {
-                            case "^":
-                                computation = Pow;
-                                break;
-                            case "*":
-                                computation = Multiply;
-                                break;
-                            case "/":
-                                computation = Div;
-                                break;
-                            case "+":
-                                computation = Add;
-                                break;
-                            case "-":
-                                computation = Sub;
-                                break;
-                        }
-                        result = computation(leftOp, rightOp);*/
-                        double result = Parser.operators[tokens[i].Value].function(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
+                        
+                        double result = Operator.GetOperators()[tokens[i].Value].function(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
                         stack.Push(new Token(TokenType.Number, result.ToString()));
                         break;
 
@@ -95,43 +75,6 @@ namespace Arithmetics
             text = stack.Pop().Value;
 
             return text;
-        }
-        private static Token Add(Token leftOp, Token rightOp)
-        {
-            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
-                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) + Convert.ToDouble(rightOp.Value)));
-
-            return new Token();
-        }
-        private static Token Sub(Token leftOp, Token rightOp)
-        {
-            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
-                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) - Convert.ToDouble(rightOp.Value)));
-
-            return new Token();
-        }
-        private static Token Multiply(Token leftOp, Token rightOp)
-        {
-            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
-                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) * Convert.ToDouble(rightOp.Value)));
-
-            return new Token();
-        }
-        private static Token Div(Token leftOp, Token rightOp)
-        {
-            if (Convert.ToInt32(rightOp.Value) == 0)
-                throw new DivideByZeroException("Деление на 0 не поддерживается");
-            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
-                return new Token(TokenType.Number, Convert.ToString(Convert.ToDouble(leftOp.Value) / Convert.ToDouble(rightOp.Value)));
-
-            return new Token();
-        }
-        private static Token Pow(Token leftOp, Token rightOp)
-        {
-            if (leftOp.Type == TokenType.Number && rightOp.Type == TokenType.Number)
-                return new Token(TokenType.Number, Convert.ToString(Math.Pow(Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value))));
-
-            return new Token();
         }
 
     }
