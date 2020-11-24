@@ -34,19 +34,12 @@ namespace WinFormsUI.Sessions
                 {
                     //Вычисляем выделенную часть "кода"
                     var text = inputRichTextBox.SelectedText;
-                    using (var reader = new StringReader(text))
-                    {
-                        var parser = new Parser();
-                        var tokens = parser.Tokenize(reader).ToList();
-                        var rpn = parser.ShuntingYard(tokens);
-                        outputRichTextBox.Text = string.Join(" ", rpn.Select(t => t.Value));
-                        //Методы из Arithmetics.Parsers Shunting-Yard algorithm
-                    }
+                    outputRichTextBox.Text = Сulculator.RPNtoAnswer(Сulculator.ExpressionToRPN(text));
                 }
                 else
                 {
                     var text = inputRichTextBox.Lines.Last();
-                    outputRichTextBox.Text = Сulculator.ExpressionToRPN(text);
+                    outputRichTextBox.Text = Сulculator.RPNtoAnswer(Сulculator.ExpressionToRPN(text));
                 }
             }
 

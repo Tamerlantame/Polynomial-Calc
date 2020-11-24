@@ -34,20 +34,7 @@ namespace Arithmetics.Parsers
     }
     public class Operator : IComparable<Operator>
     {
-        public string Name { get; set; }
-        public int Precedence { get; set; }
-        public bool RightAssociative { get; set; }
-
-        public BinaryFunc function;
-
-        public int CompareTo(Operator other)
-        {
-            return this.Precedence - other.Precedence;
-        }
-    }
-    public class Parser
-    {
-        public static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
+        private static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
             ["+"] = new Operator { Name = "+", Precedence = 1, function = ((double x, double y) => x + y) },
             ["-"] = new Operator { Name = "-", Precedence = 1, function = ((double x, double y) => x - y) },
@@ -56,6 +43,27 @@ namespace Arithmetics.Parsers
             ["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
 
         };
+        public string Name { get; set; }
+        public int Precedence { get; set; }
+        public bool RightAssociative { get; set; }
+
+        public BinaryFunc function;
+        /// <summary>
+        /// return IDictionary with Operators
+        /// </summary>
+        /// <returns></returns>
+        public static IDictionary<string, Operator> GetOperators()
+        {
+            return operators;
+        }
+        public int CompareTo(Operator other)
+        {
+            return this.Precedence - other.Precedence;
+        }
+    }
+    public class Parser
+    {
+        public static IDictionary<string, Operator> operators = Operator.GetOperators();
         private bool CompareOperators(Operator op1, Operator op2)
         {
             return op1.RightAssociative ? op1.Precedence < op2.Precedence : op1.Precedence <= op2.Precedence;

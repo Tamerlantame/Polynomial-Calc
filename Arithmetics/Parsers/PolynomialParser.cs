@@ -23,7 +23,8 @@ namespace Arithmetics.Parsers
         public static SortedList<int, double> Parse(string polyString)
         {
             SortedList<int, double> coefficientsList = new SortedList<int, double>();
-            int monomialDeg, monomialCoeff, indexOfDeg, indexOfx;
+            int monomialDeg, indexOfDeg, indexOfx;
+            double monomialCoeff;
             try
             {
                 polyString = polyString.Replace("-", "+-");
@@ -37,7 +38,7 @@ namespace Arithmetics.Parsers
                     {
                         monomialDeg = 1;
                         indexOfx = monomial.IndexOf("x");
-                        monomialCoeff = monomial[0] == 'x' ? 1 : Convert.ToInt32(monomial.Substring(0, indexOfx));
+                        monomialCoeff = monomial[0] == 'x' ? 1 : Convert.ToDouble(monomial.Substring(0, indexOfx));
                         if (monomial.Contains("^"))
                         {
                             indexOfDeg = indexOfx + 2; // i.e. index of the symbol directly after substring "x^"
@@ -51,9 +52,9 @@ namespace Arithmetics.Parsers
                     else
                     {
                         if (!coefficientsList.ContainsKey(0))
-                            coefficientsList.Add(0, Convert.ToInt32(monomial));
+                            coefficientsList.Add(0, Convert.ToDouble(monomial));
                         else
-                            coefficientsList[0] += Convert.ToInt32(monomial);
+                            coefficientsList[0] += Convert.ToDouble(monomial);
                     }
                 }
 
