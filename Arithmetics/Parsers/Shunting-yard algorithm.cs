@@ -17,6 +17,7 @@ namespace Arithmetics.Parsers
     public enum TokenType { Polynomial, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
 
     public delegate Polynomial BinaryFunc(Polynomial leftOp, Polynomial rightOp);
+    public delegate Polynomial UnaryFunc(Polynomial Func);
 
     public struct Token
     {
@@ -37,9 +38,9 @@ namespace Arithmetics.Parsers
     {
         private static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
-            ["+"] = new Operator { Name = "+", Precedence = 1, function = ((Polynomial x, Polynomial y) => x + y) },
-            ["-"] = new Operator { Name = "-", Precedence = 1, function = ((Polynomial x, Polynomial y) => x - y) },
-            ["*"] = new Operator { Name = "*", Precedence = 2, function = ((Polynomial x, Polynomial y) => x * y) },
+            ["+"] = new Operator { Name = "+", Precedence = 1, @operator = ((Polynomial x, Polynomial y) => x + y) },
+            ["-"] = new Operator { Name = "-", Precedence = 1, @operator = ((Polynomial x, Polynomial y) => x - y) },
+            ["*"] = new Operator { Name = "*", Precedence = 2, @operator = ((Polynomial x, Polynomial y) => x * y) },
             //["/"] = new Operator { Name = "/", Precedence = 2, function = ((Polynomial x, Polynomial y) => x / y) },
             //["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
 
@@ -48,7 +49,7 @@ namespace Arithmetics.Parsers
         public int Precedence { get; set; }
         public bool RightAssociative { get; set; }
 
-        public BinaryFunc function;
+        public BinaryFunc @operator;
         /// <summary>
         /// return IDictionary with Operators
         /// </summary>
@@ -62,9 +63,30 @@ namespace Arithmetics.Parsers
             return this.Precedence - other.Precedence;
         }
     }
+    public class Function : IComparable<Function>
+    {
+        private static IDictionary<string, Function> functions = new Dictionary<string, Function>
+        {
+            ["Eval"] = new Function { Name = "Eval", Precedence = 1, BiFunction = ((Polynomial x, Polynomial y) => x.Eval(y)) },
+            ["Diff"] = new Function { Name = "Diff", Precedence = 1, UFunction = ((Polynomial x) => Polynomial.Diff(x)) }
+        };
+        public string Name { get; set; }
+        public int Precedence { get; set; }
+        public BinaryFunc BiFunction;
+        public UnaryFunc UFunction;
+        public static IDictionary<string, Function> GetFunctions()
+        {
+            return functions;
+        }
+        public int CompareTo(Function other)
+        {
+            return this.Precedence - other.Precedence;
+        }
+    }
     public class Parser
     {
         public static IDictionary<string, Operator> operators = Operator.GetOperators();
+        public static IDictionary<string, Function> functions = Function.GetFunctions();
         private bool CompareOperators(Operator op1, Operator op2)
         {
             return op1.RightAssociative ? op1.Precedence < op2.Precedence : op1.Precedence <= op2.Precedence;
@@ -142,11 +164,12 @@ namespace Arithmetics.Parsers
                             stack.Push(tok);
                         else
                         {
-                            while (stack.Peek().Value != "(")
-                                yield return stack.Pop();
-                            stack.Pop();
                             if (stack.Count != 0)
                             {
+                                while (stack.Peek().Value != "(")
+                                    yield return stack.Pop();
+                                stack.Pop();
+
                                 if (stack.Peek().Type == TokenType.Function)
                                     yield return stack.Pop();
                             }

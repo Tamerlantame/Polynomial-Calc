@@ -51,9 +51,9 @@ namespace Arithmetics
                     case TokenType.Variable:
                         stack.Push(tokens[i]);
                         break;
-                    //case TokenType.Function:
-                    //    stack.Push(tok);
-                    //    break;
+                    case TokenType.Function:
+                        stack.Push(tokens[i]);
+                        break;
                     case TokenType.Operator:
                         try
                         {
@@ -65,7 +65,7 @@ namespace Arithmetics
                             throw new System.InvalidOperationException();
                         }
 
-                        Polynomial result = Operator.GetOperators()[tokens[i].Value].function(new Polynomial(PolynomialParser.Parse(leftOp.Value)),
+                        Polynomial result = Operator.GetOperators()[tokens[i].Value].@operator(new Polynomial(PolynomialParser.Parse(leftOp.Value)),
                             new Polynomial(PolynomialParser.Parse(rightOp.Value)));
                         //Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
                         stack.Push(new Token(TokenType.Polynomial, result.ToString()));
