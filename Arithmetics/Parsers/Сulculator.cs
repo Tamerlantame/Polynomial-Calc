@@ -70,9 +70,9 @@ namespace Arithmetics
                         {
                             throw new System.InvalidOperationException();
                         }
-
-                        Polynomial result = Operator.GetOperators()[tokens[i].Value].function(new Polynomial(PolynomialParser.Parse(leftOp.Value)),
-                            new Polynomial(PolynomialParser.Parse(rightOp.Value)));
+                        Polynomial leftPoly = (leftOp.Type == TokenType.Variable) ? PolyVars[leftOp.Value] : new Polynomial(PolynomialParser.Parse(leftOp.Value));
+                        Polynomial rightPoly = (rightOp.Type == TokenType.Variable) ? PolyVars[rightOp.Value] : new Polynomial(PolynomialParser.Parse(rightOp.Value));
+                        Polynomial result = Operator.GetOperators()[tokens[i].Value].function(leftPoly, rightPoly);
                         //Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
                         stack.Push(new Token(TokenType.Polynomial, result.ToString()));
                         break;

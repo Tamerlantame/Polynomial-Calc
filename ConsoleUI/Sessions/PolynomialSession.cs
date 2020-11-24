@@ -15,7 +15,7 @@ namespace WinFormsUI.Sessions
     class PolynomialSession : Session
     {
 
-        private Сulculator calculator;
+        private readonly Сulculator calculator;
         public PolynomialSession(RichTextBox input, RichTextBox output) : base(input, output)
         {
             calculator = new Сulculator();
