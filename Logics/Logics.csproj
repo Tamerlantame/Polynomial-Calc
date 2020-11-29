@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BooleanExpression.cs" />
+    <Compile Include="LogicGraph.cs" />
+    <Compile Include="LogicGraphVertex.cs" />
     <Compile Include="SAT\Clause.cs" />
     <Compile Include="SAT\Formula.cs" />
     <Compile Include="SAT\Literal.cs" />

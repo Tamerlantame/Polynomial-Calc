@@ -51,6 +51,7 @@
     <Compile Include="GraphBasicFunctions.cs" />
     <Compile Include="GraphExpressionParser.cs" />
     <Compile Include="GraphVertex.cs" />
+    <Compile Include="LogicGraphVertex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

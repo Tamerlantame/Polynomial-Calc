@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Arithmetics.Matrix;
+using Logics;
 
 namespace GraphTheory
 {
     public class Graph : IEnumerable<GraphVertex>
     {
-        private List<GraphVertex> adjacencyList;
-        private GraphVertex[] adjacencyArray;
+        protected List<GraphVertex> adjacencyList;
+        private LogicGraphVertex[] adjacencyArray;
 
-        private bool[] used;
-        private List<GraphVertex> order;
+        private List<LogicGraphVertex> order;
         private int[] comp;
 
         /// <summary>
@@ -58,17 +58,13 @@ namespace GraphTheory
                 max = Math.Max(max, GetNumber(item.Item2));
             }
 
-            adjacencyArray = new GraphVertex[max * 2];
+            adjacencyArray = new LogicGraphVertex[max * 2];
             for (int i = 0; i < max; i++)
             {
-                GraphVertex graphNode1 = new GraphVertex();
-                graphNode1.Number = i + 1;
-                graphNode1.isMoreZero = true;
+                LogicGraphVertex graphNode1 = new LogicGraphVertex(i + 1,true);
                 adjacencyArray[2 * i] = graphNode1;
 
-                GraphVertex graphNode2 = new GraphVertex();
-                graphNode2.Number = i + 1;
-                graphNode2.isMoreZero = false;
+                LogicGraphVertex graphNode2 = new LogicGraphVertex(i + 1, false);
                 adjacencyArray[2 * i + 1] = graphNode2;
             }
 
@@ -108,7 +104,7 @@ namespace GraphTheory
             }
         }
 
-        private int GetVertexIndex(GraphVertex vertex)
+        private int GetVertexIndex(LogicGraphVertex vertex)
         {
             if (vertex.isMoreZero)
             {
@@ -117,23 +113,23 @@ namespace GraphTheory
             return (vertex.Number - 1) * 2 + 1;
         }
 
-        private void DfsForTwoCnfSat1(GraphVertex vertex)
+        private void DfsForTwoCnfSat1(LogicGraphVertex vertex, ref bool[] used)
         {
             var intVertex = GetVertexIndex(vertex);
             used[intVertex] = true;
-            foreach (var item in adjacencyArray[intVertex].adjacencyList)
+            foreach (LogicGraphVertex item in adjacencyArray[intVertex].adjacencyList)
             {
                 if (!used[GetVertexIndex(item)])
                 {
-                    DfsForTwoCnfSat1(item);
+                    DfsForTwoCnfSat1(item, ref used);
                 }
             }
-            var currentVertex = new List<GraphVertex>();
+            var currentVertex = new List<LogicGraphVertex>();
             currentVertex.Add(vertex);
             order.AddRange(currentVertex);
         }
 
-        private void DfsForTwoCnfSat2(GraphVertex vertex, int connectivityСomponent)
+        private void DfsForTwoCnfSat2(LogicGraphVertex vertex, int connectivityСomponent)
         {
             comp[GetVertexIndex(vertex)] = connectivityСomponent;
             foreach (var item in adjacencyArray)
@@ -147,8 +143,8 @@ namespace GraphTheory
 
         public List<bool> TwoCnfSat()
         {
-            used = new bool[adjacencyArray.Length];
-            order = new List<GraphVertex>();
+            bool[] used = new bool[adjacencyArray.Length];
+            order = new List<LogicGraphVertex>();
             comp = new int[adjacencyArray.Length];
 
             for (int i = 0; i < adjacencyArray.Length; i++)
@@ -156,13 +152,13 @@ namespace GraphTheory
                 comp[i] = -1;
                 if (!used[i])
                 {
-                    DfsForTwoCnfSat1(adjacencyArray[i]);
+                    DfsForTwoCnfSat1(adjacencyArray[i], ref used);
                 }
             }
 
             for (int i = 0, j = 0; i < adjacencyArray.Length; i++)
             {
-                GraphVertex vertex = order[adjacencyArray.Length - i - 1];
+                LogicGraphVertex vertex = order[adjacencyArray.Length - i - 1];
                 if (comp[GetVertexIndex(vertex)] == -1)
                 {
                     DfsForTwoCnfSat2(vertex, j++);
@@ -187,6 +183,11 @@ namespace GraphTheory
             return answer;
         }
 
+        public Graph()
+        {
+            adjacencyList = new List<GraphVertex>();
+        }
+
         /// <summary>
         /// Graph constructor from adjacency matrix. Calls DFS to complete construction. 
         /// </summary>
@@ -197,9 +198,8 @@ namespace GraphTheory
             for (int i = 0; i < matrix.Columns; i++)
             {
                 ///create List of empty Nodes
-                GraphVertex a = new GraphVertex();
+                GraphVertex a = new GraphVertex(i);
                 adjacencyList.Add(a);
-                a.Number = i;
             }
             for (int i = 0; i < matrix.Columns; i++)
             {
@@ -266,10 +266,7 @@ namespace GraphTheory
             List<GraphVertex> tempList = new List<GraphVertex>(this.Count);
             for (int i = 0; i < this.Count; i++)
             {
-                GraphVertex newNode = new GraphVertex
-                {
-                    Number = i
-                };
+                GraphVertex newNode = new GraphVertex(i);
                 tempList.Add(newNode);
             }
             foreach (GraphVertex item in this)
@@ -325,12 +322,11 @@ namespace GraphTheory
         }
         public Graph AddNode(List<int> incoming, List<int> outgoing)
         {
-            GraphVertex NewNode = new GraphVertex();
+            GraphVertex NewNode = new GraphVertex(adjacencyList.Count);
             foreach (int item in outgoing)
             {
                 NewNode.adjacencyList.Add(adjacencyList[item]);
             }
-            NewNode.Number = adjacencyList.Count;
             adjacencyList.Add(NewNode);
             foreach (int item in incoming)
             {
