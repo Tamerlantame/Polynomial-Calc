@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using ConsoleUI.Forms;
+using ConsoleUI.Sessions;
 using WinFormsUI.Sessions;
 
 namespace WinFormsUI.Forms
@@ -128,5 +129,30 @@ namespace WinFormsUI.Forms
 
         }
 
+        private void createToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            createLogicSession();
+        }
+
+        private void createLogicSession()
+        {
+            string title = "LogicSession " + (tabControl1.TabCount + 1).ToString();
+
+            RichTextBox newRichTextBox = new RichTextBox
+            {
+                Location = new System.Drawing.Point(0, 0),
+                Name = title,
+                Size = richTextBox1.Size,
+                Text = ""
+            };
+            LogicSession newSession = new LogicSession(newRichTextBox, richTextBoxOutput);
+            LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
+            {
+                Name = title
+            };
+            tabControl1.TabPages.Add(newTabPage);
+            tabControl1.SelectTab(newTabPage);
+            newTabPage.Controls.Add(newRichTextBox);
+        }
     }
 }

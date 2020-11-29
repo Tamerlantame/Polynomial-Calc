@@ -20,7 +20,7 @@ namespace WinFormsUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UIForLogics());
+            Application.Run(new UIFormWithTabs());
         }
         /*public static void Main(string[] args)
         {

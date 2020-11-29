@@ -73,6 +73,7 @@
     <Compile Include="Forms\UIForm.Designer.cs">
       <DependentUpon>UIForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sessions\LogicSession.cs" />
     <Compile Include="Sessions\LyaMelikSession.cs" />
     <Compile Include="Program.cs">
       <SubType>

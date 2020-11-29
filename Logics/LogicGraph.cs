@@ -25,7 +25,7 @@ namespace Logics
                 //adjacencyList[2 * i] = graphNode1;
 
                 LogicGraphVertex graphNode2 = new LogicGraphVertex(i + 1, false);
-                adjacencyList.Add(graphNode1);
+                adjacencyList.Add(graphNode2);
                 //adjacencyList[2 * i + 1] = graphNode2;
             }
 
@@ -100,7 +100,7 @@ namespace Logics
             order.Add(vertex);
         }
 
-    public List<bool> TwoCnfSat()
+        public List<bool> TwoCnfSat()
         {
             bool[] used = new bool[adjacencyList.Count];
             order = new List<LogicGraphVertex>();
@@ -124,7 +124,7 @@ namespace Logics
                 }
             }
 
-            List<List<GraphVertex>> strongComponents = GraphBasicFunctions.StrongConectedComponents(this);
+            /*List<List<GraphVertex>> strongComponents = GraphBasicFunctions.StrongConectedComponents(this);
 
             int counter = 1;
             foreach (List<GraphVertex> listOfGraphVertex in strongComponents)
@@ -132,7 +132,7 @@ namespace Logics
                 foreach (GraphVertex vertex in listOfGraphVertex)
                     comp[GetVertexIndex((LogicGraphVertex)vertex)] = counter;
                 counter++;
-            }
+            }*/
 
 
             for (int i = 0; i < adjacencyList.Count; i += 2)
