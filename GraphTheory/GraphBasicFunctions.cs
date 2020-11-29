@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphTheory
 {
@@ -11,12 +9,12 @@ namespace GraphTheory
         public static int GraphDiam(Graph graph)
         {
             int Diam = 0;
-            var q = new Queue<ValueTuple<int, GraphNode>>();
-            foreach (GraphNode item in graph)
+            var q = new Queue<ValueTuple<int, GraphVertex>>();
+            foreach (GraphVertex item in graph)
             ///для каждой вершины bfs
             {
                 int ItemDiam = 0;
-                foreach (GraphNode node in graph)
+                foreach (GraphVertex node in graph)
                 {
                     node.Color = Colors.Grey;
                 }
@@ -24,7 +22,7 @@ namespace GraphTheory
                 q.Enqueue((0, item));
                 while (q.Count != 0)
                 {
-                    foreach (GraphNode Counter in q.Peek().Item2.adjList)
+                    foreach (GraphVertex Counter in q.Peek().Item2.adjacencyList)
                     {
                         if (Counter.Color == Colors.Grey)
                         {
@@ -45,12 +43,12 @@ namespace GraphTheory
         /// </summary>
         /// <param name="graph"></param>
         /// <returns>Отсортированный массив вершин, если в графе нет циклов, иначе возвращает null</returns>
-        public static GraphNode[] TopolSort(Graph graph)
+        public static GraphVertex[] TopolSort(Graph graph)
         {
-            GraphNode[] sorted = null;
+            GraphVertex[] sorted = null;
             if (!graph.HasCycle)
             {
-                sorted = new GraphNode[graph.Count()];
+                sorted = new GraphVertex[graph.Count()];
                 for (int i = 0; i < graph.Count(); i++)
                 {
                     sorted[i] = graph[i];
@@ -61,7 +59,7 @@ namespace GraphTheory
                     {
                         if (sorted[i].CloseTime < sorted[j].CloseTime)
                         {
-                            GraphNode a = sorted[i];
+                            GraphVertex a = sorted[i];
                             sorted[i] = sorted[j];
                             sorted[j] = a;
                         }
@@ -76,11 +74,11 @@ namespace GraphTheory
         /// </summary>
         /// <param name="graph"></param>
         /// <returns></returns>
-        public static List<List<GraphNode>> StrongConectedComponents(Graph graph)
+        public static List<List<GraphVertex>> StrongConectedComponents(Graph graph)
         {
-            List<List<GraphNode>> SCC = new List<List<GraphNode>>();
+            List<List<GraphVertex>> SCC = new List<List<GraphVertex>>();
             Graph transponded = graph.Transponse();
-            foreach (GraphNode node in transponded)
+            foreach (GraphVertex node in transponded)
             {
                 node.Color = Colors.White;// ??????????
             }
@@ -90,20 +88,20 @@ namespace GraphTheory
             {
                 maxTimeNumber = 0;
                 while (visited.Contains(maxTimeNumber)) maxTimeNumber++;
-                foreach (GraphNode item in graph)
+                foreach (GraphVertex item in graph)
                 {
                     if (!visited.Contains(item.Number) && graph[item.Number].CloseTime > graph[maxTimeNumber].CloseTime)
                     {
                         maxTimeNumber = item.Number;//ищем вeршину с максимальным closeTime в graph и берем за корень вершину с тем же номером в transponded
                     }
                 }
-                foreach (GraphNode node in transponded) // ???????????????????/
+                foreach (GraphVertex node in transponded) // ???????????????????/
                 {
                     node.CloseTime = 0;
                     node.OpenTime = 0;
                 }
-                List<GraphNode> StrongComponent = new List<GraphNode>();
-                foreach (GraphNode item in transponded)
+                List<GraphVertex> StrongComponent = new List<GraphVertex>();
+                foreach (GraphVertex item in transponded)
                 {
                     if (item.CloseTime > 0)
                     {

@@ -111,7 +111,7 @@ namespace WinFormsUI
 
                         break;
                     case "show colors":
-                        foreach (GraphNode item in graphs[activeGraph])
+                        foreach (GraphVertex item in graphs[activeGraph])
                         {
                             Console.WriteLine("{ " + item.Number + " }   " + item.Color);
                         }

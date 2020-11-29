@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using WinFormsUI.Forms;
 using Arithmetics.Parsers;
 using System.Linq;
+using ConsoleUI.Forms;
 
 namespace WinFormsUI
 {
@@ -15,19 +16,19 @@ namespace WinFormsUI
     {
         [STAThread]
 
-        //static void Main()
-        //{
-        //    Application.EnableVisualStyles();
-        //    Application.SetCompatibleTextRenderingDefault(false);
-        //    Application.Run(new UIFormWithTabs());
-        //}
-        public static void Main(string[] args)
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new UIForLogics());
+        }
+        /*public static void Main(string[] args)
         {
             var text = "(2+2)*2/(4+4)";
             Console.WriteLine(Arithmetics.Сulculator.ExpressionToRPN(text));
             Console.WriteLine(Arithmetics.Сulculator.RPNtoAnswer(Arithmetics.Сulculator.ExpressionToRPN(text)));
 
-        }
+        }*/
 
     }
 }

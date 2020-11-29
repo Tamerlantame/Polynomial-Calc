@@ -51,6 +51,10 @@
     <Compile Include="Forms\LyaMelikTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\UIForLogics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UIForLogics.Designer.cs" />
     <Compile Include="Forms\UIFormWithTabs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +94,10 @@
       <Project>{cc5b09af-47db-4d96-bb15-6282f6425042}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logics\Logics.csproj">
+      <Project>{4e1ce05c-1f84-45a8-9f1c-cfc0597b348f}</Project>
+      <Name>Logics</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Help.txt">
@@ -104,6 +112,7 @@
     <None Include="Resources\CrossImage.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\UIForLogics.resx" />
     <EmbeddedResource Include="Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
