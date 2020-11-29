@@ -97,24 +97,10 @@ namespace Logics
                     DfsForTwoCnfSat1(item, ref used);
                 }
             }
-            var currentVertex = new List<LogicGraphVertex>();
-            currentVertex.Add(vertex);
-            order.AddRange(currentVertex);
+            order.Add(vertex);
         }
 
-        private void DfsForTwoCnfSat2(LogicGraphVertex vertex, int connectivityСomponent)
-        {
-            comp[GetVertexIndex(vertex)] = connectivityСomponent;
-            foreach (LogicGraphVertex item in adjacencyList)
-            {
-                if (comp[GetVertexIndex(item)] == -1)
-                {
-                    DfsForTwoCnfSat2(item, connectivityСomponent);
-                }
-            }
-        }
-
-        public List<bool> TwoCnfSat()
+    public List<bool> TwoCnfSat()
         {
             bool[] used = new bool[adjacencyList.Count];
             order = new List<LogicGraphVertex>();
@@ -134,7 +120,7 @@ namespace Logics
                 LogicGraphVertex vertex = order[adjacencyList.Count - i - 1];
                 if (comp[GetVertexIndex(vertex)] == -1)
                 {
-                    DfsForTwoCnfSat2(vertex, j++);
+                    comp[GetVertexIndex(vertex)] = j++;
                 }
             }
 
