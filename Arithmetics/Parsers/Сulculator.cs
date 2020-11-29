@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Arithmetics;
 using Arithmetics.Parsers;
 using Arithmetics.Polynomial1;
 
 namespace Arithmetics
 {
-    public class Сulculator
+    class Сulculator
     {
-        //private delegate Token Computation(Token leftOp, Token rightOp);
 
         public Dictionary<string, Polynomial> PolyVars { get; private set; }
         public Сulculator()
@@ -24,14 +24,15 @@ namespace Arithmetics
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        private string ExpressionToRPN(string expression)
+        private string ExpressionToRPN(string expression, out List<Token> tokens)
         {
             var text = expression;
             var reader = new StringReader(text);
             var parser = new Parser();
-            var tokens = parser.Tokenize(reader).ToList();
+            tokens = parser.Tokenize(reader).ToList();
             var rpn = parser.ShuntingYard(tokens);
             var rpnStr = string.Join(" ", rpn.Select(t => t.Value));
+            tokens = rpn.ToList();
             return rpnStr;
         }
         /// <summary>
@@ -39,14 +40,14 @@ namespace Arithmetics
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        private string RPNtoAnswer(string expression)
+        private string RPNToAnswer(string expression)
         {
-            var text = ExpressionToRPN(expression);
-            var reader = new StringReader(text);
-            var parser = new Parser();
-            var tokens = parser.Tokenize(reader).ToArray();
+
+            var text = ExpressionToRPN(expression, out var tokensList );
+            var tokens = tokensList.ToArray();
             var stack = new Stack<Token>();
             Token leftOp, rightOp;
+            Polynomial result;
             for (int i = 0; i < tokens.Length; i++)
             {
                 switch (tokens[i].Type)
@@ -55,10 +56,46 @@ namespace Arithmetics
                         stack.Push(tokens[i]);
                         break;
                     case TokenType.Variable:
-                        stack.Push(tokens[i]);
+                        if (PolyVars.ContainsKey(tokens[i].Value.ToString()))
+                            stack.Push(new Token(TokenType.Polynomial, PolyVars[tokens[i].Value].ToString()));
+                        else
+                            stack.Push(tokens[i]);
                         break;
                     case TokenType.Function:
-                        stack.Push(tokens[i]);
+                        if (Function.GetFunctions()[tokens[i].Value].Type==FunctionType.Unary)
+                        {
+                            try
+                            {
+                                leftOp = stack.Pop();
+                            }
+                            catch (System.InvalidOperationException)
+                            {
+                                throw new System.InvalidOperationException();
+                            }
+                            result = Function.GetFunctions()[tokens[i].Value].UFunction
+                              (
+                              new Polynomial(PolynomialParser.Parse(leftOp.Value))
+                              );
+                            stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                        }
+                        else
+                        {
+                            try
+                            {
+                                rightOp = stack.Pop();
+                                leftOp = stack.Pop();
+                            }
+                            catch (System.InvalidOperationException)
+                            {
+                                throw new System.InvalidOperationException();
+                            }
+                            result = Function.GetFunctions()[tokens[i].Value].BiFunction
+                              (
+                              new Polynomial(PolynomialParser.Parse(leftOp.Value)),
+                              new Polynomial(PolynomialParser.Parse(rightOp.Value))
+                              );
+                            stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                        }
                         break;
                     case TokenType.Operator:
                         try
@@ -71,8 +108,11 @@ namespace Arithmetics
                             throw new System.InvalidOperationException();
                         }
 
-                        Polynomial result = Operator.GetOperators()[tokens[i].Value].@operator(new Polynomial(PolynomialParser.Parse(leftOp.Value)),
-                            new Polynomial(PolynomialParser.Parse(rightOp.Value)));
+                         result = Operator.GetOperators()[tokens[i].Value].BiOperator
+                            (
+                            new Polynomial(PolynomialParser.Parse(leftOp.Value)),
+                            new Polynomial(PolynomialParser.Parse(rightOp.Value))
+                            );
                         //Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
                         stack.Push(new Token(TokenType.Polynomial, result.ToString()));
                         break;
@@ -82,27 +122,13 @@ namespace Arithmetics
                 }
             }
             text = stack.Pop().Value;
-
             return text;
         }
 
-        public string Execute(string operation)
+        public string Execute(string expression)
         {
-            string result;
-            // нужен regex
-            if (operation.Contains(":="))
-            {
-                string[] operands = operation.Split(new string[] { ":="}, StringSplitOptions.None);
-                result = RPNtoAnswer(operands[1]);
-                if (!PolyVars.ContainsKey(operands[0])) PolyVars.Add(operands[0], new Polynomial(PolynomialParser.Parse(result)));
-                else PolyVars[operands[0]] = new Polynomial(PolynomialParser.Parse(result));
-                result = $"{operands[0]}={result}";
-            }
-            else
-            {
-                result = RPNtoAnswer(operation);
-            }
-            return result;
+            return RPNToAnswer(expression);
         }
+        
     }
 }

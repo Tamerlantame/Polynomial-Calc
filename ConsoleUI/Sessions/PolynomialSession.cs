@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Arithmetics.Polynomial1;
-using Arithmetics.Parsers;
 using Arithmetics;
 using System.IO;
 using System.Diagnostics;
@@ -14,11 +12,10 @@ namespace WinFormsUI.Sessions
 {
     class PolynomialSession : Session
     {
-
-        private Сulculator calculator;
+        private Executor executor;
         public PolynomialSession(RichTextBox input, RichTextBox output) : base(input, output)
         {
-            calculator = new Сulculator();
+            executor = new Executor();
         }
         public void Start()
         {
@@ -30,7 +27,8 @@ namespace WinFormsUI.Sessions
         /// </summary>
         private void Execute(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+           
+            if (e.KeyCode == Keys.F5)
             {
                 if (inputRichTextBox.SelectedText != "")
                 {
@@ -38,12 +36,16 @@ namespace WinFormsUI.Sessions
                     // A:= A*A;
                     //Вычисляем выделенную часть "кода"
                     var text = inputRichTextBox.SelectedText;
-                    outputRichTextBox.Text = calculator.Execute(text);
+                    outputRichTextBox.Text = executor.Launch(text);
                 }
                 else
                 {
-                    var text = inputRichTextBox.Lines.Last();
-                    outputRichTextBox.Text = calculator.Execute(text);
+                    try
+                    {
+                        var text = inputRichTextBox.Text;
+                        outputRichTextBox.Text = executor.Launch(text);
+                    }
+                    finally{}
                 }
             }
 

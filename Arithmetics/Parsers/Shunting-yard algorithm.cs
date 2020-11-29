@@ -15,6 +15,7 @@ namespace Arithmetics.Parsers
     //https://gist.github.com/istupakov/c49ef290c3bc3dbe329bf68f67971470
     //https://www.codeproject.com/Tips/351042/Shunting-Yard-algorithm-in-Csharp
     public enum TokenType { Polynomial, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
+    public enum FunctionType { Unary, Binary };
 
     public delegate Polynomial BinaryFunc(Polynomial leftOp, Polynomial rightOp);
     public delegate Polynomial UnaryFunc(Polynomial Func);
@@ -38,9 +39,9 @@ namespace Arithmetics.Parsers
     {
         private static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
-            ["+"] = new Operator { Name = "+", Precedence = 1, @operator = ((Polynomial x, Polynomial y) => x + y) },
-            ["-"] = new Operator { Name = "-", Precedence = 1, @operator = ((Polynomial x, Polynomial y) => x - y) },
-            ["*"] = new Operator { Name = "*", Precedence = 2, @operator = ((Polynomial x, Polynomial y) => x * y) },
+            ["+"] = new Operator { Name = "+", Precedence = 1, BiOperator = ((Polynomial x, Polynomial y) => x + y) },
+            ["-"] = new Operator { Name = "-", Precedence = 1, BiOperator = ((Polynomial x, Polynomial y) => x - y) },
+            ["*"] = new Operator { Name = "*", Precedence = 2, BiOperator = ((Polynomial x, Polynomial y) => x * y) },
             //["/"] = new Operator { Name = "/", Precedence = 2, function = ((Polynomial x, Polynomial y) => x / y) },
             //["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
 
@@ -49,9 +50,10 @@ namespace Arithmetics.Parsers
         public int Precedence { get; set; }
         public bool RightAssociative { get; set; }
 
-        public BinaryFunc @operator;
+        public BinaryFunc BiOperator;
+        public UnaryFunc  UOperator;
         /// <summary>
-        /// return IDictionary with Operators
+        /// return IDictionary with operators
         /// </summary>
         /// <returns></returns>
         public static IDictionary<string, Operator> GetOperators()
@@ -65,15 +67,22 @@ namespace Arithmetics.Parsers
     }
     public class Function : IComparable<Function>
     {
-        private static IDictionary<string, Function> functions = new Dictionary<string, Function>
-        {
-            ["Eval"] = new Function { Name = "Eval", Precedence = 1, BiFunction = ((Polynomial x, Polynomial y) => x.Eval(y)) },
-            ["Diff"] = new Function { Name = "Diff", Precedence = 1, UFunction = ((Polynomial x) => Polynomial.Diff(x)) }
-        };
+        
+        public FunctionType Type { get; set; }
         public string Name { get; set; }
         public int Precedence { get; set; }
         public BinaryFunc BiFunction;
-        public UnaryFunc UFunction;
+        public UnaryFunc  UFunction;
+        /// <summary>
+        /// return IDictionary with functions
+        /// </summary>
+        /// <returns></returns>
+        private static IDictionary<string, Function> functions = new Dictionary<string, Function>
+        {
+            ["Eval"] = new Function { Name = "Eval", Precedence = 1, Type = FunctionType.Binary, BiFunction = ((Polynomial x, Polynomial y) => x.Eval(y)) },
+            ["Diff"] = new Function { Name = "Diff", Precedence = 1, Type = FunctionType.Unary , UFunction  = ((Polynomial x)    =>   Polynomial.Diff(x)) }
+
+        };
         public static IDictionary<string, Function> GetFunctions()
         {
             return functions;

@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exception\InvalidWhileStructException.cs" />
+    <Compile Include="Executor.cs" />
     <Compile Include="Functions\BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
     <Compile Include="Functions\ISequence.cs" />
