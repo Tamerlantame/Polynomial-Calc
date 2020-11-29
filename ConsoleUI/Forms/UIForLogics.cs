@@ -23,7 +23,7 @@ namespace ConsoleUI.Forms
         {
             string tempString = textBox1.Text;
             var expression = new BooleanExpression(tempString); // "(~x1\/x2)/\(x1\/~x4)/\(x2\/~x4)/\(x2\/~x5)/\(x3\/x4)"
-            var graph = new Graph(expression.booleanExpression);
+            var graph = new LogicGraph(expression.booleanExpression);
             var answer = graph.TwoCnfSat();
             label1.Text = "";
             for (int i = 0; i < answer.Count; i++)

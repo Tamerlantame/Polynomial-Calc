@@ -1,9 +1,6 @@
-﻿using GraphTheory;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GraphTheory;
 
 namespace Logics
 {
@@ -23,11 +20,11 @@ namespace Logics
             adjacencyList = new List<GraphVertex>(max * 2);
             for (int i = 0; i < max; i++)
             {
-                GraphVertex graphNode1 = new LogicGraphVertex(i+1, true);
+                LogicGraphVertex graphNode1 = new LogicGraphVertex(i + 1, true);
                 adjacencyList.Add(graphNode1);
                 //adjacencyList[2 * i] = graphNode1;
 
-                GraphVertex graphNode2 = new LogicGraphVertex(i+1, false);
+                LogicGraphVertex graphNode2 = new LogicGraphVertex(i + 1, false);
                 adjacencyList.Add(graphNode1);
                 //adjacencyList[2 * i + 1] = graphNode2;
             }
@@ -82,7 +79,7 @@ namespace Logics
 
         private int GetVertexIndex(LogicGraphVertex vertex)
         {
-            if (vertex.isMoreZero)
+            if (vertex.IsPositive)
             {
                 return (vertex.Number - 1) * 2;
             }
@@ -140,6 +137,17 @@ namespace Logics
                     DfsForTwoCnfSat2(vertex, j++);
                 }
             }
+
+            List<List<GraphVertex>> strongComponents = GraphBasicFunctions.StrongConectedComponents(this);
+
+            int counter = 1;
+            foreach (List<GraphVertex> listOfGraphVertex in strongComponents)
+            {
+                foreach (GraphVertex vertex in listOfGraphVertex)
+                    comp[GetVertexIndex((LogicGraphVertex)vertex)] = counter;
+                counter++;
+            }
+
 
             for (int i = 0; i < adjacencyList.Count; i += 2)
             {
