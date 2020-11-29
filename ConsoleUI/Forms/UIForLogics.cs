@@ -25,11 +25,14 @@ namespace ConsoleUI.Forms
             var expression = new BooleanExpression(tempString); // "(~x1\/x2)/\(x1\/~x4)/\(x2\/~x4)/\(x2\/~x5)/\(x3\/x4)"
             var graph = new Graph(expression.booleanExpression);
             var answer = graph.TwoCnfSat();
+            label1.Text = "";
             for (int i = 0; i < answer.Count; i++)
+            {
                 if (answer[i] == true)
-                    label1.Text += 1 + " ";
+                    label1.Text += "x" + (i + 1).ToString() + "=" + 1 + "; ";
                 else
-                    label1.Text += 0 + " ";
+                    label1.Text += "x" + (i + 1).ToString() + "=" + 0 + "; ";
+            }
         }
     }
 }

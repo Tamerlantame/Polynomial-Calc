@@ -25,8 +25,7 @@ namespace Logics
                     string secondValue;
                     if (booleanExpression[i + 1] == '~')
                     {
-                        firstValue = booleanExpression[i + 1].ToString() + booleanExpression[i + 2]
-                            + booleanExpression[i + 3];
+                        firstValue = booleanExpression.Substring(i + 1, 3);
                         i += 6;
                     }
                     else
