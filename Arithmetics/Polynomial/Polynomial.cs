@@ -259,6 +259,34 @@ namespace Arithmetics.Polynomial1
             }
             return new Polynomial(coeff);
         }
+        public static bool operator >(Polynomial p1, Polynomial p2)
+        {
+            if (p2.Deg > p1.Deg)
+                return false;
+            if (p2.Deg == p1.Deg)
+                return p1[p1.Deg] > p2[p2.Deg];
+            return true;
+        }
+        public static bool operator >=(Polynomial p1, Polynomial p2)
+        {
+            if (p2.Deg > p1.Deg)
+                return false;
+            if (p2.Deg == p1.Deg)
+                return p1[p1.Deg] >= p2[p2.Deg];
+            return true;
+        }
+        public static bool operator <=(Polynomial p1, Polynomial p2)
+        {
+            return !(p1 >= p2);
+        }
+        public static bool operator <(Polynomial p1, Polynomial p2)
+        {
+            if (p2.Deg < p1.Deg)
+                return false;
+            if (p2.Deg == p1.Deg)
+                return p1[p1.Deg] < p2[p2.Deg];
+            return true;
+        }
         public static bool operator ==(Polynomial p1, Polynomial p2)
         {
             foreach (int deg in p1.coeff.Keys)
