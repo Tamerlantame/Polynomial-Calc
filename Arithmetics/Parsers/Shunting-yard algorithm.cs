@@ -16,10 +16,12 @@ namespace Arithmetics.Parsers
     //https://www.codeproject.com/Tips/351042/Shunting-Yard-algorithm-in-Csharp
     public enum TokenType { Polynomial, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
     public enum FunctionType { Unary, Binary };
+    public enum OperatorType { Binary, Boolean };
 
     public delegate Polynomial BinaryFunc(Polynomial leftOp, Polynomial rightOp);
+    public delegate bool BinaryBoolOperator(Polynomial leftOp, Polynomial rightOp);
     public delegate Polynomial UnaryFunc(Polynomial Func);
-
+    
     public struct Token
     {
         public TokenType Type { get; }
@@ -37,21 +39,91 @@ namespace Arithmetics.Parsers
     }
     public class Operator : IComparable<Operator>
     {
+        //Двусимвольные Операторы пока недоступны для использования
         private static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
-            ["+"] = new Operator { Name = "+", Precedence = 1, BiOperator = ((Polynomial x, Polynomial y) => x + y) },
-            ["-"] = new Operator { Name = "-", Precedence = 1, BiOperator = ((Polynomial x, Polynomial y) => x - y) },
-            ["*"] = new Operator { Name = "*", Precedence = 2, BiOperator = ((Polynomial x, Polynomial y) => x * y) },
+            ["+"] = new Operator { Name = "+", Precedence = 1, Type = OperatorType.Binary, biOperator = (Polynomial x, Polynomial y) =>
+            {
+                return x + y;
+            } },
+            ["-"] = new Operator { Name = "-", Precedence = 1, Type = OperatorType.Binary, biOperator = (Polynomial x, Polynomial y) =>
+            {
+                return x - y;
+            } },
+            ["*"] = new Operator { Name = "*", Precedence = 2, Type = OperatorType.Binary, biOperator = (Polynomial x, Polynomial y) =>
+            {
+                return x * y;
+            } },
             //["/"] = new Operator { Name = "/", Precedence = 2, function = ((Polynomial x, Polynomial y) => x / y) },
             //["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
-
+            [">"] = new Operator
+            {
+                Name = ">",
+                Precedence = 0,
+                Type = OperatorType.Boolean,
+                biBoolOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x > y;
+                }
+            },
+            //[">="] = new Operator
+            //{
+            //    Name = ">=",
+            //    Precedence = 0,
+            //    Type = OperatorType.Boolean,
+            //    biBoolOperator = (Polynomial x, Polynomial y) =>
+            //    {
+            //        return x >= y;
+            //    }
+            //},
+            ["<"] = new Operator
+            {
+                Name = "<",
+                Precedence = 0,
+                Type = OperatorType.Boolean,
+                biBoolOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x < y;
+                }
+            },
+            //["<="] = new Operator
+            //{
+            //    Name = "<=",
+            //    Precedence = 0,
+            //    Type = OperatorType.Boolean,
+            //    biBoolOperator = (Polynomial x, Polynomial y) =>
+            //    {
+            //        return x <= y;
+            //    }
+            //},
+            //["=="] = new Operator
+            //{
+            //    Name = "==",
+            //    Precedence = 0,
+            //    Type = OperatorType.Boolean,
+            //    biBoolOperator = (Polynomial x, Polynomial y) =>
+            //    {
+            //        return x==y;
+            //    }
+            //},
+            //["!="] = new Operator
+            //{
+            //    Name = "!=",
+            //    Precedence = 0,
+            //    Type = OperatorType.Boolean,
+            //    biBoolOperator = (Polynomial x, Polynomial y) =>
+            //    {
+            //        return x != y;
+            //    }
+            //},
         };
+        public OperatorType Type { get; set; }
         public string Name { get; set; }
         public int Precedence { get; set; }
         public bool RightAssociative { get; set; }
 
-        public BinaryFunc BiOperator;
-        public UnaryFunc  UOperator;
+        public BinaryFunc biOperator;
+        public BinaryBoolOperator biBoolOperator;
         /// <summary>
         /// return IDictionary with operators
         /// </summary>
@@ -79,8 +151,8 @@ namespace Arithmetics.Parsers
         /// <returns></returns>
         private static IDictionary<string, Function> functions = new Dictionary<string, Function>
         {
-            ["Eval"] = new Function { Name = "Eval", Precedence = 1, Type = FunctionType.Binary, BiFunction = ((Polynomial x, Polynomial y) => x.Eval(y)) },
-            ["Diff"] = new Function { Name = "Diff", Precedence = 1, Type = FunctionType.Unary , UFunction  = ((Polynomial x)    =>   Polynomial.Diff(x)) }
+            ["Eval"] = new Function { Name = "Eval", Precedence = 0, Type = FunctionType.Binary, BiFunction = ((Polynomial x, Polynomial y) => x.Eval(y)) },
+            ["Diff"] = new Function { Name = "Diff", Precedence = 0, Type = FunctionType.Unary , UFunction  = ((Polynomial x)    =>   Polynomial.Diff(x)) }
 
         };
         public static IDictionary<string, Function> GetFunctions()
@@ -92,7 +164,7 @@ namespace Arithmetics.Parsers
             return this.Precedence - other.Precedence;
         }
     }
-    public class Parser
+    class Parser
     {
         public static IDictionary<string, Operator> operators = Operator.GetOperators();
         public static IDictionary<string, Function> functions = Function.GetFunctions();
