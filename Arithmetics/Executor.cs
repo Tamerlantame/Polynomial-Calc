@@ -62,7 +62,7 @@ namespace Arithmetics
             var result = "";
             while (Convert.ToBoolean(Convert.ToDouble(Execute(condition))))
             {
-                result = Launch(GetBody(lines));
+                result = Launch(GetBody(lines, out int bodyLenght));
             }
             return result;
         }
@@ -75,26 +75,26 @@ namespace Arithmetics
             {
                 if (lines[i].Contains("While"))
                 {
-                    var currCycle = "";
-                    while (!lines[i-1].Contains('}'))
-                    {
-                        currCycle += lines[i] + '\n';
-                        i++;
-                    }
-                    result += PerformWhile(currCycle) + '\n';
+                    result += PerformWhile(lines[i] + '\n' + GetBody(text, out int bodyLenght)) + '\n';
+                    i += bodyLenght;
                 }
-                if (!(i < lines.Length))
-                    break;
-                result += Execute(lines[i]) + "\n";
+                else
+                {
+                    if (!(i < lines.Length))
+                        break;
+                    result += Execute(lines[i]) + "\n";
+                }
             }
             return result;
         }
-        private string GetBody (string text)
+        private string GetBody (string text, out int bodyLength)
         {
-            int leftBracetNum  = 0, rightBracetNum = 0;
+            int leftBracetNum  = 0, rightBracetNum = 0, stringNum=0;
             int firstBracetIndex = 0, lastBracetIndex = text.Length;
             for (int i = 0; i< text.Length;i++)
             {
+                if (text[i] == '\n')
+                    stringNum++;
                 if (text[i] == '{')
                     leftBracetNum++;
                 if (text[i] == '}')
@@ -107,7 +107,13 @@ namespace Arithmetics
             for (int i = 0; i < text.Length; i++)
             {
                 if (text[i] == '{')
+                {
                     firstBracetIndex = i;
+                    break;
+                }
+            }
+            for (int i = 0; i < text.Length; i++)
+            {
                 if (text[i] == '}')
                 {
                     rightBracetNum--;
@@ -116,6 +122,7 @@ namespace Arithmetics
                 }
 
             }
+            bodyLength = stringNum;
             return text.Substring(firstBracetIndex+1, lastBracetIndex - (firstBracetIndex+1));
         }
     }
