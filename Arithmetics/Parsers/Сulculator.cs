@@ -43,7 +43,7 @@ namespace Arithmetics
         private string RPNToAnswer(string expression)
         {
 
-            var text = ExpressionToRPN(expression, out var tokensList );
+            var text = ExpressionToRPN(expression, out var tokensList);
             var tokens = tokensList.ToArray();
             var stack = new Stack<Token>();
             Token leftOp, rightOp;
@@ -62,7 +62,7 @@ namespace Arithmetics
                             stack.Push(tokens[i]);
                         break;
                     case TokenType.Function:
-                        if (Function.GetFunctions()[tokens[i].Value].Type==FunctionType.Unary)
+                        if (Function.GetFunctions()[tokens[i].Value].Type == FunctionType.Unary)
                         {
                             try
                             {
@@ -107,21 +107,38 @@ namespace Arithmetics
                         {
                             throw new System.InvalidOperationException();
                         }
-
-                         result = Operator.GetOperators()[tokens[i].Value].BiOperator
+                        if (Operator.GetOperators()[tokens[i].Value].Type == OperatorType.Binary)
+                        {
+                            result = Operator.GetOperators()[tokens[i].Value].biOperator
+                               (
+                               new Polynomial(PolynomialParser.Parse(leftOp.Value)),
+                               new Polynomial(PolynomialParser.Parse(rightOp.Value))
+                               );
+                            stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                        }
+                        else//TODO подумать как детальнее реализовать взаимодействие с логическими операциями
+                        {
+                            result = Convert.ToDouble(Operator.GetOperators()[tokens[i].Value].biBoolOperator
                             (
                             new Polynomial(PolynomialParser.Parse(leftOp.Value)),
                             new Polynomial(PolynomialParser.Parse(rightOp.Value))
-                            );
-                        //Convert.ToDouble(leftOp.Value), Convert.ToDouble(rightOp.Value));
-                        stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                            ));
+                            stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                        }
                         break;
 
                     default:
                         throw new Exception("Wrong token");
                 }
             }
-            text = stack.Pop().Value;
+            try
+            {
+                text = stack.Pop().Value;
+            }
+            catch (System.InvalidOperationException)
+            {
+                text = "";
+            }
             return text;
         }
 
@@ -129,6 +146,6 @@ namespace Arithmetics
         {
             return RPNToAnswer(expression);
         }
-        
+
     }
 }

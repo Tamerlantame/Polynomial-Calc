@@ -27,15 +27,15 @@ namespace Arithmetics
         {
             string result;
             // нужен regex
-            if (operation.Contains("="))
+            if (operation.Contains(":="))
             {
-                string[] operands = operation.Split(new string[] { "=" }, StringSplitOptions.None);
+                string[] operands = operation.Split(new string[] { ":=" }, StringSplitOptions.None);
                 result = calculator.Execute(operands[1]);
                 if (!calculator.PolyVars.ContainsKey(operands[0]))
                     calculator.PolyVars.Add(operands[0], new Polynomial(PolynomialParser.Parse(result)));
                 else
                     calculator.PolyVars[operands[0]] = new Polynomial(PolynomialParser.Parse(result));
-                result = $"{operands[0]}={result}";
+                result = $"{operands[0]}:={result}";
             }
             else
             {
@@ -56,14 +56,15 @@ namespace Arithmetics
         /// <returns></returns>
         private string PerformWhile(string cycle)
         {
-
-            var lines = cycle.Replace(" ", "").Split(new Char[] { '\n' });
-            // Условие
-            var condition = lines[0].Substring(lines[0].IndexOf('('), lines[0].IndexOf(')') - lines[0].IndexOf('('));
-            
-
-            // Body Of Cycle
-            return "";
+            var lines = cycle;
+            // Условие, добавлена только обработка >< оперторов
+            var condition = lines.Substring(lines.IndexOf('(')+1, lines.IndexOf(')') - (lines.IndexOf('(')+1));
+            var result = "";
+            while (Convert.ToBoolean(Convert.ToDouble(Execute(condition))))
+            {
+                result = Launch(GetBody(lines));
+            }
+            return result;
         }
         public string Launch(string text)
         {
@@ -75,16 +76,47 @@ namespace Arithmetics
                 if (lines[i].Contains("While"))
                 {
                     var currCycle = "";
-                    while (!lines[i].Contains('}'))
+                    while (!lines[i-1].Contains('}'))
                     {
                         currCycle += lines[i] + '\n';
                         i++;
                     }
                     result += PerformWhile(currCycle) + '\n';
                 }
+                if (!(i < lines.Length))
+                    break;
                 result += Execute(lines[i]) + "\n";
             }
             return result;
+        }
+        private string GetBody (string text)
+        {
+            int leftBracetNum  = 0, rightBracetNum = 0;
+            int firstBracetIndex = 0, lastBracetIndex = text.Length;
+            for (int i = 0; i< text.Length;i++)
+            {
+                if (text[i] == '{')
+                    leftBracetNum++;
+                if (text[i] == '}')
+                    rightBracetNum++;
+                if (leftBracetNum != 0 && leftBracetNum == rightBracetNum)
+                    break;
+            }
+            if (leftBracetNum != rightBracetNum)
+                throw new Exception("Ошибка с фигурными скобками");
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '{')
+                    firstBracetIndex = i;
+                if (text[i] == '}')
+                {
+                    rightBracetNum--;
+                    if (rightBracetNum == 0)
+                        lastBracetIndex = i;
+                }
+
+            }
+            return text.Substring(firstBracetIndex+1, lastBracetIndex - (firstBracetIndex+1));
         }
     }
 }
