@@ -1,9 +1,7 @@
-﻿using Arithmetics.Matrix;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using Arithmetics.Matrix;
 
 namespace GraphTheory
 {
@@ -14,58 +12,99 @@ namespace GraphTheory
     /// </summary>
     public class GraphExpressionParser
     {
-        public static GraphExecutionExecutionResult Execute(string expr)
+        readonly static Dictionary<string, Delegate> Commands = new Dictionary<string, Delegate>
         {
-            List<Exception> exceptionsList = new List<Exception>();
-            List<Graph> graphsList = new List<Graph>();
-            if (expr.Contains("CreateFromFile"))
+            {"CreateFromFile", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(CreateFromFile) },
+            {"Transponse", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(Transponse) }
+        };
+
+
+        public static void Execute(string expr, List<Exception> exceptionsList, SortedList<string,Graph> graphsList, RichTextBox output)
+        {
+           
+            expr.Replace(" ", "");
+
+            foreach (var item in Commands)
             {
-                try
+                if (expr.Contains(item.Key))
+
                 {
-                    int startIndex = expr.IndexOf("(\"") + 2;
-                    int endIndex = expr.IndexOf("\")");
-                    string path = expr.Substring(startIndex, endIndex-startIndex);
-                    string name = expr.Contains(":=") ? expr.Substring(0, expr.IndexOf(":=")) : "";
-                    Arithmetics.Matrix.IntegerSquareMatrix graphMatrix = null;
-                    graphMatrix = (IntegerSquareMatrix)IntegerMatrix.GetFromFile(path);
-                    if (graphMatrix.Columns == 0)
-                    {
-                        exceptionsList.Add(new FormatException("Incorrect matrix size in file"));
-                    }
-                    graphsList.Add(new Graph(graphMatrix, name));
-                  
-                }
-                catch(Exception e)
-                {
-                    exceptionsList.Add(e);
+                    object[] parametersArray = new object[] { expr, exceptionsList, graphsList, output};
+                    item.Value.DynamicInvoke(parametersArray);
                 }
             }
-            else
+        }
+
+        public static void CreateFromFile(string expr, List<Exception> exceptionsList, SortedList<string, Graph> graphsList, RichTextBox output)
+        {
+            try
             {
-                exceptionsList.Add(new NotImplementedException($"Expression {expr} can not be executed"));
+                int startIndex = expr.IndexOf("(") + 1;
+                int endIndex = expr.IndexOf(")");
+                string path = expr.Substring(startIndex, endIndex - startIndex);
+                string name = expr.Contains(":=") ? expr.Substring(0, expr.IndexOf(":=")) : "";
+                var graphMatrix = new IntegerSquareMatrix(IntegerMatrix.GetFromFile(path));
+
+
+                if (graphMatrix.Columns == 0)
+                {
+                    exceptionsList.Add(new FormatException("Incorrect matrix size in file"));
+                    
+                }
+
+                var graph = new Graph(graphMatrix, name);
+                graphsList.Add(name,graph);
+                output.Text = graph.ToString();
             }
-            return new GraphExecutionExecutionResult(exceptionsList, graphsList);
+            catch (Exception e)
+            {
+                exceptionsList.Add(e);
+                output.Text += e.Message;
+            }
+        }
+        public static void Transponse(string expr, List<Exception> exceptionsList, SortedList<string, Graph> graphsList, RichTextBox output)
+        {
+            try
+            {
+                int startIndex = expr.IndexOf("(") + 1;
+                int endIndex = expr.IndexOf(")");
+                string name = expr.Substring(startIndex, endIndex - startIndex);
+                
+               if(!graphsList.Keys.Contains(name))
+                {
+                    throw new Exception("такого графа не существует");
+                }
+               else
+                {
+                    graphsList[name]= graphsList[name].Transponse();
+                    output.Text = graphsList[name].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                exceptionsList.Add(e);
+                output.Text += e.Message;
+            }
         }
     }
 
     /// <summary>
     /// Шаблон класса-результата вычисления выражения. 
     /// </summary>
-    public class GraphExecutionExecutionResult
-    {
-        public List<Exception> ExceptionsList { get; private set; }
-        public List<Graph> GraphsList { get; private set; }
+    //public class GraphExecutionExecutionResult
+    //{
+    //    public List<Exception> ExceptionsList { get; private set; }
+    //    public SortedList<string, Graph> GraphsList { get; private set; }
 
-        public GraphExecutionExecutionResult()
-        {
-            ExceptionsList = new List<Exception>();
-            GraphsList = new List<Graph>();
-        }
-        public GraphExecutionExecutionResult(List<Exception> exceptions, List<Graph> graphs)
-        {
-            ExceptionsList = new List<Exception>(exceptions);
-            GraphsList = new List<Graph>(graphs);
-        }
-
-    }
+    //    public GraphExecutionExecutionResult()
+    //    {
+    //        ExceptionsList = new List<Exception>();
+    //        GraphsList = new SortedList<string, Graph>();
+    //    }
+    //    public GraphExecutionExecutionResult(List<Exception> exceptions, SortedList<string, Graph> graphs)
+    //    {
+    //        ExceptionsList = new List<Exception>(exceptions);
+    //        GraphsList = new SortedList<string, Graph>(graphs);
+    //    }
+    //}
 }

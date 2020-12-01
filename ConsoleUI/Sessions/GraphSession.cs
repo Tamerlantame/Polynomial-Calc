@@ -14,14 +14,17 @@ namespace WinFormsUI.Sessions
 {
     class GraphSession : Session
     {
-        private SortedList<string, Graph> graphs;
+        private SortedList<string, Graph> Graphs;
+        private List<Exception> Exceptions;
 
         public GraphSession(RichTextBox input, RichTextBox output) : base(input, output) {
-            graphs = new SortedList<string, Graph>();
+            Graphs = new SortedList<string, Graph>();
+            Exceptions = new List<Exception>();
         }
         public GraphSession(RichTextBox input, RichTextBox output, SortedList<string, Graph> graphs) : base(input, output)
         {
-            this.graphs = new SortedList<string, Graph>(graphs);
+            this.Graphs = new SortedList<string, Graph>(graphs);
+            Exceptions = new List<Exception>();
         }
 
         public void Start()
@@ -38,27 +41,20 @@ namespace WinFormsUI.Sessions
         {
             if(e.KeyCode == Keys.Enter)
             {
-                if(inputRichTextBox.SelectedText != "") {
-                    //Вычисляем выделенную часть программы    
-                    //outputRichTextBox.Text += $"{inputRichTextBox.SelectedText}\n";
-                }
-                else
-                {
-                    CommandStory.Add(inputRichTextBox.Text);
+                   CommandStory.Add(inputRichTextBox.Text);
                     
-                    GraphExecutionExecutionResult result = GraphExpressionParser.Execute(inputRichTextBox.Lines.Last());
-                    if (result.ExceptionsList.Count != 0)
-                    {
-                        foreach (Exception exc in result.ExceptionsList)
-                        {
-                            this.outputRichTextBox.Text += $"{exc.Message}\n";
-                        }
-                    }
-                    else foreach(Graph g in result.GraphsList)
-                        {
-                         this.outputRichTextBox.Text += $"{g}\n";
-                        }
-                }
+                  GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
+                   
+                    
+                        //foreach (Exception exc in Exceptions)
+                        //{
+                        //    this.outputRichTextBox.Text += $"{exc.Message}\n";
+                        //}
+                    
+                     //foreach(Graph g in Graphs)
+                     //   {
+                     //   this.outputRichTextBox.Text += $"{g}\n";
+                
             }
             
         }

@@ -37,9 +37,9 @@ namespace Arithmetics.Matrix
             }
 
             elements = new int[Rows, Rows];
-            for(int i=0; i<=Rows;  i++)
+            for(int i=0; i<Rows;  i++)
             {
-                for (int j=0; i<=Rows; j++)
+                for (int j=0; j<Rows; j++)
                 {
                     this[i, j] = matrix[i, j];
                 }

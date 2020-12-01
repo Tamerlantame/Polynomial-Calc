@@ -4,7 +4,7 @@ namespace Arithmetics.Matrix
 {
     public class Matrix<T>
     {
-        protected T[,] elements;
+        public T[,] elements { get; protected set; }
         public  int Rows { get; protected set; }
         public int Columns { get; protected set; }
 
