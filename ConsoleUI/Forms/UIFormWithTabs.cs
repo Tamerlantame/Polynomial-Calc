@@ -141,11 +141,21 @@ namespace WinFormsUI.Forms
             RichTextBox newRichTextBox = new RichTextBox
             {
                 Location = new System.Drawing.Point(0, 0),
+                Margin = new System.Windows.Forms.Padding(4),
                 Name = title,
-                Size = richTextBox1.Size,
+                Size = new System.Drawing.Size(1021, 288),
+                TabIndex = 0,
                 Text = ""
             };
-            PolynomialSession newSession = new PolynomialSession(newRichTextBox, richTextBoxOutput);
+            RichTextBox newOutputRichTextBox = new RichTextBox
+            {
+                Location = new System.Drawing.Point(0, 296),
+                Name = "richTextBoxOutput",
+                ReadOnly = true,
+                Size = new System.Drawing.Size(767, 100),
+                Text = "",
+            };
+            PolynomialSession newSession = new PolynomialSession(newRichTextBox, newOutputRichTextBox);
             LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
             {
                 Name = title
