@@ -26,7 +26,29 @@ namespace Arithmetics.Matrix
         {
 
         }
+        public IntegerSquareMatrix(IntegerMatrix matrix) 
+        {
 
+            if (matrix.Columns > matrix.Rows)
+            {
+              Columns = matrix.Rows;
+                Rows = matrix.Rows;
+            }
+            else {
+                Columns = matrix.Columns;
+                Rows = matrix.Columns;
+            }
+
+            elements = new int[Rows, Rows];
+            for(int i=0; i<Rows;  i++)
+            {
+                for (int j=0; j<Rows; j++)
+                {
+                    this[i, j] = matrix[i, j];
+                }
+            }
+           
+        }
         /// <summary>
         /// Returns an Identity <paramref name="n"/> × <paramref name="n"/> matrix.
         /// </summary>

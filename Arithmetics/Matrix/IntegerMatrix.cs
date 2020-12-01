@@ -26,6 +26,7 @@ namespace Arithmetics.Matrix
 
         public IntegerMatrix(int n, int m, int[,] coeff) : base(n, m, coeff)
         {
+
         }
 
         public static IntegerMatrix GetFromFile(string path)

@@ -13,6 +13,7 @@ namespace WinFormsUI.Forms
     {
         private Point ImageLocation = new Point(13, 5);
         private Point ImgHitArea = new Point(13, 2);
+        private int TabNumber;
 
         Image CloseImage;
         public UIFormWithTabs()
@@ -23,12 +24,10 @@ namespace WinFormsUI.Forms
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            richTextBoxOutput.Text = "";
+            var currentTabPage = (LyaMelikTabPage)tabControl1.SelectedTab;
             string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Menu//GraphHelp.txt"));
-            foreach (string item in text)
-            {
-                richTextBoxOutput.Text = richTextBoxOutput.Text + item + "\n";
-            }
+            currentTabPage.CurrentSession.SetOutputBoxText(text);
+
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,21 +48,25 @@ namespace WinFormsUI.Forms
         }
         private void CreateGraphSession()
         {
-            string title = "GraphSession " + (tabControl1.TabCount + 1).ToString();
+            TabNumber++;
+            string title = "GraphSession " + TabNumber.ToString();
 
             RichTextBox newRichTextBox = new RichTextBox
             {
                 Location = new System.Drawing.Point(0, 0),
+                Margin = new System.Windows.Forms.Padding(4),
                 Name = title,
-                Size = richTextBox1.Size,
+                Size = new System.Drawing.Size(1021, 288),
+                TabIndex = 0,
                 Text = ""
             };
             RichTextBox newOutputRichTextBox = new RichTextBox
             {
-                Location = richTextBoxOutput.Location,
-                Name = title,
-                Size = richTextBoxOutput.Size,
-                Text = ""
+                Location = new System.Drawing.Point(0, 296),
+                Name = "richTextBoxOutput",
+                ReadOnly = true,
+                Size = new System.Drawing.Size(767, 100),
+                Text = "",
             };
             GraphSession newSession = new GraphSession(newRichTextBox, newOutputRichTextBox);
             LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
@@ -73,7 +76,7 @@ namespace WinFormsUI.Forms
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectTab(newTabPage);
             newTabPage.Controls.Add(newRichTextBox);
-
+            newTabPage.Controls.Add(newOutputRichTextBox);
             newSession.Start();
         }
         

@@ -4,9 +4,9 @@ namespace Arithmetics.Matrix
 {
     public class Matrix<T>
     {
-        protected T[,] elements;
-        public  int Rows { get; }
-        public int Columns { get; }
+        public T[,] elements { get; protected set; }
+        public  int Rows { get; protected set; }
+        public int Columns { get; protected set; }
 
         public T this[int index0, int index1]
         {

@@ -1,2 +1,3 @@
 ﻿Допустимые команды:
 CreateFromFile(string path) - создание графа из файла path.
+Transponse(Graph G)-транспонирование графа G
