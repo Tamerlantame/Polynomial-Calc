@@ -17,17 +17,9 @@ namespace WinFormsUI.Sessions
         {
             executor = new Executor();
         }
-        public void Start()
+
+        public override void Execute(object sender, KeyEventArgs e)
         {
-            inputRichTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(Execute);
-            //outputRichTextBox.Text += $"{Name} - session Execution: \n";
-        }
-        /// <summary>
-        /// Вычисляет последнюю строчку программы, если нажали Enter. 
-        /// </summary>
-        private void Execute(object sender, KeyEventArgs e)
-        {
-           
             if (e.KeyCode == Keys.F5)
             {
                 if (inputRichTextBox.SelectedText != "")
@@ -45,10 +37,9 @@ namespace WinFormsUI.Sessions
                         var text = inputRichTextBox.Text;
                         outputRichTextBox.Text = executor.Launch(text);
                     }
-                    finally{}
+                    finally { }
                 }
             }
-
         }
     }
 }

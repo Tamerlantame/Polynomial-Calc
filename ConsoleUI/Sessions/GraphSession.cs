@@ -27,36 +27,25 @@ namespace WinFormsUI.Sessions
             Exceptions = new List<Exception>();
         }
 
-        public void Start()
+        public override void Execute(object sender, KeyEventArgs e)
         {
-            inputRichTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(Execute);
-            //outputRichTextBox.Text += $"{Name} - session Execution: \n";
-        }
-
-        /// <summary>
-        /// Вычисляет последнюю строчку программы, если нажали Enter. 
-        /// После необходимо сделать, чтобы "вычислялась" выделенная пользователем часть программы.
-        /// </summary>
-        private void Execute(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                   CommandStory.Add(inputRichTextBox.Text);
-                    
-                  GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
-                   
-                    
-                        //foreach (Exception exc in Exceptions)
-                        //{
-                        //    this.outputRichTextBox.Text += $"{exc.Message}\n";
-                        //}
-                    
-                     //foreach(Graph g in Graphs)
-                     //   {
-                     //   this.outputRichTextBox.Text += $"{g}\n";
-                
+                CommandStory.Add(inputRichTextBox.Text);
+
+                GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
+
+
+                //foreach (Exception exc in Exceptions)
+                //{
+                //    this.outputRichTextBox.Text += $"{exc.Message}\n";
+                //}
+
+                //foreach(Graph g in Graphs)
+                //   {
+                //   this.outputRichTextBox.Text += $"{g}\n";
+
             }
-            
         }
     }
 }
