@@ -44,13 +44,16 @@ namespace WinFormsUI.Forms
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+            //LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
             // ?
             //currentPage.CurrentSession.SaveSession();
+            LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+            currentPage.Session.SaveSession();
         }
      
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            createToolStripMenuItem_Click(sender, e);
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -67,7 +70,7 @@ namespace WinFormsUI.Forms
             CloseImage = ConsoleUI.Properties.Resources.CrossImage;
             tabControl1.Padding = new Point(10, 3);
         }
-        private void tabControl1_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
 
             Image img = new Bitmap(CloseImage);
@@ -114,8 +117,7 @@ namespace WinFormsUI.Forms
         private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-            // ?
-            //currentPage.CurrentSession.SaveSession(); 
+            currentPage.Session.SaveSession(); 
         }
 
         private void LoadFileToolStripMenuItem_Click(object sender, EventArgs e)

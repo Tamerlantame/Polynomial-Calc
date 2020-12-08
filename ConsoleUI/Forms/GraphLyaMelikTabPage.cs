@@ -9,7 +9,6 @@ namespace ConsoleUI.Forms
 {
     class GraphLyaMelikTabPage : LyaMelikTabPage
     {
-        public GraphSession Session;
         public GraphLyaMelikTabPage(string name) : base(name)
         {
             Session = new GraphSession(InputRichTextBox, OutputRichTextBox);

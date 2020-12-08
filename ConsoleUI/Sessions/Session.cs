@@ -26,7 +26,7 @@ namespace WinFormsUI.Sessions
             SaveFileDialog dialog = new SaveFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                string path = dialog.InitialDirectory;
+                string path = dialog.FileName;
                 File.WriteAllLines(path, CommandStory);
             }
         }

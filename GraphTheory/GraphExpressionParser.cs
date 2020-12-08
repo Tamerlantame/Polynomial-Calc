@@ -18,15 +18,11 @@ namespace GraphTheory
             {"Transponse", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(Transponse) },
             {"SCC", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(SCC) }
         };
-
-
         public static void Execute(string expr, List<Exception> exceptionsList, SortedList<string, Graph> graphsList, RichTextBox output)
         {
             try
             {
                 expr.Replace(" ", "");
-
-
                 foreach (var item in Commands)
                 {
                     if (expr.Contains(item.Key))

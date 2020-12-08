@@ -3,8 +3,9 @@ using WinFormsUI.Sessions;
 
 namespace ConsoleUI.Forms
 {
-    class LyaMelikTabPage : TabPage
+    abstract class LyaMelikTabPage : TabPage
     {
+        public Session Session;
         public RichTextBox InputRichTextBox { get; }
         public RichTextBox OutputRichTextBox { get; set; }
         public LyaMelikTabPage(string name) : base(name)//Session ses) : base(ses.Name)
@@ -12,7 +13,7 @@ namespace ConsoleUI.Forms
             InputRichTextBox = new RichTextBox
             {
                 Location = new System.Drawing.Point(0, 0),
-                Margin = new System.Windows.Forms.Padding(4),
+                Margin = new Padding(4),
                 Name = name,
                 Size = new System.Drawing.Size(1021, 288),
                 TabIndex = 0,

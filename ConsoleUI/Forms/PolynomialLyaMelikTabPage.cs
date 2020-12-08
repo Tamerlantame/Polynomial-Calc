@@ -9,8 +9,6 @@ namespace ConsoleUI.Forms
 {
     class PolynomialLyaMelikTabPage : LyaMelikTabPage
     {
-        public PolynomialSession Session;
-
         public PolynomialLyaMelikTabPage(string name) : base(name)
         {
             Session = new PolynomialSession(InputRichTextBox, OutputRichTextBox);
