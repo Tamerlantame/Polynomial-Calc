@@ -78,12 +78,18 @@ namespace GraphTheory
         /// <returns></returns>
         public static List<List<GraphNode>> StrongConectedComponents(Graph graph)
         {
+            graph.DFS();
             List<List<GraphNode>> SCC = new List<List<GraphNode>>();
             Graph transponded = graph.Transponse();
+           
+            
+            
             foreach (GraphNode node in transponded)
             {
                 node.Color = Colors.White;// ??????????
-            }
+            
+           }
+           
             List<int> visited = new List<int>();
             int maxTimeNumber;//сюда будем помещать номер вершины-корня очередного обхода в глубину
             while (visited.Count != graph.Count())//запустим дфс для каждой css
@@ -97,11 +103,11 @@ namespace GraphTheory
                         maxTimeNumber = item.Number;//ищем вeршину с максимальным closeTime в graph и берем за корень вершину с тем же номером в transponded
                     }
                 }
-                foreach (GraphNode node in transponded) // ???????????????????/
-                {
-                    node.CloseTime = 0;
-                    node.OpenTime = 0;
-                }
+                //foreach (GraphNode node in transponded) // ???????????????????/
+                //{
+                //    node.CloseTime = 0;
+                //    node.OpenTime = 0;
+                //}
                 List<GraphNode> StrongComponent = new List<GraphNode>();
                 foreach (GraphNode item in transponded)
                 {

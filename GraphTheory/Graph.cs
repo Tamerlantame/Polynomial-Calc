@@ -268,17 +268,16 @@ namespace GraphTheory
         private void DfsVisit(GraphNode node, ref int time)
         {
             time++;
-            node.Color = Colors.Grey;
+          //  node.Color = Colors.Black;
             node.OpenTime = time;
             foreach (GraphNode adjNode in node.adjList)
             {
-                if (adjNode.Color == Colors.Grey)
+                if (adjNode.Color == Colors.Black)
                 {
                     HasCycle = true;
                 }
-                if (adjNode.Color == Colors.White)
+                if (adjNode.Color == Colors.Grey)
                 {
-
                     DfsVisit(adjNode, ref time);
                 }
             }

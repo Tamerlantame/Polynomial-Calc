@@ -15,23 +15,35 @@ namespace GraphTheory
         readonly static Dictionary<string, Delegate> Commands = new Dictionary<string, Delegate>
         {
             {"CreateFromFile", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(CreateFromFile) },
-            {"Transponse", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(Transponse) }
+            {"Transponse", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(Transponse) },
+            {"SCC", new Action<string, List<Exception>, SortedList<string,Graph>, RichTextBox >(SCC) }
         };
 
 
-        public static void Execute(string expr, List<Exception> exceptionsList, SortedList<string,Graph> graphsList, RichTextBox output)
+        public static void Execute(string expr, List<Exception> exceptionsList, SortedList<string, Graph> graphsList, RichTextBox output)
         {
-           
-            expr.Replace(" ", "");
-
-            foreach (var item in Commands)
+            try
             {
-                if (expr.Contains(item.Key))
+                expr.Replace(" ", "");
 
+
+                foreach (var item in Commands)
                 {
-                    object[] parametersArray = new object[] { expr, exceptionsList, graphsList, output};
-                    item.Value.DynamicInvoke(parametersArray);
+                    if (expr.Contains(item.Key))
+
+                    {
+                        object[] parametersArray = new object[] { expr, exceptionsList, graphsList, output };
+                        item.Value.DynamicInvoke(parametersArray);
+                        return;
+                    }
                 }
+
+                throw new Exception("syntax error");
+            }
+            catch (Exception e)
+            {
+                exceptionsList.Add(e);
+                output.Text += e.Message;
             }
         }
 
@@ -49,11 +61,11 @@ namespace GraphTheory
                 if (graphMatrix.Columns == 0)
                 {
                     exceptionsList.Add(new FormatException("Incorrect matrix size in file"));
-                    
+
                 }
 
                 var graph = new Graph(graphMatrix, name);
-                graphsList.Add(name,graph);
+                graphsList.Add(name, graph);
                 output.Text = graph.ToString();
             }
             catch (Exception e)
@@ -69,14 +81,46 @@ namespace GraphTheory
                 int startIndex = expr.IndexOf("(") + 1;
                 int endIndex = expr.IndexOf(")");
                 string name = expr.Substring(startIndex, endIndex - startIndex);
-                
-               if(!graphsList.Keys.Contains(name))
+
+                if (!graphsList.Keys.Contains(name))
                 {
                     throw new Exception("такого графа не существует");
                 }
-               else
+                else
                 {
-                    graphsList[name]= graphsList[name].Transponse();
+                    graphsList[name] = graphsList[name].Transponse();
+                    output.Text = graphsList[name].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                exceptionsList.Add(e);
+                output.Text += e.Message;
+            }
+        }
+        public static void SCC(string expr, List<Exception> exceptionsList, SortedList<string, Graph> graphsList, RichTextBox output)
+        {
+            try
+            {
+                int startIndex = expr.IndexOf("(") + 1;
+                int endIndex = expr.IndexOf(")");
+                string name = expr.Substring(startIndex, endIndex - startIndex);
+
+                if (!graphsList.Keys.Contains(name))
+                {
+                    throw new Exception("такого графа не существует");
+                }
+                else
+                {
+                    var list = GraphBasicFunctions.StrongConectedComponents(graphsList[name]);
+                    foreach (List<GraphNode> item in list)
+                    {
+                        foreach(GraphNode node in item)
+                        {
+                            output.Text += node.Number + " ";
+                        }
+                        output.Text += "/n";
+                    }
                     output.Text = graphsList[name].ToString();
                 }
             }
@@ -87,7 +131,6 @@ namespace GraphTheory
             }
         }
     }
-
     /// <summary>
     /// Шаблон класса-результата вычисления выражения. 
     /// </summary>
