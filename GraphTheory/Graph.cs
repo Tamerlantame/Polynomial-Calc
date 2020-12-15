@@ -5,10 +5,11 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
 using Arithmetics.Matrix;
+using ElementaryInterpreter;
 
 namespace GraphTheory
 {
-    public class Graph: IEnumerable<GraphNode>
+    public class Graph: IEnumerable<GraphNode>, IComputerAlgebraType
     {
         private List<GraphNode> adjNodesList;
 

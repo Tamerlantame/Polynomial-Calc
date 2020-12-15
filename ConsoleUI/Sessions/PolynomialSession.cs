@@ -7,15 +7,17 @@ using System.Windows.Forms;
 using Arithmetics;
 using System.IO;
 using System.Diagnostics;
+using Arithmetics.Polynomial1;
+using ElementaryInterpreter;
 
 namespace WinFormsUI.Sessions
 {
     class PolynomialSession : Session
     {
-        private readonly Executor executor;
+        private readonly Executor<Polynomial> executor;
         public PolynomialSession(RichTextBox input, RichTextBox output) : base(input, output)
         {
-            executor = new Executor();
+            executor = new Executor<Polynomial>();
         }
 
         public override void Execute(object sender, KeyEventArgs e)

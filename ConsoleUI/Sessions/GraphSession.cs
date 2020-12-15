@@ -33,8 +33,8 @@ namespace WinFormsUI.Sessions
             {
                 CommandStory.Add(inputRichTextBox.Text);
 
-                //GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
-                GraphExpressionParser.Execute(inputRichTextBox.Text, Exceptions, Graphs, outputRichTextBox);
+                GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
+                //GraphExpressionParser.Execute(inputRichTextBox.Text, Exceptions, Graphs, outputRichTextBox);
 
 
             }
