@@ -109,15 +109,17 @@ namespace GraphTheory
                 else
                 {
                     var list = GraphBasicFunctions.StrongConectedComponents(graphsList[name]);
+                    var SCCNumber = 1;
+                    output.Text = "";
                     foreach (List<GraphNode> item in list)
                     {
-                        foreach(GraphNode node in item)
+                        output.Text += SCCNumber + ":";
+                        foreach (GraphNode node in item)
                         {
                             output.Text += node.Number + " ";
                         }
-                        output.Text += "/n";
+                        SCCNumber++;
                     }
-                    output.Text = graphsList[name].ToString();
                 }
             }
             catch (Exception e)

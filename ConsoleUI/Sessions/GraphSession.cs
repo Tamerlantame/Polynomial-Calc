@@ -33,17 +33,7 @@ namespace WinFormsUI.Sessions
             {
                 CommandStory.Add(inputRichTextBox.Text);
 
-                GraphExpressionParser.Execute(inputRichTextBox.Text, Exceptions, Graphs, outputRichTextBox);
-
-
-                //foreach (Exception exc in Exceptions)
-                //{
-                //    this.outputRichTextBox.Text += $"{exc.Message}\n";
-                //}
-
-                //foreach(Graph g in Graphs)
-                //   {
-                //   this.outputRichTextBox.Text += $"{g}\n";
+                GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
 
             }
         }

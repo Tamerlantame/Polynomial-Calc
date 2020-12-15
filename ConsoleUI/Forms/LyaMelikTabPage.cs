@@ -17,7 +17,8 @@ namespace ConsoleUI.Forms
                 Name = name,
                 Size = new System.Drawing.Size(1021, 288),
                 TabIndex = 0,
-                Text = ""
+                Text = "",
+                Dock=DockStyle.Top
             };
             OutputRichTextBox = new RichTextBox
             {
@@ -26,7 +27,10 @@ namespace ConsoleUI.Forms
                 ReadOnly = true,
                 Size = new System.Drawing.Size(767, 100),
                 Text = "",
-            };
+                Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right))),
+        };
             Controls.Add(InputRichTextBox);
             Controls.Add(OutputRichTextBox);
         }

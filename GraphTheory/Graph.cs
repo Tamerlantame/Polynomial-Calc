@@ -265,18 +265,18 @@ namespace GraphTheory
             }
         }
         /// <summary> метод является рекурсивной частью DFS. Его смысл сводится к проставлению времен вхождения и выхода в вершину 
-        private void DfsVisit(GraphNode node, ref int time)
+        public void DfsVisit(GraphNode node, ref int time)
         {
             time++;
-          //  node.Color = Colors.Black;
             node.OpenTime = time;
+            node.Color = Colors.Grey;
             foreach (GraphNode adjNode in node.adjList)
             {
                 if (adjNode.Color == Colors.Black)
                 {
                     HasCycle = true;
                 }
-                if (adjNode.Color == Colors.Grey)
+                if (adjNode.Color == Colors.White)
                 {
                     DfsVisit(adjNode, ref time);
                 }

@@ -19,6 +19,7 @@ namespace WinFormsUI.Sessions
             Name = inputRichTextBox.Name;
             CommandStory = new List<string>();
             inputRichTextBox.KeyDown += new KeyEventHandler(Execute);
+           
         }
        
         public void SaveSession()
