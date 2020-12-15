@@ -163,6 +163,7 @@ namespace WinFormsUI.Forms
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectTab(newTabPage);
             newTabPage.Controls.Add(newRichTextBox);
+            newTabPage.Controls.Add(newOutputRichTextBox);
 
             newSession.Start();
         }
