@@ -1,45 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arithmetics;
-using Arithmetics.Polynomial1;
-using Arithmetics.Parsers;
 
-
-namespace Arithmetics
+namespace ElementaryInterpreter
 {
-    public class Executor
+    public class Executor<T> where T : IComputerAlgebraType
     {
-        private readonly Сulculator calculator;
+        private readonly Calculator<T> calculator;
         public Executor()
         {
-            calculator = new Сulculator();
+            calculator = new Calculator<T>();
         }
         /// <summary>
         ///  A:= some expression,
         ///  A:= A*A;
         /// </summary>
-        /// <param name="operation"></param>
+        /// <param name="expression"></param>
         /// <returns></returns>
-        private string Execute(string operation)
+        private string Execute(string expression)
         {
             string result;
             // нужен regex
-            if (operation.Contains(":="))
+            if (expression.Contains(":="))
             {
-                string[] operands = operation.Split(new string[] { ":=" }, StringSplitOptions.None);
+                string[] operands = expression.Split(new string[] { ":=" }, StringSplitOptions.None);
                 result = calculator.Execute(operands[1]);
-                if (!calculator.PolyVars.ContainsKey(operands[0]))
-                    calculator.PolyVars.Add(operands[0], new Polynomial(PolynomialParser.Parse(result)));
+                if (!calculator.Vars.ContainsKey(operands[0]))
+                    calculator.Vars.Add(operands[0], default);//new Polynomial(PolynomialParser.Parse(result)));
                 else
-                    calculator.PolyVars[operands[0]] = new Polynomial(PolynomialParser.Parse(result));
+                    calculator.Vars[operands[0]] = default;//new Polynomial(PolynomialParser.Parse(result));
                 result = $"{operands[0]}:={result}";
             }
             else
             {
-                result = calculator.Execute(operation);
+                result = calculator.Execute(expression);
             }
             return result;
         }

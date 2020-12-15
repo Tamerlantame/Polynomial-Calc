@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exception\InvalidWhileStructException.cs" />
-    <Compile Include="Executor.cs" />
     <Compile Include="Functions\BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
     <Compile Include="Functions\ISequence.cs" />
@@ -61,7 +60,7 @@
     <Compile Include="Parsers\Shunting-yard algorithm.cs" />
     <Compile Include="Parsers\PolynomialParser.cs" />
     <Compile Include="Parsers\ShuntingYardException.cs" />
-    <Compile Include="Parsers\Сulculator.cs" />
+    <Compile Include="Parsers\PolynomialСalculator.cs" />
     <Compile Include="Polynomial\Polynomial.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />
     <Compile Include="Functions\SternBrocotFunctions.cs" />
@@ -74,7 +73,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ElementaryInterpreter\ElementaryInterpreter.csproj">
+      <Project>{26408596-da2c-4186-a4a2-dbd967253596}</Project>
+      <Name>ElementaryInterpreter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Matrix\Tests\SCCtest.txt" />
     <Content Include="Matrix\Tests\TopologicalSort.txt" />

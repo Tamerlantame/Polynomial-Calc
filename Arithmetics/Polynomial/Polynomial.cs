@@ -4,10 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Arithmetics.Parsers;
+using ElementaryInterpreter;
 
 namespace Arithmetics.Polynomial1
 {
-    public class Polynomial : IComparable<Polynomial>, IEnumerable<int>
+    public class Polynomial : IComparable<Polynomial>, IEnumerable<int>, IComputerAlgebraType
     {
         //Поля
         private readonly SortedList<int, double> coeff;

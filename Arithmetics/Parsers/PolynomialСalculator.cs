@@ -7,14 +7,14 @@ using System.IO;
 using Arithmetics;
 using Arithmetics.Parsers;
 using Arithmetics.Polynomial1;
+using ElementaryInterpreter;
 
 namespace Arithmetics
 {
-    class Сulculator
+    class PolynomialСalculator : Calculator<Polynomial>
     {
-
         public Dictionary<string, Polynomial> PolyVars { get; private set; }
-        public Сulculator()
+        public PolynomialСalculator()
         {
             PolyVars = new Dictionary<string, Polynomial>();
         }
