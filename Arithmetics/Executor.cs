@@ -12,7 +12,7 @@ namespace Arithmetics
 {
     public class Executor
     {
-        private Сulculator calculator;
+        private readonly Сulculator calculator;
         public Executor()
         {
             calculator = new Сulculator();
@@ -58,11 +58,11 @@ namespace Arithmetics
         {
             var lines = cycle;
             // Условие, добавлена только обработка >< оперторов
-            var condition = lines.Substring(lines.IndexOf('(')+1, lines.IndexOf(')') - (lines.IndexOf('(')+1));
+            var condition = lines.Substring(startIndex: lines.IndexOf('(') + 1, length: lines.IndexOf(')') - (lines.IndexOf('(') + 1));
             var result = "";
             while (Convert.ToBoolean(Convert.ToDouble(Execute(condition))))
             {
-                result = Launch(GetBody(lines, out int bodyLenght));
+                result = Launch(GetBody(lines, out _));
             }
             return result;
         }
@@ -75,14 +75,22 @@ namespace Arithmetics
             {
                 if (lines[i].Contains("While"))
                 {
-                    result += PerformWhile(lines[i] + '\n' + GetBody(text, out int bodyLenght)) + '\n';
+                    result += PerformWhile(lines[i] + '\n' + '{' + '\n' + GetBody(text, out int bodyLenght) + '\n' + '}') + '\n';
                     i += bodyLenght;
                 }
                 else
                 {
                     if (!(i < lines.Length))
                         break;
-                    result += Execute(lines[i]) + "\n";
+                    try
+                    {
+                        result += Execute(lines[i]) + "\n";
+                    }
+                    catch(Exception exeption)
+                    {
+                        result += exeption.Message + "\n";
+                    }
+                    
                 }
             }
             return result;

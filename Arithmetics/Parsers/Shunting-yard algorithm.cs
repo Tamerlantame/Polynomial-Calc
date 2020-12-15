@@ -14,7 +14,7 @@ namespace Arithmetics.Parsers
     //https://web.archive.org/web/20110718214204/http://en.literateprograms.org/Shunting_yard_algorithm_(C)
     //https://gist.github.com/istupakov/c49ef290c3bc3dbe329bf68f67971470
     //https://www.codeproject.com/Tips/351042/Shunting-Yard-algorithm-in-Csharp
-    public enum TokenType { Polynomial, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace };
+    public enum TokenType { Polynomial, Variable, Function, Parenthesis, Operator, Comma, WhiteSpace, Exeption };
     public enum FunctionType { Unary, Binary };
     public enum OperatorType { Binary, Boolean };
 
@@ -40,21 +40,58 @@ namespace Arithmetics.Parsers
     public class Operator : IComparable<Operator>
     {
         //Двусимвольные Операторы пока недоступны для использования
-        private static IDictionary<string, Operator> operators = new Dictionary<string, Operator>
+        private static readonly IDictionary<string, Operator> operators = new Dictionary<string, Operator>
         {
-            ["+"] = new Operator { Name = "+", Precedence = 1, Type = OperatorType.Binary, biOperator = (Polynomial x, Polynomial y) =>
+            ["+"] = new Operator
             {
-                return x + y;
-            } },
-            ["-"] = new Operator { Name = "-", Precedence = 1, Type = OperatorType.Binary, biOperator = (Polynomial x, Polynomial y) =>
+                Name = "+",
+                Precedence = 1,
+                Type = OperatorType.Binary,
+                biOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x + y;
+                }
+            },
+            ["-"] = new Operator
             {
-                return x - y;
-            } },
-            ["*"] = new Operator { Name = "*", Precedence = 2, Type = OperatorType.Binary, biOperator = (Polynomial x, Polynomial y) =>
+                Name = "-",
+                Precedence = 1,
+                Type = OperatorType.Binary,
+                biOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x - y;
+                }
+            },
+            ["*"] = new Operator
             {
-                return x * y;
-            } },
-            //["/"] = new Operator { Name = "/", Precedence = 2, function = ((Polynomial x, Polynomial y) => x / y) },
+                Name = "*",
+                Precedence = 2,
+                Type = OperatorType.Binary,
+                biOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x * y;
+                }
+            },
+            ["/"] = new Operator
+            {
+                Name = "/",
+                Precedence = 2,
+                Type = OperatorType.Binary,
+                biOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x / y;
+                }
+            },
+            ["%"] = new Operator
+            {
+                Name = "%",
+                Precedence = 2,
+                Type = OperatorType.Binary,
+                biOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x % y;
+                }
+            },
             //["^"] = new Operator { Name = "^", Precedence = 3, RightAssociative = true, function = ((double x, double y) => Math.Pow(x, y)) }
             [">"] = new Operator
             {
@@ -66,16 +103,16 @@ namespace Arithmetics.Parsers
                     return x > y;
                 }
             },
-            //[">="] = new Operator
-            //{
-            //    Name = ">=",
-            //    Precedence = 0,
-            //    Type = OperatorType.Boolean,
-            //    biBoolOperator = (Polynomial x, Polynomial y) =>
-            //    {
-            //        return x >= y;
-            //    }
-            //},
+            [">="] = new Operator
+            {
+                Name = ">=",
+                Precedence = 0,
+                Type = OperatorType.Boolean,
+                biBoolOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x >= y;
+                }
+            },
             ["<"] = new Operator
             {
                 Name = "<",
@@ -86,36 +123,36 @@ namespace Arithmetics.Parsers
                     return x < y;
                 }
             },
-            //["<="] = new Operator
-            //{
-            //    Name = "<=",
-            //    Precedence = 0,
-            //    Type = OperatorType.Boolean,
-            //    biBoolOperator = (Polynomial x, Polynomial y) =>
-            //    {
-            //        return x <= y;
-            //    }
-            //},
-            //["=="] = new Operator
-            //{
-            //    Name = "==",
-            //    Precedence = 0,
-            //    Type = OperatorType.Boolean,
-            //    biBoolOperator = (Polynomial x, Polynomial y) =>
-            //    {
-            //        return x==y;
-            //    }
-            //},
-            //["!="] = new Operator
-            //{
-            //    Name = "!=",
-            //    Precedence = 0,
-            //    Type = OperatorType.Boolean,
-            //    biBoolOperator = (Polynomial x, Polynomial y) =>
-            //    {
-            //        return x != y;
-            //    }
-            //},
+            ["<="] = new Operator
+            {
+                Name = "<=",
+                Precedence = 0,
+                Type = OperatorType.Boolean,
+                biBoolOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x <= y;
+                }
+            },
+            ["=="] = new Operator
+            {
+                Name = "==",
+                Precedence = 0,
+                Type = OperatorType.Boolean,
+                biBoolOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x == y;
+                }
+            },
+            ["!="] = new Operator
+            {
+                Name = "!=",
+                Precedence = 0,
+                Type = OperatorType.Boolean,
+                biBoolOperator = (Polynomial x, Polynomial y) =>
+                {
+                    return x != y;
+                }
+            },
         };
         public OperatorType Type { get; set; }
         public string Name { get; set; }
@@ -149,7 +186,7 @@ namespace Arithmetics.Parsers
         /// return IDictionary with functions
         /// </summary>
         /// <returns></returns>
-        private static IDictionary<string, Function> functions = new Dictionary<string, Function>
+        private static readonly IDictionary<string, Function> functions = new Dictionary<string, Function>
         {
             ["Eval"] = new Function { Name = "Eval", Precedence = 0, Type = FunctionType.Binary, BiFunction = ((Polynomial x, Polynomial y) => x.Eval(y)) },
             ["Diff"] = new Function { Name = "Diff", Precedence = 0, Type = FunctionType.Unary , UFunction  = ((Polynomial x)    =>   Polynomial.Diff(x)) }
@@ -187,8 +224,7 @@ namespace Arithmetics.Parsers
                 return TokenType.Parenthesis;
             if (operators.ContainsKey(Convert.ToString(ch)))
                 return TokenType.Operator;
-
-            throw new Exception("Wrong character");
+            return TokenType.Exeption;
         }
         public IEnumerable<Token> Tokenize(TextReader reader)
         {
@@ -201,6 +237,11 @@ namespace Arithmetics.Parsers
                 var currType = DetermineType(ch);
                 if (currType == TokenType.WhiteSpace)
                     continue;
+                if (currType == TokenType.Exeption)
+                {
+                    ShuntingYardException ShuntingYardExeption = new ShuntingYardException("Wrong symbol", ch);
+                    continue;
+                }
 
                 token.Append(ch);
 
@@ -257,14 +298,18 @@ namespace Arithmetics.Parsers
                         }
                         break;
                     default:
-                        throw new Exception("Wrong token");
+                        ShuntingYardException ShuntingYardExeption =  new ShuntingYardException("Wrong token", tok);
+                        break;
                 }
             }
             while (stack.Any())
             {
                 var tok = stack.Pop();
                 if (tok.Type == TokenType.Parenthesis)
-                    throw new Exception("Mismatched parentheses");
+                {
+                    ShuntingYardException ShuntingYardExeption = new ShuntingYardException("Mismatched parentheses");
+                    continue;
+                }
                 yield return tok;
             }
         }
