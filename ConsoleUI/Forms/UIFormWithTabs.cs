@@ -13,16 +13,18 @@ namespace WinFormsUI.Forms
     {
         private Point ImageLocation = new Point(13, 5);
         private Point ImgHitArea = new Point(13, 2);
+
         private int TabNumber;
 
         Image CloseImage;
+
         public UIFormWithTabs()
         {
             InitializeComponent();
             //CreateGraphSession();
         }
 
-        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var currentTabPage = (LyaMelikTabPage)tabControl1.SelectedTab;
             string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Menu//GraphHelp.txt"));
@@ -33,16 +35,37 @@ namespace WinFormsUI.Forms
             }
         }
 
-        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TabNumber++;
-            string title = "Graph Session" + TabNumber;
-            GraphLyaMelikTabPage newTabPage = new GraphLyaMelikTabPage(title);
-            tabControl1.TabPages.Add(newTabPage);
-            tabControl1.SelectTab(newTabPage);
+            if (sender.ToString() == "Create" || sender.ToString() == "Open")
+            {
+                string title = "Graph Session" + TabNumber;
+                GraphLyaMelikTabPage newTabPage = new GraphLyaMelikTabPage(title);
+                tabControl1.TabPages.Add(newTabPage);
+                tabControl1.SelectTab(newTabPage);
+            }
+            if (sender.ToString() == "New file" || sender.ToString() == "Load file")
+            {
+                string title = "Polynomial Session " + TabNumber;
+                PolynomialLyaMelikTabPage newTabPage = new PolynomialLyaMelikTabPage(title);
+                tabControl1.TabPages.Add(newTabPage);
+                tabControl1.SelectTab(newTabPage);
+            }
         }
+        //private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    sender.ToString();
+        //    sender.GetType();
+        //    TabNumber++;
+        //    string title = "Polynomial Session " + TabNumber;
+        //    PolynomialLyaMelikTabPage newTabPage = new PolynomialLyaMelikTabPage(title);
+        //    tabControl1.TabPages.Add(newTabPage);
+        //    tabControl1.SelectTab(newTabPage);
+        //}
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
             // ?
@@ -50,10 +73,10 @@ namespace WinFormsUI.Forms
             LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
             currentPage.Session.SaveSession();
         }
-     
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            createToolStripMenuItem_Click(sender, e);
+            CreateToolStripMenuItem_Click(sender, e);
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -103,31 +126,34 @@ namespace WinFormsUI.Forms
             }
         }
 
+
+
         //Относится к PolynomialSession
-        private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TabNumber++;
-            string title = "Polynomial Session " + TabNumber;
-            PolynomialLyaMelikTabPage newTabPage = new PolynomialLyaMelikTabPage(title);
-            tabControl1.TabPages.Add(newTabPage);
-            tabControl1.SelectTab(newTabPage);
-        }
+        //private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    sender.ToString();
+        //    sender.GetType();
+        //    TabNumber++;
+        //    string title = "Polynomial Session " + TabNumber;
+        //    PolynomialLyaMelikTabPage newTabPage = new PolynomialLyaMelikTabPage(title);
+        //    tabControl1.TabPages.Add(newTabPage);
+        //    tabControl1.SelectTab(newTabPage);
+        //}
+        //private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+        //    currentPage.Session.SaveSession();
+        //}
 
-        private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-            currentPage.Session.SaveSession(); 
-        }
-
-        private void LoadFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                string sessionText = File.ReadAllText(dialog.FileName);
-                LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-                currentPage.InputRichTextBox.Text = sessionText; 
-            }
-        }
+        //private void LoadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    OpenFileDialog dialog = new OpenFileDialog();
+        //    if (dialog.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string sessionText = File.ReadAllText(dialog.FileName);
+        //        LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+        //        currentPage.InputRichTextBox.Text = sessionText;
+        //    }
+        //}
     }
 }
