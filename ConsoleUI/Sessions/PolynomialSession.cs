@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Arithmetics;
-using System.IO;
-using System.Diagnostics;
+﻿using System.Windows.Forms;
 using Arithmetics.Polynomial1;
 using ElementaryInterpreter;
 
@@ -24,6 +16,7 @@ namespace WinFormsUI.Sessions
         {
             if (e.KeyCode == Keys.F5)
             {
+                CommandStory.Add(inputRichTextBox.Text);
                 if (inputRichTextBox.SelectedText != "")
                 {
                     // A:= some expression
