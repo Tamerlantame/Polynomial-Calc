@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphTheory
 {
@@ -79,35 +77,42 @@ namespace GraphTheory
         public static List<List<GraphNode>> StrongConectedComponents(Graph graph)
         {
             List<List<GraphNode>> SCC = new List<List<GraphNode>>();
+            graph.DFS();//проставили время закрытия/открытия
             Graph transponded = graph.Transponse();
             foreach (GraphNode node in transponded)
             {
-                node.Color = Colors.White;// ??????????
+                node.Color = Colors.White;
             }
-            List<int> visited = new List<int>();
+            List<int> used = new List<int>();
             int maxTimeNumber;//сюда будем помещать номер вершины-корня очередного обхода в глубину
-            while (visited.Count != graph.Count())//запустим дфс для каждой css
+            while (used.Count != graph.Count)//запустим дфс для каждой css
             {
                 maxTimeNumber = 0;
-                while (visited.Contains(maxTimeNumber)) maxTimeNumber++;
+                while (used.Contains(maxTimeNumber) == true)
+                {
+                    maxTimeNumber++;
+                }
+
                 foreach (GraphNode item in graph)
                 {
-                    if (!visited.Contains(item.Number) && graph[item.Number].CloseTime > graph[maxTimeNumber].CloseTime)
+                    if (used.Contains(item.Number) != true && graph[item.Number].CloseTime > graph[maxTimeNumber].CloseTime)
                     {
                         maxTimeNumber = item.Number;//ищем вeршину с максимальным closeTime в graph и берем за корень вершину с тем же номером в transponded
                     }
                 }
-                foreach (GraphNode node in transponded) // ???????????????????/
+                foreach (GraphNode node in transponded)
                 {
                     node.CloseTime = 0;
                     node.OpenTime = 0;
                 }
+                int time = 1;
+                transponded.DfsVisit(transponded[maxTimeNumber],ref time);
                 List<GraphNode> StrongComponent = new List<GraphNode>();
                 foreach (GraphNode item in transponded)
                 {
                     if (item.CloseTime > 0)
                     {
-                        visited.Add(item.Number);
+                        used.Add(item.Number);
                         StrongComponent.Add(item);
                     }
                 }

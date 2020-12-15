@@ -14,11 +14,12 @@ namespace WinFormsUI.Sessions
         protected List<string> CommandStory;
         public Session(RichTextBox input, RichTextBox output)
         {
-
             inputRichTextBox = input;
             outputRichTextBox = output;
             Name = inputRichTextBox.Name;
             CommandStory = new List<string>();
+            inputRichTextBox.KeyDown += new KeyEventHandler(Execute);
+           
         }
        
         public void SaveSession()
@@ -26,7 +27,7 @@ namespace WinFormsUI.Sessions
             SaveFileDialog dialog = new SaveFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                string path = dialog.InitialDirectory;
+                string path = dialog.FileName;
                 File.WriteAllLines(path, CommandStory);
             }
         }
@@ -41,8 +42,6 @@ namespace WinFormsUI.Sessions
             outputRichTextBox.Text = "";
             outputRichTextBox.Text = text;
         }
-       
-        
         public void SetOutputBoxText(string[] text)
         {
             outputRichTextBox.Text = "";
@@ -51,5 +50,11 @@ namespace WinFormsUI.Sessions
                 outputRichTextBox.Text = outputRichTextBox.Text + item + "\n";
             }
         }
+
+        /// <summary>
+        /// Вычисляет последнюю строчку программы, если нажали Enter. 
+        /// После необходимо сделать, чтобы "вычислялась" выделенная пользователем часть программы.
+        /// </summary>
+        public abstract void Execute(object sender, KeyEventArgs e);
     }
 }

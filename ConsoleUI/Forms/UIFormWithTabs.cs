@@ -19,76 +19,47 @@ namespace WinFormsUI.Forms
         public UIFormWithTabs()
         {
             InitializeComponent();
-            CreateGraphSession();
+            //CreateGraphSession();
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var currentTabPage = (LyaMelikTabPage)tabControl1.SelectedTab;
             string[] text = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Menu//GraphHelp.txt"));
-            currentTabPage.CurrentSession.SetOutputBoxText(text);
-
+            currentTabPage.OutputRichTextBox.Text = "";
+            foreach (string item in text)
+            {
+                currentTabPage.OutputRichTextBox.Text = currentTabPage.OutputRichTextBox.Text + item + "\n";
+            }
         }
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateGraphSession();
+            TabNumber++;
+            string title = "Graph Session" + TabNumber;
+            GraphLyaMelikTabPage newTabPage = new GraphLyaMelikTabPage(title);
+            tabControl1.TabPages.Add(newTabPage);
+            tabControl1.SelectTab(newTabPage);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
+            // ?
+            //currentPage.CurrentSession.SaveSession();
             LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-
-            currentPage.CurrentSession.SaveSession();
+            currentPage.Session.SaveSession();
         }
-
-        private void graphToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void CreateGraphSession()
-        {
-            TabNumber++;
-            string title = "GraphSession " + TabNumber.ToString();
-
-            RichTextBox newRichTextBox = new RichTextBox
-            {
-                Location = new System.Drawing.Point(0, 0),
-                Margin = new System.Windows.Forms.Padding(4),
-                Name = title,
-                Size = new System.Drawing.Size(1021, 288),
-                TabIndex = 0,
-                Text = ""
-            };
-            RichTextBox newOutputRichTextBox = new RichTextBox
-            {
-                Location = new System.Drawing.Point(0, 296),
-                Name = "richTextBoxOutput",
-                ReadOnly = true,
-                Size = new System.Drawing.Size(767, 100),
-                Text = "",
-            };
-            GraphSession newSession = new GraphSession(newRichTextBox, newOutputRichTextBox);
-            LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
-            {
-                Name = title
-            };
-            tabControl1.TabPages.Add(newTabPage);
-            tabControl1.SelectTab(newTabPage);
-            newTabPage.Controls.Add(newRichTextBox);
-            newTabPage.Controls.Add(newOutputRichTextBox);
-            newSession.Start();
-        }
-        
-
+     
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            createToolStripMenuItem_Click(sender, e);
             OpenFileDialog dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string sessionText = File.ReadAllText(dialog.FileName);
                 LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-                currentPage.CurrentSession.SetInputBoxText(sessionText);
+                currentPage.InputRichTextBox.Text = sessionText;
             }
         }
 
@@ -99,7 +70,7 @@ namespace WinFormsUI.Forms
             CloseImage = ConsoleUI.Properties.Resources.CrossImage;
             tabControl1.Padding = new Point(10, 3);
         }
-        private void tabControl1_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
 
             Image img = new Bitmap(CloseImage);
@@ -134,32 +105,11 @@ namespace WinFormsUI.Forms
 
 
         //Относится к PolynomialSession
-        private void CreatePolynomialSession()
+        private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string title = "CreatePolynomial " + (tabControl1.TabCount + 1).ToString();
-
-            RichTextBox newRichTextBox = new RichTextBox
-            {
-                Location = new System.Drawing.Point(0, 0),
-                Margin = new System.Windows.Forms.Padding(4),
-                Name = title,
-                Size = new System.Drawing.Size(1021, 288),
-                TabIndex = 0,
-                Text = ""
-            };
-            RichTextBox newOutputRichTextBox = new RichTextBox
-            {
-                Location = new System.Drawing.Point(0, 296),
-                Name = "richTextBoxOutput",
-                ReadOnly = true,
-                Size = new System.Drawing.Size(767, 100),
-                Text = "",
-            };
-            PolynomialSession newSession = new PolynomialSession(newRichTextBox, newOutputRichTextBox);
-            LyaMelikTabPage newTabPage = new LyaMelikTabPage(newSession)
-            {
-                Name = title
-            };
+            TabNumber++;
+            string title = "Polynomial Session " + TabNumber;
+            PolynomialLyaMelikTabPage newTabPage = new PolynomialLyaMelikTabPage(title);
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectTab(newTabPage);
             newTabPage.Controls.Add(newRichTextBox);
@@ -175,8 +125,7 @@ namespace WinFormsUI.Forms
         private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-
-            currentPage.CurrentSession.SaveSession();
+            currentPage.Session.SaveSession(); 
         }
 
         private void LoadFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,7 +135,7 @@ namespace WinFormsUI.Forms
             {
                 string sessionText = File.ReadAllText(dialog.FileName);
                 LyaMelikTabPage currentPage = (LyaMelikTabPage)tabControl1.SelectedTab;
-                currentPage.CurrentSession.SetInputBoxText(sessionText);
+                currentPage.InputRichTextBox.Text = sessionText; 
             }
         }
     }

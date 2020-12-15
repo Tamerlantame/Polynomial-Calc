@@ -3,12 +3,36 @@ using WinFormsUI.Sessions;
 
 namespace ConsoleUI.Forms
 {
-    class LyaMelikTabPage : TabPage
+    abstract class LyaMelikTabPage : TabPage
     {
-        public Session CurrentSession;
-        public LyaMelikTabPage(Session ses) : base(ses.Name)
+        public Session Session;
+        public RichTextBox InputRichTextBox { get; }
+        public RichTextBox OutputRichTextBox { get; set; }
+        public LyaMelikTabPage(string name) : base(name)//Session ses) : base(ses.Name)
         {
-            CurrentSession = ses;
+            InputRichTextBox = new RichTextBox
+            {
+                Location = new System.Drawing.Point(0, 0),
+                Margin = new Padding(4),
+                Name = name,
+                Size = new System.Drawing.Size(1021, 288),
+                TabIndex = 0,
+                Text = "",
+                Dock=DockStyle.Top
+            };
+            OutputRichTextBox = new RichTextBox
+            {
+                Location = new System.Drawing.Point(0, 296),
+                Name = "richTextBoxOutput",
+                ReadOnly = true,
+                Size = new System.Drawing.Size(767, 100),
+                Text = "",
+                Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right))),
+        };
+            Controls.Add(InputRichTextBox);
+            Controls.Add(OutputRichTextBox);
         }
     }
 }
