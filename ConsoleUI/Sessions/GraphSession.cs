@@ -29,11 +29,13 @@ namespace WinFormsUI.Sessions
 
         public override void Execute(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.F5)
             {
                 CommandStory.Add(inputRichTextBox.Text);
 
-                GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
+                //GraphExpressionParser.Execute(inputRichTextBox.Lines.Last(), Exceptions, Graphs, outputRichTextBox);
+                GraphExpressionParser.Execute(inputRichTextBox.Text, Exceptions, Graphs, outputRichTextBox);
+
 
             }
         }

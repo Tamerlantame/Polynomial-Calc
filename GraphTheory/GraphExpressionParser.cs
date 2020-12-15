@@ -33,8 +33,7 @@ namespace GraphTheory
                         return;
                     }
                 }
-
-                throw new Exception("syntax error");
+                //throw new Exception("syntax error");
             }
             catch (Exception e)
             {
@@ -47,8 +46,8 @@ namespace GraphTheory
         {
             try
             {
-                int startIndex = expr.IndexOf("(") + 1;
-                int endIndex = expr.IndexOf(")");
+                int startIndex = expr.IndexOf("\"") + 1;
+                int endIndex = expr.IndexOf("\")");
                 string path = expr.Substring(startIndex, endIndex - startIndex);
                 string name = expr.Contains(":=") ? expr.Substring(0, expr.IndexOf(":=")) : "";
                 var graphMatrix = new IntegerSquareMatrix(IntegerMatrix.GetFromFile(path));
@@ -80,7 +79,7 @@ namespace GraphTheory
 
                 if (!graphsList.Keys.Contains(name))
                 {
-                    throw new Exception("такого графа не существует");
+                    throw new Exception("Граф не существует");
                 }
                 else
                 {
@@ -104,7 +103,7 @@ namespace GraphTheory
 
                 if (!graphsList.Keys.Contains(name))
                 {
-                    throw new Exception("такого графа не существует");
+                    throw new Exception("Граф не существует");
                 }
                 else
                 {
