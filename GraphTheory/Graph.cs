@@ -297,6 +297,11 @@ namespace GraphTheory
         {
             return adjNodesList.GetEnumerator();
         }
+
+        public IComputerAlgebraType ParseExpression(string expr)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

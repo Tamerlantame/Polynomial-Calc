@@ -13,7 +13,6 @@ namespace ElementaryInterpreter
         {
             Vars = new Dictionary<string, T>();
         }
-
         public string Execute(string expr)
         {
             return "";

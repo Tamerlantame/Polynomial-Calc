@@ -8,5 +8,6 @@ namespace ElementaryInterpreter
 {
     public interface IComputerAlgebraType
     {
+        IComputerAlgebraType ParseExpression(string expr);
     }
 }

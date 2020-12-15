@@ -432,5 +432,10 @@ namespace Arithmetics.Polynomial1
         {
             return coeff.Keys.GetEnumerator();
         }
+
+        public IComputerAlgebraType ParseExpression(string expr)
+        {
+            return new Polynomial(PolynomialParser.Parse(expr));
+        }
     }
 }
