@@ -12,7 +12,7 @@ namespace WinFormsUI.Sessions
 {
     class PolynomialSession : Session
     {
-        private Executor executor;
+        private readonly Executor executor;
         public PolynomialSession(RichTextBox input, RichTextBox output) : base(input, output)
         {
             executor = new Executor();

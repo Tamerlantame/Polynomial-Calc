@@ -63,7 +63,7 @@ namespace Arithmetics.Parsers
             {
                 //coefficientsList.Clear();
                 //coefficientsList.Add(0, 0);
-                throw new InvalidPolynomialStringException(e.StackTrace);
+                InvalidPolynomialStringException invalidPolynomialStringException = new InvalidPolynomialStringException(e.StackTrace);
             }
             return coefficientsList;
     }

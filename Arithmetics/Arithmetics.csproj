@@ -57,8 +57,10 @@
     <Compile Include="Matrix\IntegerMatrix.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Exception\Polynomial\InvalidPolynomialStringException.cs" />
+    <Compile Include="Parsers\SyntaxException.cs" />
     <Compile Include="Parsers\Shunting-yard algorithm.cs" />
     <Compile Include="Parsers\PolynomialParser.cs" />
+    <Compile Include="Parsers\ShuntingYardException.cs" />
     <Compile Include="Parsers\Сulculator.cs" />
     <Compile Include="Polynomial\Polynomial.cs" />
     <Compile Include="Polynomial\RandomPolynomial.cs" />

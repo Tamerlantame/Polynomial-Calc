@@ -70,7 +70,8 @@ namespace Arithmetics
                             }
                             catch (System.InvalidOperationException)
                             {
-                                throw new System.InvalidOperationException();
+                                SyntaxException syntaxException = new SyntaxException("Не удалось определить функцию");
+                                leftOp = new Token(TokenType.Exeption, syntaxException.Message);
                             }
                             result = Function.GetFunctions()[tokens[i].Value].UFunction
                               (
@@ -87,7 +88,9 @@ namespace Arithmetics
                             }
                             catch (System.InvalidOperationException)
                             {
-                                throw new System.InvalidOperationException();
+                                SyntaxException syntaxException = new SyntaxException("Не удалось применить функцию к операнду(ам)");
+                                rightOp = new Token(TokenType.Exeption, syntaxException.Message);
+                                leftOp  = new Token(TokenType.Exeption, syntaxException.Message);
                             }
                             result = Function.GetFunctions()[tokens[i].Value].BiFunction
                               (
@@ -101,20 +104,43 @@ namespace Arithmetics
                         try
                         {
                             rightOp = stack.Pop();
+                            //leftOp = stack.Pop();
+                        }
+                        catch (System.InvalidOperationException)
+                        {
+                            SyntaxException syntaxException = new SyntaxException("Не удалось применить оператор к операнду(ам)");
+                            rightOp = new Token(TokenType.Polynomial, "0");
+                            //leftOp  = new Token(TokenType.Exeption, syntaxException.Message);
+
+                        }
+                        try
+                        {
+                            //rightOp = stack.Pop();
                             leftOp = stack.Pop();
                         }
                         catch (System.InvalidOperationException)
                         {
-                            throw new System.InvalidOperationException();
+                            SyntaxException syntaxException = new SyntaxException("Не удалось применить оператор к операнду(ам)");
+                            //rightOp = new Token(TokenType.Exeption, syntaxException.Message);
+                            leftOp  = new Token(TokenType.Polynomial, "0");
+
                         }
                         if (Operator.GetOperators()[tokens[i].Value].Type == OperatorType.Binary)
                         {
-                            result = Operator.GetOperators()[tokens[i].Value].biOperator
-                               (
-                               new Polynomial(PolynomialParser.Parse(leftOp.Value)),
-                               new Polynomial(PolynomialParser.Parse(rightOp.Value))
-                               );
-                            stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                            try
+                            {
+                                result = Operator.GetOperators()[tokens[i].Value].biOperator
+                                   (
+                                   new Polynomial(PolynomialParser.Parse(leftOp.Value)),
+                                   new Polynomial(PolynomialParser.Parse(rightOp.Value))
+                                   );
+                                stack.Push(new Token(TokenType.Polynomial, result.ToString()));
+                            }
+                            catch(InvalidPolynomialStringException exception)
+                            {
+                                stack.Push(new Token(TokenType.Exeption, exception.Message));
+                            }
+                            
                         }
                         else//TODO подумать как детальнее реализовать взаимодействие с логическими операциями
                         {
