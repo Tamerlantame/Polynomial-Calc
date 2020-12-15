@@ -103,7 +103,6 @@ namespace WinFormsUI.Forms
             }
         }
 
-
         //Относится к PolynomialSession
         private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -112,14 +111,6 @@ namespace WinFormsUI.Forms
             PolynomialLyaMelikTabPage newTabPage = new PolynomialLyaMelikTabPage(title);
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectTab(newTabPage);
-            newTabPage.Controls.Add(newRichTextBox);
-            newTabPage.Controls.Add(newOutputRichTextBox);
-
-            newSession.Start();
-        }
-        private void NewFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CreatePolynomialSession();
         }
 
         private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
