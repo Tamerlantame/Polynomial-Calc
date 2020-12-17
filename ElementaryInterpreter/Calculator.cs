@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElementaryInterpreter
 {
-    public class Calculator<T>
+    public class Calculator<T> where T : IComputerAlgebraType, new()
     {
         public Dictionary<string, T> Vars { get; private set; }
         public Calculator()

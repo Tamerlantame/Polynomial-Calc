@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Arithmetics;
 using Arithmetics.Parsers;
 using Arithmetics.Polynomial1;
 using ElementaryInterpreter;
 
 namespace Arithmetics
 {
-    class PolynomialСalculator : Calculator<Polynomial>
+    public class PolynomialСalculator : Calculator<Polynomial>
     {
         public Dictionary<string, Polynomial> PolyVars { get; private set; }
         public PolynomialСalculator()
@@ -168,7 +167,7 @@ namespace Arithmetics
             return text;
         }
 
-        public string Execute(string expression)
+        public new string Execute(string expression)
         {
             return RPNToAnswer(expression);
         }

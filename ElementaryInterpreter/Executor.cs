@@ -2,8 +2,9 @@
 
 namespace ElementaryInterpreter
 {
-    public class Executor<T> where T : IComputerAlgebraType
+    public class Executor<T> where T : IComputerAlgebraType, new()
     {
+
         private readonly Calculator<T> calculator;
         public Executor()
         {
@@ -18,15 +19,17 @@ namespace ElementaryInterpreter
         private string Execute(string expression)
         {
             string result;
+
             // нужен regex
             if (expression.Contains(":="))
             {
                 string[] operands = expression.Split(new string[] { ":=" }, StringSplitOptions.None);
                 result = calculator.Execute(operands[1]);
+                T someResult = (T)Activator.CreateInstance( typeof(T) , new object[] { result });
                 if (!calculator.Vars.ContainsKey(operands[0]))
-                    calculator.Vars.Add(operands[0], default);//new Polynomial(PolynomialParser.Parse(result)));
+                    calculator.Vars.Add(operands[0], someResult);//new Polynomial(PolynomialParser.Parse(result)));
                 else
-                    calculator.Vars[operands[0]] = default;//new Polynomial(PolynomialParser.Parse(result));
+                    calculator.Vars[operands[0]] = someResult;//new Polynomial(PolynomialParser.Parse(result));
                 result = $"{operands[0]}:={result}";
             }
             else
@@ -78,20 +81,20 @@ namespace ElementaryInterpreter
                     {
                         result += Execute(lines[i]) + "\n";
                     }
-                    catch(Exception exeption)
+                    catch (Exception exeption)
                     {
                         result += exeption.Message + "\n";
                     }
-                    
+
                 }
             }
             return result;
         }
-        private string GetBody (string text, out int bodyLength)
+        private string GetBody(string text, out int bodyLength)
         {
-            int leftBracetNum  = 0, rightBracetNum = 0, stringNum=0;
+            int leftBracetNum = 0, rightBracetNum = 0, stringNum = 0;
             int firstBracetIndex = 0, lastBracetIndex = text.Length;
-            for (int i = 0; i< text.Length;i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 if (text[i] == '\n')
                     stringNum++;
@@ -123,7 +126,7 @@ namespace ElementaryInterpreter
 
             }
             bodyLength = stringNum;
-            return text.Substring(firstBracetIndex+1, lastBracetIndex - (firstBracetIndex+1));
+            return text.Substring(firstBracetIndex + 1, lastBracetIndex - (firstBracetIndex + 1));
         }
     }
 }
