@@ -15,6 +15,10 @@ namespace ElementaryInterpreter
         }
         public string Execute(string expr)
         {
+            if (typeof(T) == new Arithmetics.Polynomial1.Polynomial().GetType())
+                return new Arithmetics.PolynomialСalculator().Execute(expr);
+            //if (typeof(T) == new GraphTheory.GraphExpressionParser().GetType())
+            //    return new GraphTheory.GraphExpressionParser().Execute(expr);
             return "";
         }
     }

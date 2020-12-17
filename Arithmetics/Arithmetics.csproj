@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElementaryInterpreter\Calculator.cs" />
+    <Compile Include="ElementaryInterpreter\Executor.cs" />
+    <Compile Include="ElementaryInterpreter\IComputerAlgebraType.cs" />
     <Compile Include="Exception\InvalidWhileStructException.cs" />
     <Compile Include="Functions\BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
