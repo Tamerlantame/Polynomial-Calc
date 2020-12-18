@@ -4,27 +4,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTheory", "GraphTheory\GraphTheory.csproj", "{CC5B09AF-47DB-4D96-BB15-6282F6425042}"
-	ProjectSection(ProjectDependencies) = postProject
-		{26408596-DA2C-4186-A4A2-DBD967253596} = {26408596-DA2C-4186-A4A2-DBD967253596}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "ConsoleUI\UI.csproj", "{306DECF8-8F0C-43D1-B342-3F4F97D50E15}"
 	ProjectSection(ProjectDependencies) = postProject
-		{26408596-DA2C-4186-A4A2-DBD967253596} = {26408596-DA2C-4186-A4A2-DBD967253596}
+		{D93B8E36-915F-4FF9-9D79-1BC7090C93BA} = {D93B8E36-915F-4FF9-9D79-1BC7090C93BA}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arithmetics", "Arithmetics\Arithmetics.csproj", "{E9EDA9A1-7C35-4E0A-94E0-4117A8699052}"
-	ProjectSection(ProjectDependencies) = postProject
-		{26408596-DA2C-4186-A4A2-DBD967253596} = {26408596-DA2C-4186-A4A2-DBD967253596}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logics", "Logics\Logics.csproj", "{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}"
 	ProjectSection(ProjectDependencies) = postProject
+		{D93B8E36-915F-4FF9-9D79-1BC7090C93BA} = {D93B8E36-915F-4FF9-9D79-1BC7090C93BA}
 		{E9EDA9A1-7C35-4E0A-94E0-4117A8699052} = {E9EDA9A1-7C35-4E0A-94E0-4117A8699052}
 		{CC5B09AF-47DB-4D96-BB15-6282F6425042} = {CC5B09AF-47DB-4D96-BB15-6282F6425042}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElementaryInterpreter", "ElementaryInterpreter\ElementaryInterpreter.csproj", "{26408596-DA2C-4186-A4A2-DBD967253596}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElementaryInterpreter", "ElementaryIntepreter\ElementaryInterpreter.csproj", "{D93B8E36-915F-4FF9-9D79-1BC7090C93BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,10 +43,10 @@ Global
 		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E1CE05C-1F84-45A8-9F1C-CFC0597B348F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26408596-DA2C-4186-A4A2-DBD967253596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26408596-DA2C-4186-A4A2-DBD967253596}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26408596-DA2C-4186-A4A2-DBD967253596}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26408596-DA2C-4186-A4A2-DBD967253596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D93B8E36-915F-4FF9-9D79-1BC7090C93BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D93B8E36-915F-4FF9-9D79-1BC7090C93BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D93B8E36-915F-4FF9-9D79-1BC7090C93BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D93B8E36-915F-4FF9-9D79-1BC7090C93BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

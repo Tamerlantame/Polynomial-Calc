@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("ElementaryInterpreter")]
+[assembly: AssemblyTitle("ElementaryIntepreter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ElementaryInterpreter")]
+[assembly: AssemblyProduct("ElementaryIntepreter")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("26408596-da2c-4186-a4a2-dbd967253596")]
+[assembly: Guid("d93b8e36-915f-4ff9-9d79-1bc7090c93ba")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

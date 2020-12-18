@@ -49,9 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ElementaryInterpreter\Calculator.cs" />
-    <Compile Include="ElementaryInterpreter\Executor.cs" />
-    <Compile Include="ElementaryInterpreter\IComputerAlgebraType.cs" />
     <Compile Include="Exception\InvalidWhileStructException.cs" />
     <Compile Include="Functions\BinaryTree.cs" />
     <Compile Include="Fraction\BrocotFraction.cs" />
@@ -75,12 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ElementaryInterpreter\ElementaryInterpreter.csproj">
-      <Project>{26408596-da2c-4186-a4a2-dbd967253596}</Project>
-      <Name>ElementaryInterpreter</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Matrix\Tests\SCCtest.txt" />
