@@ -302,6 +302,11 @@ namespace GraphTheory
         {
             throw new NotImplementedException();
         }
+
+        string IComputerAlgebraType.Execute(string expression, Dictionary<string, IComputerAlgebraType> vars)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

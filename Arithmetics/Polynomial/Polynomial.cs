@@ -423,6 +423,7 @@ namespace Arithmetics.Polynomial1
             return new Polynomial(coeff);
         }
 
+
         public IEnumerator<int> GetEnumerator()
         {
 
@@ -441,9 +442,12 @@ namespace Arithmetics.Polynomial1
 
         public string Execute(string expression, Dictionary<string, IComputerAlgebraType> vars)
         {
-            // пока пустой список переменных.!!!!!!!!!!
-            PolynomialСalculator calc = new PolynomialСalculator(new Dictionary<string, Polynomial>());
-            return calc.RPNToAnswer(expression);
+            Dictionary<string, Polynomial> polyVars = new Dictionary<string, Polynomial>();
+            foreach (var item in vars.Keys)
+            {
+                polyVars.Add(item, vars[item] as Polynomial);
+            }
+            return new PolynomialСalculator(polyVars).RPNToAnswer(expression);
         }
     }
 }

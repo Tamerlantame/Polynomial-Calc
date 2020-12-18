@@ -41,9 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\ElementaryInterpreter\Calculator.cs">
-      <Link>Calculator.cs</Link>
-    </Compile>
+    <Compile Include="Calculator.cs" />
     <Compile Include="Executor.cs" />
     <Compile Include="IComputerAlgebraType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
