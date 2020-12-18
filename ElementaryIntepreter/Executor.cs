@@ -25,11 +25,10 @@ namespace ElementaryInterpreter
             {
                 string[] operands = expression.Split(new string[] { ":=" }, StringSplitOptions.None);
                 result = calculator.Execute(operands[1]);
-                T tResult = (T)Activator.CreateInstance( typeof(T) , new object[] { result });
                 if (!calculator.Vars.ContainsKey(operands[0]))
-                    calculator.Vars.Add(operands[0], tResult);//new Polynomial(PolynomialParser.Parse(result)));
+                    calculator.Vars.Add(operands[0], new T().ParseExpression(result));
                 else
-                    calculator.Vars[operands[0]] = tResult;//new Polynomial(PolynomialParser.Parse(result));
+                    calculator.Vars[operands[0]] = new T().ParseExpression(result);
                 result = $"{operands[0]}:={result}";
             }
             else

@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using Arithmetics.Parsers;
 using ElementaryInterpreter;
 
@@ -436,6 +437,13 @@ namespace Arithmetics.Polynomial1
         public IComputerAlgebraType ParseExpression(string expr)
         {
             return new Polynomial(PolynomialParser.Parse(expr));
+        }
+
+        public string Execute(string expression, Dictionary<string, IComputerAlgebraType> vars)
+        {
+            // пока пустой список переменных.!!!!!!!!!!
+            PolynomialСalculator calc = new PolynomialСalculator(new Dictionary<string, Polynomial>());
+            return calc.RPNToAnswer(expression);
         }
     }
 }

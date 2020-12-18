@@ -92,6 +92,10 @@
       <Project>{e9eda9a1-7c35-4e0a-94e0-4117a8699052}</Project>
       <Name>Arithmetics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ElementaryIntepreter\ElementaryInterpreter.csproj">
+      <Project>{d93b8e36-915f-4ff9-9d79-1bc7090c93ba}</Project>
+      <Name>ElementaryInterpreter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphTheory\GraphTheory.csproj">
       <Project>{cc5b09af-47db-4d96-bb15-6282f6425042}</Project>
       <Name>GraphTheory</Name>

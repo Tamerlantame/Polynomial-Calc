@@ -77,5 +77,11 @@
     <Content Include="Matrix\Tests\SCCtest.txt" />
     <Content Include="Matrix\Tests\TopologicalSort.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElementaryIntepreter\ElementaryInterpreter.csproj">
+      <Project>{d93b8e36-915f-4ff9-9d79-1bc7090c93ba}</Project>
+      <Name>ElementaryInterpreter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

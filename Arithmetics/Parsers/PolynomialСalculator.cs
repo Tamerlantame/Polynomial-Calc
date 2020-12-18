@@ -10,12 +10,16 @@ using ElementaryInterpreter;
 
 namespace Arithmetics
 {
-    public class PolynomialСalculator : Calculator<Polynomial>
+    class PolynomialСalculator
     {
         public Dictionary<string, Polynomial> PolyVars { get; private set; }
         public PolynomialСalculator()
         {
             PolyVars = new Dictionary<string, Polynomial>();
+        }
+        public PolynomialСalculator(Dictionary<string, Polynomial> vars)
+        {
+            PolyVars = new Dictionary<string, Polynomial>(vars);
         }
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace Arithmetics
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        private string RPNToAnswer(string expression)
+        public string RPNToAnswer(string expression)
         {
 
             var text = ExpressionToRPN(expression, out var tokensList);
@@ -166,11 +170,5 @@ namespace Arithmetics
             }
             return text;
         }
-
-        public new string Execute(string expression)
-        {
-            return RPNToAnswer(expression);
-        }
-
     }
 }
